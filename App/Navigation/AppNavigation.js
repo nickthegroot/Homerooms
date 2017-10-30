@@ -1,17 +1,35 @@
-import { StackNavigator } from 'react-navigation'
-import LaunchScreen from '../Containers/LaunchScreen'
+import React from 'react'
+import { NavigationComponent } from 'react-native-material-bottom-navigation'
+import { TabNavigator } from 'react-navigation'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import styles from './Styles/NavigationStyles'
+import LaunchScreen from '../Containers/LaunchScreen'
+import TestScreen from '../Containers/TestScreen'
 
 // Manifest of possible screens
-const PrimaryNav = StackNavigator({
-  LaunchScreen: { screen: LaunchScreen }
+const PrimaryNav = TabNavigator({
+  LaunchScreen: { screen: LaunchScreen },
+  TestScreen: { screen: TestScreen }
 }, {
-  // Default config for all screens
-  headerMode: 'none',
   initialRouteName: 'LaunchScreen',
-  navigationOptions: {
-    headerStyle: styles.header
+  tabBarComponent: NavigationComponent,
+  tabBarPosition: 'bottom',
+  tabBarOptions: {
+    bottomNavigationOptions: {
+      activeLabelColor: '#03a9f4',
+      tabs: {
+        LaunchScreen: {
+          activeIcon: <Icon size={24} color='#03a9f4' name='home' />,
+          icon: <Icon size={24} color='black' name='home' />,
+          label: 'Home'
+        },
+        TestScreen: {
+          activeIcon: <Icon size={24} color='#03a9f4' name='mood' />,
+          icon: <Icon size={24} color='black' name='mood' />,
+          label: 'Test'
+        }
+      }
+    }
   }
 })
 

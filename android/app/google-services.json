@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "781236960586",
+    "firebase_url": "https://lohs-supportseminar.firebaseio.com",
+    "project_id": "lohs-supportseminar",
+    "storage_bucket": "lohs-supportseminar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781236960586:android:00c4e9a06d2ebd91",
+        "android_client_info": {
+          "package_name": "com.nbdeg.supportseminar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781236960586-9vajulmp9ckh4ibsb3fjq4t2l8ve6ufh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nbdeg.supportseminar",
+            "certificate_hash": "5e0b605af5a2719dbfe76391f067b127a01f5551"
+          }
+        },
+        {
+          "client_id": "781236960586-pc4qlbt7b3i3iupfu4lfn32h1p6dpe30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtDeLNRi6B1_fu4zJVTRDH1h1VNkAmDGg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "781236960586-pc4qlbt7b3i3iupfu4lfn32h1p6dpe30.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "781236960586-ig2ipindjptjjm0o563j3qdkosook8nv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nbdeg.supportSeminar"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
