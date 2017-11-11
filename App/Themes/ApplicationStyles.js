@@ -9,7 +9,7 @@ const ApplicationStyles = {
   screen: {
     mainContainer: {
       flex: 1,
-      backgroundColor: Colors.transparent
+      backgroundColor: Colors.background
     },
     backgroundImage: {
       position: 'absolute',
@@ -74,6 +74,9 @@ const ApplicationStyles = {
     borderColor: Colors.ember,
     alignItems: 'center',
     textAlign: 'center'
+  },
+  card: {
+    backgroundColor: Colors.frost
   }
 }
 

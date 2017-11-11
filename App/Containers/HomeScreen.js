@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { View, ScrollView, Text, Image } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { Card, CardTitle, CardContent, CardAction, CardButton, CardImage } from 'react-native-material-cards'
 import Moment from 'moment'
-import { getTheme } from 'react-native-material-kit'
 
+import { Fonts } from '../Themes'
 import Styles from './Styles/HomeScreenStyles'
-const theme = getTheme()
 
 export default class HomeScreen extends Component {
   constructor (props) {
@@ -15,19 +14,16 @@ export default class HomeScreen extends Component {
       name: 'Nick',
       nextSeminar: Moment().endOf('day').fromNow(), // TODO Change to actual next seminar
       teacher: {
-        name: 'Ms. Dunn',
-        room: 201,
-        picture: 'https://lh4.googleusercontent.com/-MTGT0NQMvPc/AAAAAAAAAAI/AAAAAAAAACM/r24A-Y5y5ow/photo.jpg?sz=75'
+        name: 'Mr. Grosse',
+        room: '201',
+        picture: 'https://cdn.discordapp.com/attachments/321072442334380032/377577442614837249/c672c6fd7ba520a3c05bed1b43cd13b9c9106eb8_full.jpg'
       }
     }
   }
 
   render () {
     return (
-      <ScrollView>
-        <View style={Styles.settingsIcons}>
-          <Icon size={20} color='black' name='settings' />
-        </View>
+      <ScrollView style={Styles.mainContainer}>
         <View style={Styles.container}>
           <Text style={Styles.titleText}>Welcome back, {this.state.name}</Text>
           <View style={Styles.break} />
@@ -37,20 +33,23 @@ export default class HomeScreen extends Component {
           </View>
           <View style={Styles.break} />
 
-          {/* Card */}
+          <Card>
+            <CardTitle
+              title='Your Next Support Seminar'
+              subtitle={this.state.teacher.name + ' | Room ' + this.state.teacher.room}
+              avatarSource={{ uri: this.state.teacher.picture }}
+            />
+            <CardAction
+              separator
+              inColumn={false}>
+              <CardButton
+                onPress={() => { }}
+                title='E-Mail'
+                color='blue'
+              />
+            </CardAction>
+          </Card>
 
-          <View style={theme.cardStyle}>
-            <Image source={{ uri: this.state.teacher.picture }} style={theme.cardImageStyle} />
-            <Text style={[theme.cardTitleStyle, { backgroundColor: 'white', padding: 5 }]}>{this.state.teacher.name}</Text>
-            <View style={{ padding: 15 }}>
-              <Text style={[theme.cardContentStyle, Styles.summaryText, { padding: 0 }]}>
-                For the next Support Seminar, you are scheduled for {this.state.teacher.name} in room {this.state.teacher.room}.
-              </Text>
-            </View>
-            <View style={theme.cardActionStyle}>
-              <Text>E-Mail</Text>
-            </View>
-          </View>
         </View>
       </ScrollView>
     )

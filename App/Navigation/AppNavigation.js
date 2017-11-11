@@ -7,11 +7,15 @@ import SignInScreen from '../Containers/SignInScreen'
 
 import HomeScreen from '../Containers/HomeScreen'
 import RequestScreen from '../Containers/RequestScreen'
+import SettingsScreen from '../Containers/SettingsScreen'
+
+import { Colors } from '../Themes'
 
 // Manifest of possible screens
 const TabNav = TabNavigator({
+  RequestScreen: { screen: RequestScreen },
   HomeScreen: { screen: HomeScreen },
-  RequestScreen: { screen: RequestScreen }
+  SettingsScreen: { screen: SettingsScreen }
 }, {
   initialRouteName: 'HomeScreen',
   swipeEnabled: true,
@@ -20,17 +24,23 @@ const TabNav = TabNavigator({
   tabBarPosition: 'bottom',
   tabBarOptions: {
     bottomNavigationOptions: {
-      activeLabelColor: '#03a9f4',
+      labelColor: 'white',
+      shifting: true,
       tabs: {
         HomeScreen: {
-          activeIcon: <Icon size={24} color='#03a9f4' name='home' />,
-          icon: <Icon size={24} color='black' name='home' />,
+          icon: <Icon size={24} color='white' name='home' />,
+          barBackgroundColor: Colors.facebook,
           label: 'Home'
         },
         RequestScreen: {
-          activeIcon: <Icon size={24} color='#03a9f4' name='swap-horiz' />,
-          icon: <Icon size={24} color='black' name='swap-horiz' />,
+          icon: <Icon size={24} color='white' name='swap-horiz' />,
+          barBackgroundColor: Colors.plant,
           label: 'Request'
+        },
+        SettingsScreen: {
+          icon: <Icon size={24} color='white' name='settings' />,
+          barBackgroundColor: Colors.dirt,
+          label: 'Settings'
         }
       }
     }

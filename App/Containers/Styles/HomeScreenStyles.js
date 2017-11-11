@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { ApplicationStyles } from '../../Themes/'
-import Metrics from '../../Themes/Metrics'
-import Fonts from '../../Themes/Fonts'
+import { ApplicationStyles, Metrics, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -10,10 +8,8 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   titleText: {
-    ...Fonts.style.h4,
-    fontWeight: 'bold',
-    // paddingVertical: 40,
-    paddingTop: 25,
+    ...Fonts.style.header,
+    paddingTop: 60,
     color: 'black',
     textAlign: 'center'
   },
@@ -22,10 +18,13 @@ export default StyleSheet.create({
     paddingTop: Metrics.doubleBaseMargin
   },
   break: {
-    padding: 40
+    padding: 30
   },
   summaryText: {
     ...Fonts.style.description,
     textAlign: 'center'
+  },
+  cardText: {
+    ...Fonts.style.description
   }
 })

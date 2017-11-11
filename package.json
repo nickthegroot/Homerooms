@@ -2,6 +2,19 @@
   "name": "SupportSeminar",
   "version": "0.0.1",
   "private": true,
+  "description": "LOHS App to digitize Support Seminar",
+  "author": {
+    "name": "Nick DeGroot",
+    "email": "contact@nbdeg.com",
+    "url": "http://nbdeg.com"
+  },
+  "bugs": {
+    "url": "https://github.com/nbd9/SupportSeminar/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nbd9/SupportSeminar.git"
+  },
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
@@ -36,10 +49,11 @@
     "react-native-animatable": "^1.2.4",
     "react-native-config": "^0.6.0",
     "react-native-drawer": "^2.3.0",
+    "react-native-elements": "^0.18.2",
     "react-native-firebase": "^3.0.5",
     "react-native-material-bottom-navigation": "^0.5.2",
-    "react-native-material-kit": "xinthink/react-native-material-kit",
-    "react-native-vector-icons": "4.3.0",
+    "react-native-material-cards": "SiDevesh/React-Native-Material-Cards",
+    "react-native-vector-icons": "oblador/react-native-vector-icons",
     "react-navigation": "^1.0.0-beta.7",
     "react-redux": "^5.0.2",
     "react-redux-firebase": "^2.0.0-beta.14",
@@ -52,12 +66,14 @@
   "devDependencies": {
     "@storybook/addon-storyshots": "^3.2.3",
     "@storybook/react-native": "^3.2.3",
-    "babel-eslint": "7.1.1",
+    "babel-eslint": "^8.0.2",
     "babel-jest": "21.2.0",
     "babel-plugin-ignite-ignore-reactotron": "^0.3.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react-native": "3.0.2",
     "enzyme": "^2.6.0",
+    "eslint": "^4.10.0",
+    "eslint-plugin-react": "^7.4.0",
     "husky": "^0.13.1",
     "ignite-animatable": "^1.0.0",
     "ignite-ir-boilerplate": "^2.2.2",

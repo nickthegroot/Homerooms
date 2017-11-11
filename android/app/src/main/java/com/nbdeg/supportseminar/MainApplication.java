@@ -3,8 +3,6 @@ package com.nbdeg.supportseminar;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.github.xinthink.rnmk.ReactMaterialKitPackage;
-import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
@@ -33,8 +31,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReactMaterialKitPackage(),
-            new RNFirebasePackage(),
             new RNFirebasePackage(),
             new VectorIconsPackage(),
             new RNFirebaseAnalyticsPackage(),

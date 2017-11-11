@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StatusBar } from 'react-native'
+import { View, StatusBar, Platform } from 'react-native'
 import ReduxNavigation from '../Navigation/ReduxNavigation'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
@@ -17,9 +17,10 @@ class RootContainer extends Component {
   }
 
   render () {
+    let statusBar = (Platform.OS == 'ios') ? (<StatusBar barStyle='dark-content' />) : (<StatusBar barStyle='light-content' />)
     return (
       <View style={styles.applicationView}>
-        <StatusBar barStyle='light-content' />
+        {statusBar}
         <ReduxNavigation />
       </View>
     )

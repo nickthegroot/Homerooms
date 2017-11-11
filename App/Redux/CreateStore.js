@@ -6,7 +6,7 @@ import RehydrationServices from '../Services/RehydrationServices'
 import ReduxPersist from '../Config/ReduxPersist'
 import ScreenTracking from './ScreenTrackingMiddleware'
 import { reactReduxFirebase } from 'react-redux-firebase'
-import RNFirebase from 'react-native-firebase'
+import Firebase from 'react-native-firebase'
 
 // creates the store
 export default (rootReducer, rootSaga) => {
@@ -36,15 +36,12 @@ export default (rootReducer, rootSaga) => {
   }
 
   /* ------------- Firebase Enhancer ------------- */
-  const reactNativeFirebaseConfig = {
-    debug: __DEV__
-  }
 
   const reduxFirebaseConfig = {
     userProfile: 'users' // save users profiles to 'users' collection
   }
 
-  const firebase = RNFirebase.initializeApp(reactNativeFirebaseConfig)
+  const firebase = Firebase.app()
   enhancers.push(reactReduxFirebase(firebase, reduxFirebaseConfig))
 
   // if Reactotron is enabled (default for __DEV__), we'll create the store through Reactotron
