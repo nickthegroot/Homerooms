@@ -3,13 +3,9 @@ import { ApplicationStyles, Metrics, Fonts } from '../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  container: {
-    ...ApplicationStyles.container,
-    alignItems: 'center'
-  },
   titleText: {
     ...Fonts.style.header,
-    paddingTop: 60,
+    paddingTop: 70,
     color: 'black',
     textAlign: 'center'
   },

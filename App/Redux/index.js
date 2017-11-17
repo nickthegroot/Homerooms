@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import configureStore from './CreateStore'
 import rootSaga from '../Sagas/'
+import { firebaseReducer } from 'react-redux-firebase'
 
 /* ------------- Assemble The Reducers ------------- */
 export const reducers = combineReducers({
-  nav: require('./NavigationRedux').reducer
+  nav: require('./NavigationRedux').reducer,
+  firebase: firebaseReducer
 })
 
 export default () => {

@@ -4,5 +4,8 @@
     "production": {
       "plugins": ["ignite-ignore-reactotron"]
     }
-  }
+  },
+  "plugins": [
+    "transform-decorators"
+  ]
 }

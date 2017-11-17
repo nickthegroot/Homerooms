@@ -24,22 +24,23 @@ const TabNav = TabNavigator({
   tabBarPosition: 'bottom',
   tabBarOptions: {
     bottomNavigationOptions: {
-      labelColor: 'white',
+      labelColor: 'gray',
       shifting: true,
+      activeLabelColor: Colors.blue,
       tabs: {
         HomeScreen: {
-          icon: <Icon size={24} color='white' name='home' />,
-          barBackgroundColor: Colors.facebook,
+          activeIcon: <Icon size={24} color={Colors.blue} name='home' />,
+          icon: <Icon size={24} color='gray' name='home' />,
           label: 'Home'
         },
         RequestScreen: {
-          icon: <Icon size={24} color='white' name='swap-horiz' />,
-          barBackgroundColor: Colors.plant,
+          activeIcon: <Icon size={24} color={Colors.blue} name='swap-horiz' />,
+          icon: <Icon size={24} color='gray' name='swap-horiz' />,
           label: 'Request'
         },
         SettingsScreen: {
-          icon: <Icon size={24} color='white' name='settings' />,
-          barBackgroundColor: Colors.dirt,
+          activeIcon: <Icon size={24} color={Colors.blue} name='settings' />,
+          icon: <Icon size={24} color='gray' name='settings' />,
           label: 'Settings'
         }
       }
@@ -51,7 +52,7 @@ const PrimaryNav = StackNavigator({
   SignInScreen: { screen: SignInScreen },
   TabNav: { screen: TabNav }
 }, {
-  initialRouteName: 'TabNav',
+  initialRouteName: 'SignInScreen',
   headerMode: 'none'
 })
 

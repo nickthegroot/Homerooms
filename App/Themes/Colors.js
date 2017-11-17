@@ -1,6 +1,7 @@
 const colors = {
   background: '#F7F7F7',
   navy: '#000080',
+  blue: '#1e88e5',
   plant: '#00796B',
   highligher: '#F3F315',
   facebook: '#3b5998',
