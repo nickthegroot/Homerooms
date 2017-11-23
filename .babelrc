@@ -6,6 +6,6 @@
     }
   },
   "plugins": [
-    "transform-decorators"
+    "babel-plugin-transform-decorators-legacy"
   ]
 }

@@ -18,7 +18,7 @@ class SignInScreen extends Component {
         props.navigation.dispatch(NavigationActions.reset({
           index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: 'TabNav' })
+            NavigationActions.navigate({ routeName: 'TabNav' }, props.teachers)
           ]
         }))
       }
@@ -39,7 +39,7 @@ class SignInScreen extends Component {
       .then(() => this.props.navigation.dispatch(NavigationActions.reset({
         index: 0,
         actions: [
-          NavigationActions.navigate({ routeName: 'TabNav' })
+          NavigationActions.navigate({ routeName: 'TabNav' }, this.props.teachers)
         ]
       })))
       .catch((error) => {
