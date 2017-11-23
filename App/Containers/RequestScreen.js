@@ -4,8 +4,6 @@ import { List, ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 
-// More info here: https://facebook.github.io/react-native/docs/sectionlist.html
-
 // Styles
 import styles from './Styles/RequestScreenStyles'
 

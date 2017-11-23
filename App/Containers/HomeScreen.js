@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Text, Button } from 'react-native'
+import { View, ScrollView, Text, Alert } from 'react-native'
 import { Card, CardTitle, CardAction, CardButton } from 'react-native-material-cards'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
+import Mailer from 'react-native-mail'
 import Moment from 'moment'
 
 import { firebaseProfilePopulates } from '../Config/FirebaseConfig'
@@ -22,6 +23,23 @@ export default class HomeScreen extends Component {
       date: Moment().format('dddd, MMMM Do'),
       nextSeminar: Moment().endOf('day').fromNow() // TODO: Change to actual next seminar
     }
+  }
+
+  handleEmail = (email: string) => {
+    Mailer.mail({
+      subject: 'Support Seminar Help',
+      recipients: [email]
+    }, (error, event) => {
+      Alert.alert(  // TODO: Handle error
+        error,
+        event,
+        [
+          { text: 'Ok', onPress: () => console.log('OK: Email Error Response') },
+          { text: 'Cancel', onPress: () => console.log('CANCEL: Email Error Response') }
+        ],
+        { cancelable: true }
+      )
+    })
   }
 
   render () {
@@ -47,7 +65,7 @@ export default class HomeScreen extends Component {
                 separator
                 inColumn={false}>
                 <CardButton
-                  onPress={() => { }}
+                  onPress={() => { this.handleEmail(this.props.populatedProfile.defaultSeminar.email) }}
                   title='E-Mail'
                   color={Colors.blue}
                 />

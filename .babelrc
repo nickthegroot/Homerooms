@@ -1,11 +1,11 @@
 {
-  "presets": ["react-native"],
+  "presets": ["react-native", "flow"],
+  "plugins": [
+    "transform-decorators-legacy"
+  ],
   "env": {
     "production": {
       "plugins": ["ignite-ignore-reactotron"]
     }
-  },
-  "plugins": [
-    "babel-plugin-transform-decorators-legacy"
-  ]
+  }
 }
