@@ -34,7 +34,8 @@
     "lint": "standard --verbose | snazzy",
     "lintdiff": "git diff --name-only --cached --relative | grep '\\.js$' | xargs standard | snazzy",
     "fixcode": "standard --fix",
-    "git-hook": "yarn run lint -s && yarn run test -s"
+    "git-hook": "yarn run lint -s && yarn run test -s",
+    "flow": "flow"
   },
   "dependencies": {
     "apisauce": "^0.14.0",
@@ -78,7 +79,7 @@
     "eslint": "3.x",
     "eslint-plugin-flowtype": "^2.39.1",
     "eslint-plugin-react": "^7.4.0",
-    "flow-bin": "^0.59.0",
+    "flow-bin": "0.53.0",
     "husky": "^0.13.1",
     "ignite-animatable": "^1.0.0",
     "ignite-ir-boilerplate": "^2.2.2",
