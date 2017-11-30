@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react'
-import { ScrollView, Alert } from 'react-native'
+import { ScrollView, Alert, Platform } from 'react-native'
 import { List, ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
@@ -12,10 +12,12 @@ import styles from './Styles/RequestScreenStyles'
 
 type Teacher = {
   email: string,
-  name: string,
-  picture: string,
-  room: string,
-  subject: string
+  firstName: string,
+  id: string,
+  lastName: string,
+  room: string | number,
+  taughtCourses: string,
+  picture?: string
 }
 
 type Props = {
@@ -23,51 +25,115 @@ type Props = {
    [key: string]: Teacher
   },
   firebase: {
-    push: (path: string, data: {}) => any
+    push: (path: string, data: {}) => any,
+    auth: () => any
   }
 }
 
 @firebaseConnect(
-  { type: 'once', path: '/teachers' }
+  { type: 'once', path: '/teachers', queryParams: ['orderByChild=lastName'] }
 )
 @connect(state => ({
-  teachers: state.firebase.data.teachers
+  teachers: state.firebase.data.teachers,
+  profile: state.firebase.profile
 }))
 export default class RequestScreen extends React.Component<Props> {
+  handleRequest = (teacherKey: string) => {
+    if (teacherKey !== '-L-9gHZsBoau-s4TYwSS') { return }
+    // TODO: Change when Push Notifications are enabled on iOS.
+    if (Platform.OS === 'android') {
+      Firebase.messaging().getToken().then((token) => {
+        this.props.firebase
+          .push('/requests', { user: this.props.firebase.auth()._user.uid, pushID: token, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
+          .then((requestSnapshot) => {
+            this.props.firebase.updateProfile({ lastRequest: requestSnapshot.key })
+          })
+          .catch((err) => {
+            if (!__DEV__) {
+              Firebase.crash().log('Push to Database Error on RequestScreen')
+              Firebase.crash().report(err)
+            }
+
+            Alert.alert(
+              'Error',
+              'An error occured when trying to submit your request. Please try again.',
+              [
+                { text: 'OK' }
+              ],
+              { cancelable: true }
+            )
+          })
+      })
+    } else {
+      this.props.firebase
+        .push('/requests', { user: this.props.firebase.auth()._user.uid, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
+        .catch((err) => {
+          if (!__DEV__) {
+            Firebase.crash().log('Push to Database Error on RequestScreen')
+            Firebase.crash().report(err)
+          }
+
+          Alert.alert(
+            'Error',
+            'An error occured when trying to submit your request. Please try again.',
+            [
+              { text: 'OK' }
+            ],
+            { cancelable: true }
+          )
+        })
+    }
+  }
+
   render () {
     var teacherList = []
     for (let teacherKey in this.props.teachers) {
       let teacher: Teacher = this.props.teachers[teacherKey]
-      teacherList.push(
-        <ListItem
-          roundAvatar
-          avatar={{ uri: teacher.picture }}
-          onPressRightIcon={
-            function () {
-              this.props.firebase
-                .push('/requests', { teacher: teacherKey, accepted: false, timestamp: Moment().format() })
-                .catch((err) => {
-                  if (!__DEV__) {
-                    Firebase.crash().log('Push to Database Error on RequestScreen')
-                    Firebase.crash().report(err)
-                  }
-
-                  Alert.alert(
-                    'Error',
-                    'An error occured when trying to submit your request. Please try again.',
-                    [
-                      { text: 'OK' }
-                    ],
-                    { cancelable: true }
-                  )
-                })
-            }.bind(this)
-        }
-          key={teacherKey}
-          title={teacher.name}
-          subtitle={teacher.subject + ' Teacher | Room ' + teacher.room}
+      if ('picture' in teacher) {
+        teacherList.push(
+          <ListItem
+            roundAvatar
+            avatar={{ uri: teacher.picture }}
+            onPressRightIcon={
+              function () {
+                Alert.alert(
+                  'Are you sure?',
+                  'You\'re requesting ' + teacher.firstName + ' ' + teacher.lastName + ' for next Support Seminar.',
+                  [
+                    { text: 'Yes', onPress: () => { this.handleRequest(teacherKey) } },
+                    { text: 'No' }
+                  ],
+                  { cancelable: false }
+                )
+              }.bind(this)
+            }
+            key={teacherKey}
+            title={teacher.firstName + ' ' + teacher.lastName}
+            subtitle={teacher.taughtCourses + ' | Room ' + teacher.room}
         />
       )
+      } else {
+        teacherList.push(
+          <ListItem
+            onPressRightIcon={
+              function () {
+                Alert.alert(
+                  'Are you sure?',
+                  'You\'re requesting ' + teacher.firstName + ' ' + teacher.lastName + ' for next Support Seminar.',
+                  [
+                    { text: 'Yes', onPress: () => { this.handleRequest(teacherKey) } },
+                    { text: 'No' }
+                  ],
+                  { cancelable: false }
+                )
+              }
+            }
+            key={teacherKey}
+            title={teacher.firstName + ' ' + teacher.lastName}
+            subtitle={teacher.taughtCourses + ' | Room ' + teacher.room}
+          />
+      )
+      }
     }
 
     return (

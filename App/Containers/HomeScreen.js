@@ -8,17 +8,19 @@ import { connect } from 'react-redux'
 import Mailer from 'react-native-mail'
 import Moment from 'moment'
 
-import { firebaseProfilePopulates } from '../Config/FirebaseConfig'
+import { firebaseProfilePopulates, firebaseRequestPopulates } from '../Config/FirebaseConfig'
 
 import { Colors } from '../Themes'
 import Styles from './Styles/HomeScreenStyles'
 
 type Teacher = {
   email: string,
-  name: string,
-  picture: string,
-  room: string,
-  subject: string
+  firstName: string,
+  id: string,
+  lastName: string,
+  room: string | number,
+  taughtCourses: string,
+  picture?: string
 }
 
 type Props = {
@@ -65,6 +67,32 @@ export default class HomeScreen extends React.Component<Props> {
   render () {
     let date = Moment().format('dddd, MMMM Do')
     let nextSeminar = Moment().endOf('day').fromNow()
+    let cardTitle_: React.Node
+    let cardButton_: React.Node
+
+    if (this.props.populatedProfile.defaultSeminar && 'picture' in this.props.populatedProfile.defaultSeminar) {
+      cardTitle_ = <CardTitle
+          title='Your Next Support Seminar'
+          subtitle={this.props.populatedProfile.defaultSeminar.lastName + ' | Room ' + this.props.populatedProfile.defaultSeminar.room}
+          avatarSource={{ uri: this.props.populatedProfile.defaultSeminar.picture }}
+        />
+      cardButton_ = <CardButton
+          onPress={() => { if (this.props.populatedProfile.defaultSeminar) { this.handleEmail(this.props.populatedProfile.defaultSeminar.email) /* Need to do this because of Flow bug. */ } }}
+          title='E-Mail'
+          color={Colors.blue}
+        />
+    } else if (this.props.populatedProfile.defaultSeminar) {
+      cardTitle_ = <CardTitle
+          title='Your Next Support Seminar'
+          subtitle={this.props.populatedProfile.defaultSeminar.lastName + ' | Room ' + this.props.populatedProfile.defaultSeminar.room}
+          avatarSource={{ uri: this.props.populatedProfile.defaultSeminar.picture }}
+        />
+      cardButton_ = <CardButton
+          onPress={() => { if (this.props.populatedProfile.defaultSeminar) { this.handleEmail(this.props.populatedProfile.defaultSeminar.email) /* Need to do this because of Flow bug. */ } }}
+          title='E-Mail'
+          color={Colors.blue}
+        />
+    }
 
     return (
       <ScrollView style={Styles.mainContainer}>
@@ -80,19 +108,11 @@ export default class HomeScreen extends React.Component<Props> {
           {(this.props.populatedProfile.defaultSeminar)
           ? (
             <Card>
-              <CardTitle
-                title='Your Next Support Seminar'
-                subtitle={this.props.populatedProfile.defaultSeminar.name + ' | Room ' + this.props.populatedProfile.defaultSeminar.room}
-                avatarSource={{ uri: this.props.populatedProfile.defaultSeminar.picture }}
-              />
+              {cardTitle_}
               <CardAction
                 separator
                 inColumn={false}>
-                <CardButton
-                  onPress={() => { if (this.props.populatedProfile.defaultSeminar) { this.handleEmail(this.props.populatedProfile.defaultSeminar.email) /* Need to do this because of Flow bug. */ } }}
-                  title='E-Mail'
-                  color={Colors.blue}
-                />
+                { cardButton_ }
               </CardAction>
             </Card>
           )
