@@ -29,30 +29,34 @@ const mailTransport = nodemailer.createTransport({
 exports.sendRequest = functions.database.ref('/requests/{pushId}')
   .onWrite(event => {
     let val = event.data.val()
-    let teacherKey = val.teacher
-    let studentKey = val.user
 
-    console.log('Sending request email', event.params.pushId, teacherKey)
-    let acceptLink = 'https://lohs-supportseminar.firebaseapp.com/acceptRequest/' + event.params.pushId
+    // Make sure there's a need to continue.
+    if (val.accepted === false) {
+      let teacherKey = val.teacher
+      let studentKey = val.user
 
-    let teacherRef = db.ref('teachers/' + teacherKey)
-    let studentRef = db.ref('users/' + studentKey)
+      console.log('Sending request email', event.params.pushId, teacherKey)
+      let acceptLink = 'https://lohs-supportseminar.firebaseapp.com/acceptRequest/' + event.params.pushId
 
-    teacherRef.once('value', function (teacherSnapshot) {
-      let teacher = teacherSnapshot.val()
-      studentRef.once('value', function (studentSnapshot) {
-        let student = studentSnapshot.val()
-        let mailOptions = {
-          from: '"Support Seminar" <noreply@nbdeg.com>',
-          to: teacher.email,
-          subject: 'Support Seminar Student Request',
-          text: 'Hello ' + teacher.firstName + ' ' + teacher.lastName + ',\n' + student.name + ' has requested to come to your next Support Seminar. To accept the request, please click the link below.\n' + acceptLink,
-          html: '<h1>Hello ' + teacher.firstName + ' ' + teacher.lastName + ',</h1>\n<p>' + student.name + ' has requested to come to your next Support Seminar. To accept the request, please click <a href=' + acceptLink + ' />here.</p>'
-        }
+      let teacherRef = db.ref('teachers/' + teacherKey)
+      let studentRef = db.ref('users/' + studentKey)
 
-        return mailTransport.sendMail(mailOptions)
+      teacherRef.once('value', function (teacherSnapshot) {
+        let teacher = teacherSnapshot.val()
+        studentRef.once('value', function (studentSnapshot) {
+          let student = studentSnapshot.val()
+          let mailOptions = {
+            from: '"Support Seminar" <noreply@nbdeg.com>',
+            to: teacher.email,
+            subject: 'Support Seminar Student Request',
+            text: 'Hello ' + teacher.firstName + ' ' + teacher.lastName + ',\n' + student.name + ' has requested to come to your next Support Seminar. To accept the request, please click the link below.\n' + acceptLink,
+            html: '<h1>Hello ' + teacher.firstName + ' ' + teacher.lastName + ',</h1>\n<p>' + student.name + ' has requested to come to your next Support Seminar. To accept the request, please click <a href=' + acceptLink + ' />here.</p>'
+          }
+
+          return mailTransport.sendMail(mailOptions)
+        })
       })
-    })
+    }
   })
 
   /**

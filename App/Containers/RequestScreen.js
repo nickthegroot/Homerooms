@@ -26,51 +26,31 @@ type Props = {
   },
   firebase: {
     push: (path: string, data: {}) => any,
-    auth: () => any
+    auth: () => any,
+    updateProfile: ({}) => any
   }
 }
 
 @firebaseConnect(
-  { type: 'once', path: '/teachers', queryParams: ['orderByChild=lastName'] }
+  { type: 'once', path: '/teachers' }
 )
-@connect(state => ({
-  teachers: state.firebase.data.teachers,
-  profile: state.firebase.profile
+@connect(({ firebase }) => ({
+  teachers: firebase.data.teachers
 }))
 export default class RequestScreen extends React.Component<Props> {
   handleRequest = (teacherKey: string) => {
-    if (teacherKey !== '-L-9gHZsBoau-s4TYwSS') { return }
     // TODO: Change when Push Notifications are enabled on iOS.
     if (Platform.OS === 'android') {
       Firebase.messaging().getToken().then((token) => {
-        this.props.firebase
-          .push('/requests', { user: this.props.firebase.auth()._user.uid, pushID: token, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
-          .then((requestSnapshot) => {
-            this.props.firebase.updateProfile({ lastRequest: requestSnapshot.key })
-          })
-          .catch((err) => {
-            if (!__DEV__) {
-              Firebase.crash().log('Push to Database Error on RequestScreen')
-              Firebase.crash().report(err)
-            }
-
-            Alert.alert(
-              'Error',
-              'An error occured when trying to submit your request. Please try again.',
-              [
-                { text: 'OK' }
-              ],
-              { cancelable: true }
-            )
-          })
-      })
-    } else {
-      this.props.firebase
-        .push('/requests', { user: this.props.firebase.auth()._user.uid, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
-        .catch((err) => {
+        try {
+          let requestRef = Firebase.database().ref('/requests').push({ user: this.props.firebase.auth()._user.uid, pushID: token, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
+          this.props.firebase.updateProfile({ lastRequest: requestRef.key })
+        } catch (err) {
           if (!__DEV__) {
             Firebase.crash().log('Push to Database Error on RequestScreen')
             Firebase.crash().report(err)
+          } else {
+            console.tron.log(err)
           }
 
           Alert.alert(
@@ -81,7 +61,29 @@ export default class RequestScreen extends React.Component<Props> {
             ],
             { cancelable: true }
           )
-        })
+        }
+      })
+    } else {
+      try {
+        let requestRef = Firebase.database().ref('/requests').push({ user: this.props.firebase.auth()._user.uid, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
+        this.props.firebase.updateProfile({ lastRequest: requestRef.key })
+      } catch (err) {
+        if (!__DEV__) {
+          Firebase.crash().log('Push to Database Error on RequestScreen')
+          Firebase.crash().report(err)
+        } else {
+          console.tron.log(err)
+        }
+
+        Alert.alert(
+          'Error',
+          'An error occured when trying to submit your request. Please try again.',
+          [
+            { text: 'OK' }
+          ],
+          { cancelable: true }
+        )
+      }
     }
   }
 
