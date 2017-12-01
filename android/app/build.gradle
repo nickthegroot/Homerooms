@@ -79,7 +79,9 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
-apply from: "$gradle.gradleUserHomeDir/keystores/seminar.gradle"
+
+/* Uncomment for local builds */
+// apply from: "$gradle.gradleUserHomeDir/keystores/seminar.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:

@@ -120,6 +120,7 @@
       "flowtype",
       "react"
     ],
+    "ignore": [ "node_modules", "flow-typed" ],
     "globals": [
       "describe",
       "test",

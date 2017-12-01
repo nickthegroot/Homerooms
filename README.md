@@ -5,4 +5,3 @@
 Created by Nick DeGroot during his Junior year (2017-2018).
 
 * Standard compliant React Native App Utilizing [Ignite](https://github.com/infinitered/ignite)
-
