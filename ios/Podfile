@@ -6,11 +6,15 @@ target 'SupportSeminar' do
   # use_frameworks!
 
   # Pods for SupportSeminar
+  pod 'AppCenter/Crashes', '~> 1.0.1'
+  pod 'AppCenter/Analytics', '~> 1.0.1'
+  pod 'AppCenterReactNativeShared', '~> 1.0.1'
   pod 'Firebase/Core'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Crash'
   pod 'Firebase/Database'
+  pod 'Firebase/Messaging'
   pod 'Firebase/Performance'
 
 end
