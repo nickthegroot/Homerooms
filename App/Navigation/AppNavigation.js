@@ -3,11 +3,11 @@ import { NavigationComponent } from 'react-native-material-bottom-navigation'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import SignInScreen from '../Containers/SignInScreen'
+import SignInScreen from '../Screens/SignIn/SignInScreen'
 
-import HomeScreen from '../Containers/HomeScreen'
-import RequestScreen from '../Containers/RequestScreen'
-import SettingsScreen from '../Containers/SettingsScreen'
+import HomeScreen from '../Screens/Home/HomeScreen'
+import RequestScreen from '../Screens/Request/RequestScreen'
+import SettingsScreen from '../Screens/Settings/SettingsScreen'
 
 import { Colors } from '../Themes'
 
