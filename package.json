@@ -57,7 +57,6 @@
     "react-native-firebase": "^3.0.5",
     "react-native-mail": "^3.0.5",
     "react-native-material-bottom-navigation": "^0.5.2",
-    "react-native-material-cards": "SiDevesh/React-Native-Material-Cards",
     "react-native-vector-icons": "oblador/react-native-vector-icons",
     "react-navigation": "^1.0.0-beta.7",
     "react-redux": "^5.0.2",
@@ -108,9 +107,6 @@
       "/node_modules/",
       "Tests/Setup.js"
     ],
-    "setupFiles": [
-      "./Tests/Setup"
-    ],
     "preset": "react-native"
   },
   "config": {},
@@ -120,7 +116,10 @@
       "flowtype",
       "react"
     ],
-    "ignore": [ "node_modules", "flow-typed" ],
+    "ignore": [
+      "node_modules",
+      "flow-typed"
+    ],
     "globals": [
       "describe",
       "test",

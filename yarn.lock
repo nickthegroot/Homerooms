@@ -6900,12 +6900,6 @@ react-native-material-bottom-navigation@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/react-native-material-bottom-navigation/-/react-native-material-bottom-navigation-0.5.2.tgz#6b5dea51ea7fb7c21b4df9ffbb56ef1ed9b661ab"
 
-react-native-material-cards@SiDevesh/React-Native-Material-Cards:
-  version "1.0.7"
-  resolved "https://codeload.github.com/SiDevesh/React-Native-Material-Cards/tar.gz/e7c0e867773dc36aaca23a8f67b32cfd98ecf2bf"
-  dependencies:
-    prop-types "^15.5.10"
-
 react-native-tab-view@^0.0.69:
   version "0.0.69"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.69.tgz#f52d4354a98a382f10eb5fcf61db5216c91dc7e7"

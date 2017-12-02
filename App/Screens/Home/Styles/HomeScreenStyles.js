@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native'
-import { ApplicationStyles } from '../../Themes/'
+import { ApplicationStyles } from '../../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  form: {
-    marginTop: 30
+  break: {
+    padding: 30
   }
 })

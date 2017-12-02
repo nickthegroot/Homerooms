@@ -1,16 +1,17 @@
 // @flow
 import * as React from 'react'
 import { View, ScrollView, Text, Alert } from 'react-native'
-import { Card, CardTitle, CardAction, CardButton } from 'react-native-material-cards'
+import { Card, Button } from 'react-native-elements'
 import firebase from 'react-native-firebase'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import Mailer from 'react-native-mail'
 import Moment from 'moment'
 
-import { firebaseProfilePopulates } from '../Config/FirebaseConfig'
+import { firebaseProfilePopulates } from '../../Config/FirebaseConfig'
+import CurrentSeminarCard from './Components/CurrentSeminarCard'
+import TitleText from './Components/TitleText'
 
-import { Colors } from '../Themes'
 import Styles from './Styles/HomeScreenStyles'
 
 type Teacher = {
@@ -89,48 +90,14 @@ export default class HomeScreen extends React.Component<Props> {
   render () {
     let date = Moment().format('dddd, MMMM Do')
     let nextSeminar = Moment().endOf('day').fromNow()
-    let cardTitle_: React.Node
-
-    if (this.state.seminarTeacher && 'picture' in this.state.seminarTeacher) {
-      cardTitle_ = <CardTitle
-        title='Your Next Support Seminar'
-        subtitle={this.state.seminarTeacher.lastName + ' | Room ' + this.state.seminarTeacher.room}
-        avatarSource={{ uri: this.state.seminarTeacher.picture }}
-        />
-    } else if (this.state.seminarTeacher) {
-      cardTitle_ = <CardTitle
-        title='Your Next Support Seminar'
-        subtitle={this.state.seminarTeacher.lastName + ' | Room ' + this.state.seminarTeacher.room}
-        />
-    }
 
     return (
       <ScrollView style={Styles.mainContainer}>
         <View style={Styles.container}>
-          <Text style={Styles.titleText}>Welcome back, {this.props.profile.name}</Text>
-          <View style={Styles.break} />
-          <View>
-            <Text style={Styles.summaryText}>Today is {date}</Text>
-            <Text style={Styles.summaryText}>The next Support Seminar is {nextSeminar}</Text>
-          </View>
+          <TitleText date={date} name={this.props.populatedProfile.name} nextSeminar={nextSeminar} />
           <View style={Styles.break} />
 
-          {(this.state.seminarTeacher)
-          ? (
-            <Card>
-              {cardTitle_}
-              <CardAction
-                separator
-                inColumn={false}>
-                <CardButton
-                  onPress={() => { if (this.state.seminarTeacher) { this.handleEmail(this.state.seminarTeacher.email) /* Need to do this because of Flow bug. */ } }}
-                  title='E-Mail'
-                  color={Colors.blue}
-                  />
-              </CardAction>
-            </Card>
-          )
-          : null }
+          <CurrentSeminarCard seminarTeacher={this.state.seminarTeacher} />
 
         </View>
       </ScrollView>

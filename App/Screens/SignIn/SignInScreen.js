@@ -3,7 +3,7 @@ import { View, Image } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 import { firebaseConnect } from 'react-redux-firebase'
 import * as firebase from 'react-native-firebase'
-import { Images } from '../Themes'
+import { Images } from '../../Themes'
 import { NavigationActions } from 'react-navigation'
 
 import Styles from './Styles/SignInStyles'
