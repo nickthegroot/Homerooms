@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Image } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
 import { firebaseConnect } from 'react-redux-firebase'
-import * as firebase from 'react-native-firebase'
+import Firebase from 'react-native-firebase'
 import { Images } from '../../Themes'
 import { NavigationActions } from 'react-navigation'
 
@@ -12,7 +12,6 @@ import Styles from './Styles/SignInStyles'
 class SignInScreen extends Component {
   constructor (props) {
     super(props)
-    console.tron.log(props)
 
     // Checks to see if the user is logged in - and if so redirect them to HomeScreen
     props.firebase.auth().onAuthStateChanged((user) => {
@@ -60,8 +59,8 @@ class SignInScreen extends Component {
         break
       default:
         if (!__DEV__) {
-          firebase.crash().log('Auth Error: Unknown Error Code')
-          firebase.crash().report(error)
+          Firebase.crash().log('Auth Error: Unknown Error Code')
+          Firebase.crash().report(error)
         }
         break
     }
