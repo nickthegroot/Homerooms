@@ -1,10 +1,16 @@
+// @flow
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Text, View } from 'react-native'
 
 import Styles from '../Styles/TitleTextStyles'
 
-const TitleText = ({ name, date, nextSeminar }) => {
+type Props = {
+  name: string,
+  date: string,
+  nextSeminar: string
+}
+
+const TitleText = ({ name, date, nextSeminar }: Props) => {
   return (
     <View>
       <Text style={Styles.titleText}>Welcome back, {name}</Text>
@@ -14,12 +20,6 @@ const TitleText = ({ name, date, nextSeminar }) => {
         <Text style={Styles.summaryText}>The next Support Seminar is {nextSeminar}</Text>
       </View>
     </View>)
-}
-
-TitleText.propTypes = {
-  name: PropTypes.string,
-  date: PropTypes.string,
-  nextSeminar: PropTypes.string
 }
 
 export default TitleText

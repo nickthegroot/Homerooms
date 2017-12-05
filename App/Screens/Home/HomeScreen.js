@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react'
 import { View, ScrollView, Alert } from 'react-native'
-import firebase from 'react-native-firebase'
+import Firebase from 'react-native-firebase'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import Mailer from 'react-native-mail'
@@ -35,7 +35,7 @@ type Props = {
   profile: {
     defaultSeminar: string,
     name: string,
-    schoolID: string
+    lastRequest: string
   },
   populatedProfile: {
     defaultSeminar: ?Teacher,
@@ -62,7 +62,7 @@ export default class HomeScreen extends React.Component<Props, State> {
 
   componentWillReceiveProps (nextProps: Props) {
     if (nextProps.populatedProfile.lastRequest && nextProps.populatedProfile.lastRequest.accepted && nextProps.populatedProfile.lastRequest.teacher) {
-      firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
+      Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
         this.setState({
           seminarTeacher: teacherSnapshot.val()
         })
@@ -80,8 +80,8 @@ export default class HomeScreen extends React.Component<Props, State> {
       recipients: [email]
     }, (error, event) => {
       if (!__DEV__) {
-        firebase.crash().log('Mailer Error on HomeScreen')
-        firebase.crash().report(error)
+        Firebase.crash().log('Mailer Error on HomeScreen')
+        Firebase.crash().report(error)
       }
 
       Alert.alert(
@@ -97,12 +97,19 @@ export default class HomeScreen extends React.Component<Props, State> {
 
   render () {
     let date = Moment().format('dddd, MMMM Do')
-    let nextSeminar = Moment().endOf('day').fromNow()
+    let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
+    let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
+
+    let nextSeminar
+
+    nextSeminar = (nextSeminarTuesday.isBefore(nextSeminarWednesday))
+    ? nextSeminarTuesday
+    : nextSeminarWednesday
 
     return (
       <ScrollView style={Styles.mainContainer}>
         <View style={Styles.container}>
-          <TitleText date={date} name={this.props.populatedProfile.name} nextSeminar={nextSeminar} />
+          <TitleText date={date} name={this.props.populatedProfile.name} nextSeminar={nextSeminar.fromNow()} />
           <View style={Styles.break} />
 
           <CurrentSeminarCard seminarTeacher={this.state.seminarTeacher} />

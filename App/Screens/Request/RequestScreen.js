@@ -5,7 +5,7 @@ import { List, ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import Moment from 'moment'
-import * as Firebase from 'react-native-firebase'
+import Firebase from 'react-native-firebase'
 
 // Styles
 import styles from './Styles/RequestScreenStyles'
@@ -39,51 +39,33 @@ type Props = {
 }))
 export default class RequestScreen extends React.Component<Props> {
   handleRequest = (teacherKey: string) => {
+    try {
     // TODO: Change when Push Notifications are enabled on iOS.
-    if (Platform.OS === 'android') {
-      Firebase.messaging().getToken().then((token) => {
-        try {
+      if (Platform.OS === 'android') {
+        Firebase.messaging().getToken().then((token) => {
           let requestRef = Firebase.database().ref('/requests').push({ user: this.props.firebase.auth()._user.uid, pushID: token, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
           this.props.firebase.updateProfile({ lastRequest: requestRef.key })
-        } catch (err) {
-          if (!__DEV__) {
-            Firebase.crash().log('Push to Database Error on RequestScreen')
-            Firebase.crash().report(err)
-          } else {
-            console.tron.log(err)
-          }
-
-          Alert.alert(
-            'Error',
-            'An error occured when trying to submit your request. Please try again.',
-            [
-              { text: 'OK' }
-            ],
-            { cancelable: true }
-          )
-        }
-      })
-    } else {
-      try {
+        })
+      } else {
         let requestRef = Firebase.database().ref('/requests').push({ user: this.props.firebase.auth()._user.uid, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
         this.props.firebase.updateProfile({ lastRequest: requestRef.key })
-      } catch (err) {
-        if (!__DEV__) {
-          Firebase.crash().log('Push to Database Error on RequestScreen')
-          Firebase.crash().report(err)
-        } else {
-          console.tron.log(err)
-        }
-
-        Alert.alert(
-          'Error',
-          'An error occured when trying to submit your request. Please try again.',
-          [
-            { text: 'OK' }
-          ],
-          { cancelable: true }
-        )
       }
+    } catch (err) {
+      if (!__DEV__) {
+        Firebase.crash().log('Push to Database Error on RequestScreen')
+        Firebase.crash().report(err)
+      } else {
+        console.tron.log(err)
+      }
+
+      Alert.alert(
+        'Error',
+        'An error occured when trying to submit your request. Please try again.',
+        [
+          { text: 'OK' }
+        ],
+        { cancelable: true }
+      )
     }
   }
 
@@ -113,7 +95,7 @@ export default class RequestScreen extends React.Component<Props> {
             title={teacher.firstName + ' ' + teacher.lastName}
             subtitle={teacher.taughtCourses + ' | Room ' + teacher.room}
         />
-      )
+        )
       } else {
         teacherList.push(
           <ListItem
@@ -128,13 +110,13 @@ export default class RequestScreen extends React.Component<Props> {
                   ],
                   { cancelable: false }
                 )
-              }
+              }.bind(this)
             }
             key={teacherKey}
             title={teacher.firstName + ' ' + teacher.lastName}
             subtitle={teacher.taughtCourses + ' | Room ' + teacher.room}
           />
-      )
+        )
       }
     }
 
