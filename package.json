@@ -49,7 +49,7 @@
     "querystringify": "1.0.0",
     "ramda": "^0.25.0",
     "react": "16.2.0",
-    "react-native": "0.50.4",
+    "react-native": "0.51.0",
     "react-native-animatable": "^1.2.4",
     "react-native-code-push": "^5.2.0-beta",
     "react-native-drawer": "^2.3.0",
