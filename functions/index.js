@@ -46,7 +46,7 @@ exports.sendRequest = functions.database.ref('/requests/{pushId}')
         studentRef.once('value', function (studentSnapshot) {
           let student = studentSnapshot.val()
           let mailOptions = {
-            from: '"Support Seminar" <noreply@nbdeg.com>',
+            from: '"Support Seminar" <' + functions.config().gmail.email + '>',
             to: teacher.email,
             subject: 'Support Seminar Student Request',
             text: 'Hello ' + teacher.firstName + ' ' + teacher.lastName + ',\n' + student.name + ' has requested to come to your next Support Seminar. To accept the request, please click the link below.\n' + acceptLink,
@@ -80,13 +80,32 @@ exports.acceptRequest = functions.https.onRequest((req, res) => {
                     <title>Support Seminar Request</title>
                 </head>
                 <body>
-                    <h1>There was an erro accepting the user. Please try again later.\n${error}</h1>
+                    <h1>There was an error accepting the user. Please try again later.\n${error}</h1>
                 </body>
             </html>`
       )
     } else {
       console.log('User accepted.')
     }
+  })
+
+  // Send e-mail to current support seminar teacher
+  ref.once('value', function (requestSnapshot) {
+    db.ref('users/' + requestSnapshot.val().user).once('value', function (userSnapshot) {
+      let student = userSnapshot.val()
+      db.ref('teachers/' + userSnapshot.val().defaultSeminar).once('value', function (teacherSnapshot) {
+        let teacher = teacherSnapshot.val()
+        let mailOptions = {
+          from: '"Support Seminar" <' + functions.config().gmail.email + '>',
+          to: teacher.email,
+          subject: 'Support Seminar Student Transfer',
+          text: 'Hello ' + teacher.firstName + ' ' + teacher.lastName + ',\n' + userSnapshot.name + ' has been accepted into a different support seminar, and as such will be going straight there. Please do not mark them absent.',
+          html: '<h1>Hello ' + teacher.firstName + ' ' + teacher.lastName + ',</h1>\n<p>' + student.name + ' has been accepted into a different support seminar, and as such will be going straight there. Please do not mark them absent.</p>'
+        }
+
+        mailTransport.sendMail(mailOptions)
+      })
+    })
   })
 
   // Return HTML file.
