@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "black",
+        "fontFamily": "Lato-Regular",
+        "fontSize": 30,
+        "fontWeight": "bold",
+        "paddingTop": 70,
+        "textAlign": "center",
+      }
+    }
+  >
+    Welcome back, 
+    Test
+  </Text>
+  <View
+    style={
+      Object {
+        "padding": 30,
+      }
+    }
+  />
+  <View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 15,
+          "textAlign": "center",
+        }
+      }
+    >
+      Today is 
+      Friday, December 1st
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 15,
+          "textAlign": "center",
+        }
+      }
+    >
+      The next Support Seminar is 
+      4 hours
+    </Text>
+  </View>
+</View>
+`;
