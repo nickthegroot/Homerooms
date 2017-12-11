@@ -78,7 +78,6 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "4.0.0",
     "enzyme": "^3.2.0",
-    "eslint": "^4.13.0",
     "eslint-plugin-flowtype": "^2.39.1",
     "eslint-plugin-react": "^7.4.0",
     "flow-bin": "0.61.0",
