@@ -1,5 +1,5 @@
 {
-  "presets": ["react-native", "flow", "es2015"],
+  "presets": ["react-native", "flow"],
   "plugins": ["transform-decorators-legacy"],
   "env": {
     "production": {

@@ -103,8 +103,7 @@
       "**/?(*.)(spec|test).js?(x)"
     ],
     "testPathIgnorePatterns": [
-      "/node_modules/",
-      "Tests/Setup.js"
+      "/node_modules/"
     ],
     "preset": "react-native"
   },
