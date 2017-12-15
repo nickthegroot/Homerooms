@@ -56,7 +56,7 @@
     "react-native-elements": "^0.18.2",
     "react-native-firebase": "^3.0.5",
     "react-native-mail": "^3.0.5",
-    "react-native-material-bottom-navigation": "^0.6.1",
+    "react-native-material-bottom-navigation": "^0.7.0",
     "react-native-vector-icons": "oblador/react-native-vector-icons",
     "react-navigation": "^1.0.0-beta.7",
     "react-redux": "^5.0.2",
