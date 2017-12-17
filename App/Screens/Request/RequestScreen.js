@@ -37,8 +37,8 @@ type Props = {
 @connect(({ firebase }) => ({
   teachers: firebase.data.teachers
 }))
-export default class RequestScreen extends React.Component<Props, {nextSeminar: string}> {
-  constructor (props) {
+export default class RequestScreen extends React.Component<Props, {nextSeminar: any}> {
+  constructor (props: Props) {
     super(props)
     let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
     let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
@@ -47,9 +47,9 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
       ? nextSeminarTuesday
       : nextSeminarWednesday
 
-      this.setState = {
-        nextSemianr: nextSeminar.format()
-      }
+    this.state = {
+      nextSeminar: nextSeminar
+    }
   }
 
   handleRequest = (teacherKey: string) => {
@@ -63,7 +63,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
             teacher: teacherKey,
             accepted: false,
             timestamp: Moment().format(),
-            requestedTime: this.state.nextSeminar
+            requestedTime: this.state.nextSeminar.format()
           })
           this.props.firebase.updateProfile({ lastRequest: requestRef.key })
         })
@@ -73,7 +73,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
           teacher: teacherKey,
           accepted: false,
           timestamp: Moment().format(),
-          requestedTime: this.state.nextSeminar
+          requestedTime: this.state.nextSeminar.format()
         })
         this.props.firebase.updateProfile({ lastRequest: requestRef.key })
       }
@@ -109,7 +109,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
               function () {
                 Alert.alert(
                   'Are you sure?',
-                  'You\'re requesting ' + teacher.firstName + ' ' + teacher.lastName + ' for next Support Seminar.',
+                  `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.format('MM/DD/YYYY')}.`,
                   [
                     { text: 'Yes', onPress: () => { this.handleRequest(teacherKey) } },
                     { text: 'No' }

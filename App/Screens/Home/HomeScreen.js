@@ -29,7 +29,7 @@ type Request = {
   teacher: string, // First comes in as key
   accepted: boolean,
   timestamp: string,
-  requestDate: string
+  requestedTime: string
 }
 
 type Props = {
@@ -73,7 +73,7 @@ export default class HomeScreen extends React.Component<Props, State> {
     if (nextProps.populatedProfile.lastRequest &&
       nextProps.populatedProfile.lastRequest.accepted &&
       nextProps.populatedProfile.lastRequest.teacher &&
-      Moment(nextProps.populatedProfile.lastRequest.requestDate).isBefore(nextSeminar)) {
+      Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminar)) {
       Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
         this.setState({
           seminarTeacher: teacherSnapshot.val()

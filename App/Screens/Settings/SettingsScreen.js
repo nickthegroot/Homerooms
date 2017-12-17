@@ -14,12 +14,18 @@ type Profile = {
   lastRequest: string
 }
 
+type Props = {
+  firebase: any,
+  profile: Profile,
+  navigation: any
+}
+
 @firebaseConnect()
 @connect(({ firebase }) => ({
   profile: firebase.profile
 }))
-class SettingsScreen extends React.Component<{ firebase: any, profile: Profile, navigation: any }> {
-  constructor (props) {
+class SettingsScreen extends React.Component<Props> {
+  constructor (props: Props) {
     super(props)
     props.firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
