@@ -37,17 +37,44 @@ type Props = {
 @connect(({ firebase }) => ({
   teachers: firebase.data.teachers
 }))
-export default class RequestScreen extends React.Component<Props> {
+export default class RequestScreen extends React.Component<Props, {nextSeminar: string}> {
+  constructor (props) {
+    super(props)
+    let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
+    let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
+
+    let nextSeminar = (nextSeminarTuesday.isBefore(nextSeminarWednesday))
+      ? nextSeminarTuesday
+      : nextSeminarWednesday
+
+      this.setState = {
+        nextSemianr: nextSeminar.format()
+      }
+  }
+
   handleRequest = (teacherKey: string) => {
     try {
     // TODO: Change when Push Notifications are enabled on iOS.
       if (Platform.OS === 'android') {
         Firebase.messaging().getToken().then((token) => {
-          let requestRef = Firebase.database().ref('/requests').push({ user: this.props.firebase.auth()._user.uid, pushID: token, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
+          let requestRef = Firebase.database().ref('/requests').push({
+            user: this.props.firebase.auth()._user.uid,
+            pushID: token,
+            teacher: teacherKey,
+            accepted: false,
+            timestamp: Moment().format(),
+            requestedTime: this.state.nextSeminar
+          })
           this.props.firebase.updateProfile({ lastRequest: requestRef.key })
         })
       } else {
-        let requestRef = Firebase.database().ref('/requests').push({ user: this.props.firebase.auth()._user.uid, teacher: teacherKey, accepted: false, timestamp: Moment().format() })
+        let requestRef = Firebase.database().ref('/requests').push({
+          user: this.props.firebase.auth()._user.uid,
+          teacher: teacherKey,
+          accepted: false,
+          timestamp: Moment().format(),
+          requestedTime: this.state.nextSeminar
+        })
         this.props.firebase.updateProfile({ lastRequest: requestRef.key })
       }
     } catch (err) {
