@@ -2,62 +2,93 @@
 
 exports[`renders correctly 1`] = `
 <View>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    style={
+  <Image
+    source={
       Object {
-        "color": "black",
-        "fontFamily": "Lato-Regular",
-        "fontSize": 30,
-        "fontWeight": "bold",
-        "paddingTop": 70,
-        "textAlign": "center",
+        "testUri": "../../../App/Images/School.jpg",
       }
     }
-  >
-    Welcome back, 
-    Test
-  </Text>
-  <View
     style={
       Object {
-        "padding": 30,
+        "borderColor": "#3E2723",
+        "height": 250,
+        "width": 750,
       }
     }
   />
-  <View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "bottom": 0,
+        "flex": 1,
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 10,
+      }
+    }
+  >
     <Text
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
       style={
         Object {
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 15,
+          "color": "black",
+          "fontFamily": "Lato-Regular",
+          "fontSize": 27,
+          "fontWeight": "bold",
           "textAlign": "center",
         }
       }
     >
-      Today is 
-      Friday, December 1st
+      Welcome back, 
+      Test
     </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+    <View
       style={
         Object {
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 15,
-          "textAlign": "center",
+          "padding": 20,
         }
       }
-    >
-      The next Support Seminar is 
-      4 hours
-    </Text>
+    />
+    <View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "black",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 15,
+            "textAlign": "center",
+          }
+        }
+      >
+        Today is 
+        Friday, December 1st
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "black",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 15,
+            "textAlign": "center",
+          }
+        }
+      >
+        The next Support Seminar is 
+        4 hours
+      </Text>
+    </View>
   </View>
 </View>
 `;

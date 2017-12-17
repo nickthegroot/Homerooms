@@ -5,8 +5,8 @@ import { View, Text } from 'react-native'
 import Styles from './Styles/SettingsScreenStyles'
 import { firebaseConnect } from 'react-redux-firebase'
 import { Button, Card } from 'react-native-elements'
-import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux'
 
 type Profile = {
   defaultSeminar: string,
@@ -14,12 +14,18 @@ type Profile = {
   lastRequest: string
 }
 
+type Props = {
+  firebase: any,
+  profile: Profile,
+  navigation: any
+}
+
 @firebaseConnect()
 @connect(({ firebase }) => ({
   profile: firebase.profile
 }))
-class SettingsScreen extends React.Component<{ firebase: any, profile: Profile, navigation: any }> {
-  constructor (props) {
+class SettingsScreen extends React.Component<Props> {
+  constructor (props: Props) {
     super(props)
     props.firebase.auth().onAuthStateChanged((user) => {
       if (!user) {

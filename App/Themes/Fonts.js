@@ -6,7 +6,7 @@ const type = {
 const size = {
   regular: 17,
   medium: 15,
-  header: 30,
+  header: 27,
   smallHeader: 20
 }
 

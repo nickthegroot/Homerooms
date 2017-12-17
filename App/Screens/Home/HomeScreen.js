@@ -28,7 +28,8 @@ type Request = {
   pushID?: string,
   teacher: string, // First comes in as key
   accepted: boolean,
-  timestamp: string
+  timestamp: string,
+  requestedTime: string
 }
 
 type Props = {
@@ -61,7 +62,18 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    if (nextProps.populatedProfile.lastRequest && nextProps.populatedProfile.lastRequest.accepted && nextProps.populatedProfile.lastRequest.teacher) {
+    let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
+    let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
+
+    let nextSeminar = (nextSeminarTuesday.isBefore(nextSeminarWednesday))
+      ? nextSeminarTuesday
+      : nextSeminarWednesday
+
+      // TODO: Attach a requsted timestamp onto every reqest
+    if (nextProps.populatedProfile.lastRequest &&
+      nextProps.populatedProfile.lastRequest.accepted &&
+      nextProps.populatedProfile.lastRequest.teacher &&
+      Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminar)) {
       Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
         this.setState({
           seminarTeacher: teacherSnapshot.val()
@@ -100,9 +112,7 @@ export default class HomeScreen extends React.Component<Props, State> {
     let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
     let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
 
-    let nextSeminar
-
-    nextSeminar = (nextSeminarTuesday.isBefore(nextSeminarWednesday))
+    let nextSeminar = (nextSeminarTuesday.isBefore(nextSeminarWednesday))
     ? nextSeminarTuesday
     : nextSeminarWednesday
 
