@@ -17,13 +17,12 @@ type Teacher = {
   lastName: string,
   room: string | number,
   taughtCourses: string,
-  picture?: string
+  picture?: string,
+  key: string
 }
 
 type Props = {
- teachers: {
-   [key: string]: Teacher
-  },
+  teachers: [],
   firebase: {
     push: (path: string, data: {}) => any,
     auth: () => any,
@@ -32,12 +31,13 @@ type Props = {
 }
 
 @firebaseConnect(
-  { type: 'once', path: '/teachers' }
+  { type: 'once', path: '/teachers', queryParams: ['orderByChild=lastName'] }
 )
 @connect(({ firebase }) => ({
-  teachers: firebase.data.teachers
+  teachers: firebase.ordered.teachers,
+  profile: firebase.profile
 }))
-export default class RequestScreen extends React.Component<Props, {nextSeminar: any}> {
+export default class RequestScreen extends React.Component<Props, {nextSeminar: any, teachers: []}> {
   constructor (props: Props) {
     super(props)
     let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
@@ -49,6 +49,14 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
 
     this.state = {
       nextSeminar: nextSeminar
+    }
+  }
+
+  componentWillReceiveProps (nextProps: Props) {
+    if (nextProps.teachers) {
+      this.setState({
+        teachers: nextProps.teachers
+      })
     }
   }
 
@@ -98,52 +106,57 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
 
   render () {
     var teacherList = []
-    for (let teacherKey in this.props.teachers) {
-      let teacher: Teacher = this.props.teachers[teacherKey]
-      if ('picture' in teacher) {
-        teacherList.push(
-          <ListItem
-            roundAvatar
-            avatar={{ uri: teacher.picture }}
-            onPressRightIcon={
+
+    if (this.state.teachers) {
+      for (let teacherItem of this.state.teachers) {
+        if (teacherItem.key !== this.props.profile.defaultSeminar) {
+          let teacher: Teacher = teacherItem.value
+          if ('picture' in teacher) {
+            teacherList.push(
+              <ListItem
+                roundAvatar
+                avatar={{ uri: teacher.picture }}
+                onPressRightIcon={
               function () {
                 Alert.alert(
                   'Are you sure?',
                   `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.format('MM/DD/YYYY')}.`,
                   [
-                    { text: 'Yes', onPress: () => { this.handleRequest(teacherKey) } },
+                    { text: 'Yes', onPress: () => { this.handleRequest(teacherItem.key) } },
                     { text: 'No' }
                   ],
                   { cancelable: false }
-                )
-              }.bind(this)
-            }
-            key={teacherKey}
-            title={teacher.firstName + ' ' + teacher.lastName}
-            subtitle={teacher.taughtCourses + ' | Room ' + teacher.room}
-        />
-        )
-      } else {
-        teacherList.push(
-          <ListItem
-            onPressRightIcon={
+                    )
+                  }.bind(this)
+                }
+                key={teacherItem.key}
+                title={`${teacher.firstName} ${teacher.lastName}`}
+                subtitle={`${teacher.taughtCourses} | Room ${teacher.room}`}
+            />
+            )
+          } else {
+            teacherList.push(
+              <ListItem
+                onPressRightIcon={
               function () {
                 Alert.alert(
                   'Are you sure?',
-                  'You\'re requesting ' + teacher.firstName + ' ' + teacher.lastName + ' for next Support Seminar.',
+                  `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.format('MM/DD/YYYY')}.`,
                   [
-                    { text: 'Yes', onPress: () => { this.handleRequest(teacherKey) } },
+                    { text: 'Yes', onPress: () => { this.handleRequest(teacherItem.key) } },
                     { text: 'No' }
                   ],
                   { cancelable: false }
                 )
               }.bind(this)
             }
-            key={teacherKey}
-            title={teacher.firstName + ' ' + teacher.lastName}
-            subtitle={teacher.taughtCourses + ' | Room ' + teacher.room}
-          />
-        )
+                key={teacherItem.key}
+                title={`${teacher.firstName} ${teacher.lastName}`}
+                subtitle={`${teacher.taughtCourses} | Room ${teacher.room}`}
+              />
+            )
+          }
+        }
       }
     }
 

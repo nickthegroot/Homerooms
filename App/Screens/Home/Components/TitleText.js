@@ -24,7 +24,7 @@ const TitleText = ({ name, date, nextSeminar }: Props) => {
         </View>
       </View>
     </View>
-    )
+  )
 }
 
 export default TitleText

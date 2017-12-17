@@ -5,8 +5,8 @@ import { View, Text } from 'react-native'
 import Styles from './Styles/SettingsScreenStyles'
 import { firebaseConnect } from 'react-redux-firebase'
 import { Button, Card } from 'react-native-elements'
-import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux'
 
 type Profile = {
   defaultSeminar: string,
