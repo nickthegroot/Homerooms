@@ -127,7 +127,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
                   ],
                   { cancelable: false }
                     )
-                  }.bind(this)
+              }.bind(this)
                 }
                 key={teacherItem.key}
                 title={`${teacher.firstName} ${teacher.lastName}`}
