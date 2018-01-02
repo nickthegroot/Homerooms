@@ -4,6 +4,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import SignInScreen from '../Screens/SignIn/SignInScreen'
+import LaunchScreen from '../Screens/Launch/LaunchScreen'
 
 import HomeScreen from '../Screens/Home/HomeScreen'
 import RequestScreen from '../Screens/Request/RequestScreen'
@@ -49,10 +50,11 @@ const TabNav = TabNavigator({
 })
 
 const PrimaryNav = StackNavigator({
+  LaunchScreen: { screen: LaunchScreen },
   SignInScreen: { screen: SignInScreen },
   TabNav: { screen: TabNav }
 }, {
-  initialRouteName: 'SignInScreen',
+  initialRouteName: 'LaunchScreen',
   headerMode: 'none'
 })
 

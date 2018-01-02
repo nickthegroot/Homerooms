@@ -14,6 +14,4 @@ target 'SupportSeminar' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Performance'
 
-  pod 'react-native-video', :path => '../node_modules/react-native-video'
-
 end
