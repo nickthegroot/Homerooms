@@ -7013,9 +7013,9 @@ react-native-mail@^3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/react-native-mail/-/react-native-mail-3.0.5.tgz#e497cb192a52102458f5e2a554dfc65d3fb635cb"
 
-react-native-material-bottom-navigation@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-material-bottom-navigation/-/react-native-material-bottom-navigation-0.6.1.tgz#d0e4bef76c3306dd01222a42b42092e2e522ad2e"
+react-native-material-bottom-navigation@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-material-bottom-navigation/-/react-native-material-bottom-navigation-0.7.0.tgz#bc3e9d5c86ada5a4d5d6a47722b3db233cc6906c"
 
 react-native-tab-view@^0.0.69:
   version "0.0.69"
