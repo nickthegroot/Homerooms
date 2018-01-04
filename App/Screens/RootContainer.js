@@ -17,10 +17,9 @@ class RootContainer extends Component {
   }
 
   render () {
-    let statusBar = (Platform.OS === 'ios') ? (<StatusBar barStyle='dark-content' />) : (<StatusBar barStyle='light-content' />)
     return (
       <View style={styles.applicationView}>
-        {statusBar}
+        <StatusBar barStyle='light-content' />
         <ReduxNavigation />
       </View>
     )
