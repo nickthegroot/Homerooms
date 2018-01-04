@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { View, Image } from 'react-native'
-import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements'
+import { View } from 'react-native'
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { firebaseConnect } from 'react-redux-firebase'
 import Firebase from 'react-native-firebase'
-import { Images } from '../../Themes'
 import { NavigationActions } from 'react-navigation'
+import Video from 'react-native-video'
+
+import Button from '../Components/Button'
+import BackgroundVideo from '../../Images/BackgroundVideo.mp4'
 
 import Styles from './Styles/SignInStyles'
 
@@ -12,18 +15,6 @@ import Styles from './Styles/SignInStyles'
 class SignInScreen extends Component {
   constructor (props) {
     super(props)
-
-    // Checks to see if the user is logged in - and if so redirect them to HomeScreen
-    props.firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        props.navigation.dispatch(NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'TabNav' }, props.teachers)
-          ]
-        }))
-      }
-    })
 
     this.handleSignIn = this.handleSignIn.bind(this)
     this.handleError = this.handleError.bind(this)
@@ -67,35 +58,49 @@ class SignInScreen extends Component {
   }
 
   render () {
-    return <View style={Styles.mainContainer}>
-      <Image source={{ uri: Images.logo }} />
-      <View style={Styles.form}>
-        <FormLabel>E-Mail</FormLabel>
-        <FormInput
-          autoCapitalize='none'
-          keyboardType='email-address'
-          placeholder='Please enter your e-mail...'
-          onChangeText={email => this.setState({ emailError: null, email: email })}
-          shake={this.state.emailError}
-      />
-        {this.state.emailError}
-        <FormLabel>Password</FormLabel>
-        <FormInput
-          autoCapitalize='none'
-          secureTextEntry
-          placeholder='Please enter your password...'
-          onChangeText={password => this.setState({ password: password })}
-          shake={this.state.passwordError}
-      />
-        {this.state.passwordError}
-        <Button
-          onPress={this.handleSignIn}
-          icon={{ name: 'done' }}
-          buttonStyle={{ marginTop: 15 }}
-          title='SUBMIT'
-      />
+    return (
+      <View style={Styles.mainComponent}>
+
+        <Video
+          source={BackgroundVideo}
+          rate={1.0}
+          muted
+          resizeMode={'cover'}
+          repeat
+          style={Styles.video}
+        />
+        <View style={Styles.overlay} />
+
+        <View style={Styles.contentView}>
+          <View style={Styles.form}>
+            <FormLabel>E-Mail</FormLabel>
+            <FormInput
+              autoCapitalize='none'
+              keyboardType='email-address'
+              placeholder='Please enter your e-mail...'
+              onChangeText={email => this.setState({ emailError: null, email: email })}
+              shake={this.state.emailError}
+          />
+            {this.state.emailError}
+            <FormLabel>Password</FormLabel>
+            <FormInput
+              autoCapitalize='none'
+              secureTextEntry
+              placeholder='Please enter your password...'
+              onChangeText={password => this.setState({ password: password })}
+              shake={this.state.passwordError}
+          />
+            {this.state.passwordError}
+          </View>
+        </View>
+
+        {/* Footer */}
+        <View style={Styles.bottomButton}>
+          <Button text={'Log In'} onPress={this.handleSignIn} />
+        </View>
+
       </View>
-    </View>
+    )
   }
 }
 

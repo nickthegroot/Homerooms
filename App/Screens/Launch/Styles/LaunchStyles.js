@@ -4,8 +4,7 @@ import { ApplicationStyles } from '../../../Themes/'
 export default StyleSheet.create({
   mainComponent: {
     ...ApplicationStyles.screen.mainContainer,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    flex: 1
+    backgroundColor: 'transparent'
   },
   video: {
     position: 'absolute',
@@ -29,5 +28,10 @@ export default StyleSheet.create({
     left: 0,
     backgroundColor: 'black',
     opacity: 0.3
-  }
+  },
+  contentView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  lakeOswegoTitle: { fontFamily: 'OpenSans-Regular', fontSize: 20, color: '#FFFFFF', letterSpacing: 1.25 },
+  line: { width: 275, height: 4, backgroundColor: '#3B5998' },
+  supportSeminarTitleWhite: { fontFamily: 'Lato-Bold', fontSize: 52, color: '#FFFFFF' },
+  supportSeminarTitleBlue: { fontFamily: 'Lato-Bold', fontSize: 52, color: '#1E88E5' }
 })
