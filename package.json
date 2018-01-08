@@ -1,5 +1,5 @@
 {
-  "name": "SupportSeminar",
+  "name": "Homeroom",
   "version": "0.1.1",
   "private": true,
   "description": "LOHS App to digitize Support Seminar",
@@ -18,6 +18,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "ios": "react-native run-ios --simulator=\"iPhone X\"",
+    "android": "~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full & react-native run-android",
     "test": "jest",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && yarn cache clean --force",
     "clean:android": "cd android/ && ./gradlew clean && cd .. && react-native run-android",

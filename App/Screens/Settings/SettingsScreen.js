@@ -32,7 +32,7 @@ class SettingsScreen extends React.Component<Props> {
         this.props.navigation.dispatch(NavigationActions.reset({
           index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: 'SignInScreen' })
+            NavigationActions.navigate({ routeName: 'LaunchScreen' })
           ]
         }))
       }

@@ -1,4 +1,4 @@
-rootProject.name = 'SupportSeminar'
+rootProject.name = 'Homeroom'
 include ':react-native-video'
 project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android')
 include ':react-native-code-push'

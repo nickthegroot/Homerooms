@@ -7,7 +7,7 @@ import { NavigationActions } from 'react-navigation'
 import Video from 'react-native-video'
 
 import Button from '../Components/Button'
-import BackgroundVideo from '../../Images/BackgroundVideo.mp4'
+import BackgroundVideo from '../../Images/BackgroundVideo2.mp4'
 
 import Styles from './Styles/SignInStyles'
 
@@ -24,6 +24,18 @@ class SignInScreen extends Component {
       email: null,
       password: null
     }
+
+      // Checks to see if the user is logged in - and if so redirect them to HomeScreen
+    props.firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        props.navigation.dispatch(NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: 'TabNav' }, props.teachers)
+          ]
+        }))
+      }
+    })
   }
 
   handleSignIn () {

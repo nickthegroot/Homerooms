@@ -51,7 +51,7 @@ class LaunchScreen extends Component {
         <View style={Styles.contentView}>
           <Text style={Styles.lakeOswegoTitle}>Lake Oswego High School's</Text>
           <View style={Styles.line} />
-          <Text style={Styles.supportSeminarTitleWhite}>Support Seminar<Text style={Styles.supportSeminarTitleBlue}>.</Text></Text>
+          <Text style={Styles.supportSeminarTitleWhite}>Homeroom<Text style={Styles.supportSeminarTitleBlue}>.</Text></Text>
         </View>
 
         {/* Footer */}
