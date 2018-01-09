@@ -3,4 +3,5 @@
     "flow.useNPMPackagedFlow": true,
     "eslint.enable": false,
     "java.configuration.updateBuildConfiguration": "disabled",
+    "git.ignoreLimitWarning": true,
 }

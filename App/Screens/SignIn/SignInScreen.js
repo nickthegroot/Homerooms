@@ -26,16 +26,16 @@ class SignInScreen extends Component {
     }
 
       // Checks to see if the user is logged in - and if so redirect them to HomeScreen
-    props.firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        props.navigation.dispatch(NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'TabNav' }, props.teachers)
-          ]
-        }))
-      }
-    })
+  //   props.firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       props.navigation.dispatch(NavigationActions.reset({
+  //         index: 0,
+  //         actions: [
+  //           NavigationActions.navigate({ routeName: 'TabNav' })
+  //         ]
+  //       }))
+  //     }
+  //   })
   }
 
   handleSignIn () {
