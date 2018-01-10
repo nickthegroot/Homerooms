@@ -4,7 +4,7 @@ import { ScrollView, Alert, Platform } from 'react-native'
 import { List, ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
-import Moment from 'moment'
+import { DateTime } from 'luxon'
 import Firebase from 'react-native-firebase'
 
 // Styles
@@ -40,10 +40,10 @@ type Props = {
 export default class RequestScreen extends React.Component<Props, {nextSeminar: any, teachers: []}> {
   constructor (props: Props) {
     super(props)
-    let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
-    let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
+    let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 }) // day(7 + 2).hour(12).minute(30)
+    let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
 
-    let nextSeminar = (nextSeminarTuesday.isBefore(nextSeminarWednesday))
+    let nextSeminar = (nextSeminarTuesday > nextSeminarWednesday)
       ? nextSeminarTuesday
       : nextSeminarWednesday
 
@@ -70,8 +70,8 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
             pushID: token,
             teacher: teacherKey,
             accepted: false,
-            timestamp: Moment().format(),
-            requestedTime: this.state.nextSeminar.format()
+            timestamp: DateTime.local.toString(),
+            requestedTime: this.state.nextSeminar.toString()
           })
           this.props.firebase.updateProfile({ lastRequest: requestRef.key })
         })
@@ -80,8 +80,8 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
           user: this.props.firebase.auth()._user.uid,
           teacher: teacherKey,
           accepted: false,
-          timestamp: Moment().format(),
-          requestedTime: this.state.nextSeminar.format()
+          timestamp: DateTime.local.toString(),
+          requestedTime: this.state.nextSeminar.toString()
         })
         this.props.firebase.updateProfile({ lastRequest: requestRef.key })
       }
@@ -116,18 +116,17 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
               <ListItem
                 roundAvatar
                 avatar={{ uri: teacher.picture }}
-                onPressRightIcon={
-              function () {
-                Alert.alert(
-                  'Are you sure?',
-                  `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.format('MM/DD/YYYY')}.`,
-                  [
-                    { text: 'Yes', onPress: () => { this.handleRequest(teacherItem.key) } },
-                    { text: 'No' }
-                  ],
-                  { cancelable: false }
-                    )
-              }.bind(this)
+                onPressRightIcon={function () {
+                  Alert.alert(
+                    'Are you sure?',
+                    `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.format('MM/DD/YYYY')}.`,
+                    [
+                      { text: 'Yes', onPress: () => { this.handleRequest(teacherItem.key) } },
+                      { text: 'No' }
+                    ],
+                    { cancelable: false }
+                      )
+                }.bind(this)
                 }
                 key={teacherItem.key}
                 title={`${teacher.firstName} ${teacher.lastName}`}

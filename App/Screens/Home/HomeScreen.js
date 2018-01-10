@@ -5,7 +5,7 @@ import Firebase from 'react-native-firebase'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import Mailer from 'react-native-mail'
-import Moment from 'moment'
+import { DateTime } from 'luxon'
 
 import { firebaseProfilePopulates } from '../../Config/FirebaseConfig'
 import CurrentSeminarCard from './Components/CurrentSeminarCard'
@@ -62,10 +62,10 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
-    let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
+    let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 }) // day(7 + 2).hour(12).minute(30)
+    let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
 
-    let nextSeminar = (nextSeminarTuesday.isBefore(nextSeminarWednesday))
+    let nextSeminar = (nextSeminarTuesday > nextSeminarWednesday)
       ? nextSeminarTuesday
       : nextSeminarWednesday
 
@@ -73,7 +73,7 @@ export default class HomeScreen extends React.Component<Props, State> {
     if (nextProps.populatedProfile.lastRequest &&
       nextProps.populatedProfile.lastRequest.accepted &&
       nextProps.populatedProfile.lastRequest.teacher &&
-      Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminar)) {
+      DateTime.fromISO(nextProps.populatedProfile.lastRequest.requestedTime) > nextSeminar) {
       Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
         this.setState({
           seminarTeacher: teacherSnapshot.val()
@@ -108,22 +108,19 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   render () {
-    let date = Moment().format('dddd, MMMM Do')
-    let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
-    let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
+    let date = DateTime.local().toFormat('cccc, LLL d')
+    let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 }) //day(7 + 2).hour(12).minute(30)
+    let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
 
-    let nextSeminar = (nextSeminarTuesday.isBefore(nextSeminarWednesday))
-    ? nextSeminarTuesday
-    : nextSeminarWednesday
-
+    let nextSeminar = (nextSeminarTuesday > nextSeminarWednesday)
+      ? nextSeminarTuesday
+      : nextSeminarWednesday
     return (
       <ScrollView style={Styles.mainContainer}>
         <View style={Styles.container}>
-          <TitleText date={date} name={this.props.populatedProfile.name} nextSeminar={nextSeminar.fromNow()} />
+          <TitleText date={date} name={this.props.populatedProfile.name} nextSeminar={nextSeminar.toFormat('cccc, LLL d')} />
           <View style={Styles.break} />
-
           <CurrentSeminarCard seminarTeacher={this.state.seminarTeacher} />
-
         </View>
       </ScrollView>
     )
