@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab|Nunito');
+body {
+	background: #3b5998;
+	font-family: 'Nunito', sans-serif;
+	color: #000;
+}
+#content-wrap {
+	background: #f7f7f7;
+	width: 80%;
+	max-width: 1000px;
+	margin: 20px auto;
+	padding: 20px;
+}
+span {
+	color: #1E88E5;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+h5 {
+	font-family: 'Josefin Slab', serif;
+	font-weight: bold;
+	color: #1E88E5;
+	font-size: 2em;
+	text-align: left;
+	margin: 0;
+}
+button {
+	margin: 0 5px;
+	background: none;
+	border-radius: 10%;
+	width: 100px;
+	height: 50px;
+	color: #1E88E5;
+	border: 5px solid #1E88E5;
+	transition: all 1s ease;
+	opacity: 0.7;
+}
+button:hover {
+	transform: scale(1.1);
+	opacity: 1;
+}
+#accept-btn {
+	border-color: #46cc56;
+	color: #46cc56;
+}
+#reject-btn {
+	border-color: #cc4656;
+	color: #cc4656;
+}
+.wrapper {
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+}
+.center {
+	text-align: center;
+}
+footer {
+	margin-top: 50px;
+	font-size: 0.8em;
+	text-align: center;
+	color: #888;
+}
+</style>
+</head>
+<body>
+<div id="content-wrap">
+  <h5>Dear Mr. Joe, </h5>
+  <p><span class="name">Jane Doe</span> would like to attend your homeroom on <span class="date">Wednesday, January 1st</span> because <span class="reason">she would like to work on algebra</span>. </p>
+  <p class = "center"> Do you accept this request? </p>
+  <div class = "wrapper">
+    <button id="accept-btn"> Accept </button>
+    <button id="reject-btn"> Reject </button>
+  </div>
+  <p> Sincerely, <br>
+    <br>
+    The Homeroom Team </p>
+  <footer>
+    <p>This message is from Homeroom, an app to connect teachers and learners. <br>
+      Click here if you got this email by mistake. <br>
+      Contact us at 000-000-0000 <br>
+      Copyright 2018 </p>
+  </footer>
+</div>
+</body>
+</html>
