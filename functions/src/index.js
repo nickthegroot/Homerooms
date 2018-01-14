@@ -1,12 +1,12 @@
 // @flow
-import functions, { Request } from 'firebase-functions'
-import admin from 'firebase-admin'
-import nodemailer from 'nodemailer'
-import { DateTime } from 'luxon'
+import type { Teacher, Request, Student } from '../../App/Types/DatabaseTypes'
 
-import type { Teacher, Request as Req, Student } from '../../App/Types/DatabaseTypes'
+const functions = require('firebase-functions')
+const admin = require('firebase-admin')
+const nodemailer = require('nodemailer')
+const DateTime = require('luxon').DateTime
 
-const serviceAccount = require('./lohs-supportseminar-firebase-adminsdk-key.json')
+const serviceAccount = require('../homeroom-firebase-adminsdk-key.json')
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://lohs-supportseminar.firebaseio.com'
@@ -27,7 +27,8 @@ const mailTransport = nodemailer.createTransport({
   }
 })
 
-const generateRequestEmail = (teacher: Teacher, student: Student, date: string, reason: string, acceptLink: string, declineLink: string) => {
+const generateRequestEmail = (teacher: Teacher, student: Student, reason: string, acceptLink: string, declineLink: string) => {
+  let date = DateTime.local().toFormat(DateTime.DATE_HUGE)
   return (`
 <!doctype html>
 <html>
@@ -96,9 +97,22 @@ const generateRequestEmail = (teacher: Teacher, student: Student, date: string, 
       text-align: center;
       color: #888;
     }
+    .preheader {
+      color: transparent;
+      display: none !important;
+      height: 0;
+      max-height: 0;
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      mso-hide: all;
+      visibility: hidden;
+      width: 0;
+    }
   </style>
 </head>
 <body>
+  <p class="preheader">${student.name} wants to attend your homeroom.</p>
   <div id="content-wrap">
     <h5>Dear ${teacher.firstName} ${teacher.lastName}, </h5>
     <p><span class="name">${student.name}</span> would like to attend your homeroom on <span class="date">${date}</span> because <span class="reason">"${reason}"</span>. </p>
@@ -122,12 +136,75 @@ const generateRequestEmail = (teacher: Teacher, student: Student, date: string, 
 `)
 }
 
+const generateAcceptedScreen = (student: Student) => {
+  let date = DateTime.local().toFormat(DateTime.DATE_HUGE)
+  return (`
+<!doctype html>
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Josefin+Slab|Nunito');
+    body {
+      background: #3b5998;
+      font-family: 'Nunito', sans-serif;
+      color: #000;
+    }
+    #content-wrap {
+      background: #f7f7f7;
+      width: 80%;
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+    span {
+      color: #1E88E5;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    .wrapper {
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+    .center {
+      text-align: center;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 0.8em;
+      text-align: center;
+      color: #888;
+    }
+    .check {
+      font-size: 5em;
+      color: #46cc56;
+      display: block;
+      text-align: center;
+      line-height: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div id="content-wrap"> <span class="check">✔</span>
+    <p class="center"><span class="name">${student.name}</span> has been accepted into your homeroom on <span class="date">${date}</span>. <br>
+      Happy teaching!</p>
+    <footer>
+      <p>This message is from Homeroom, an app to connect teachers and learners. <br>
+        Contact us at <a href='mailto:contact@homeroom-app.com'>contact@homeroom-app.com <br>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
+`)
+}
+
 /**
  * Sends an email to the requested teacher, asking to accept the student into Support Seminar
  */
 exports.sendRequest = functions.database.ref('/requests/{pushId}')
   .onWrite(event => {
-    let request: Req = event.data.val()
+    let request: Request = event.data.val()
 
     // Make sure there's a need to continue.
     if (request.accepted === false) {
@@ -150,7 +227,7 @@ exports.sendRequest = functions.database.ref('/requests/{pushId}')
             to: teacher.email,
             subject: 'Support Seminar Student Request',
             text: `${student.name} has requested to come to your homeroom. To accept, please click this link: ${acceptLink}. To decline, please click this link: ${declineLink}`,
-            html: generateRequestEmail(teacher, student, DateTime.local().toFormat(DateTime.DATE_HUGE), request.reason, acceptLink, declineLink)
+            html: generateRequestEmail(teacher, student, request.reason, acceptLink, declineLink)
           }
 
           return mailTransport.sendMail(mailOptions)
@@ -228,18 +305,7 @@ exports.acceptRequest = functions.https.onRequest((req, res) => {
           admin.messaging().sendToDevice(request.pushId, payload)
         }
 
-        return res.send(`
-            <!doctype html>
-            <html>
-                <head>
-                    <title>Support Seminar Request</title>
-                </head>
-                <body>
-                    <h1>Thank you, ${teacher.firstName} ${teacher.lastName}</h1>
-                    <p>The student ${student.name} has been accepted into your next Support Seminar.</p>
-                </body>
-            </html>`
-        )
+        return res.send(generateAcceptedScreen(student))
       })
     })
   })
