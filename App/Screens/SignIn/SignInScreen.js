@@ -7,7 +7,7 @@ import { NavigationActions } from 'react-navigation'
 import Video from 'react-native-video'
 
 import Button from '../Components/Button'
-import BackgroundVideo from '../../Images/BackgroundVideo2.mp4'
+import BackgroundVideo from '../../Assets/Images/BackgroundVideo2.mp4'
 
 import Styles from './Styles/SignInStyles'
 

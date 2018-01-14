@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native'
-import { ApplicationStyles } from '../../../Themes/'
+import { ApplicationStyles, Colors, Fonts } from '../../../Themes/'
 
 export default StyleSheet.create({
   mainComponent: {
-    ...ApplicationStyles.screen.mainContainer,
+    ...ApplicationStyles.mainContainer,
     backgroundColor: 'transparent'
   },
   video: {
@@ -29,9 +29,27 @@ export default StyleSheet.create({
     backgroundColor: 'black',
     opacity: 0.3
   },
-  contentView: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  lakeOswegoTitle: { fontFamily: 'OpenSans-Regular', fontSize: 20, color: '#FFFFFF', letterSpacing: 1.25 },
-  line: { width: 275, height: 4, backgroundColor: '#3B5998' },
-  supportSeminarTitleWhite: { fontFamily: 'Lato-Bold', fontSize: 52, color: '#FFFFFF' },
-  supportSeminarTitleBlue: { fontFamily: 'Lato-Bold', fontSize: 52, color: '#1E88E5' }
+  contentView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  lakeOswegoTitle: {
+    fontFamily: Fonts.type.headings,
+    fontSize: Fonts.size.heading,
+    color: 'white',
+    letterSpacing: 1.25
+  },
+  line: {
+    width: 275,
+    height: 4,
+    backgroundColor: Colors.darkBlue
+  },
+  supportSeminarTitleWhite: {
+    ...Fonts.style.largeHeading
+  },
+  supportSeminarTitleBlue: {
+    ...Fonts.style.largeHeading,
+    color: Colors.lightBlue
+  }
 })

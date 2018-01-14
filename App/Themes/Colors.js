@@ -1,13 +1,7 @@
 const colors = {
   background: '#F7F7F7',
-  navy: '#000080',
-  blue: '#1e88e5',
-  plant: '#00796B',
-  highligher: '#F3F315',
-  facebook: '#3b5998',
-  dirt: '#3E2723',
-  transparent: 'rgba(0,0,0,0)',
-  error: 'rgba(200, 0, 0, 0.8)'
+  darkBlue: '#3B5998',
+  lightBlue: '#1E88E5'
 }
 
 export default colors

@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native'
+import { Fonts, Colors } from '../../Themes'
 
 const Button = ({text, onPress}) => {
   return (
@@ -15,17 +16,17 @@ const Button = ({text, onPress}) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#3B5998',
+    backgroundColor: Colors.darkBlue,
     borderRadius: 24,
     paddingBottom: 10,
     paddingLeft: 50,
     paddingRight: 50
   },
   buttonText: {
-    fontFamily: 'Lato-Bold',
+    fontFamily: Fonts.type.content,
     paddingTop: 10,
     fontSize: 24,
-    color: '#FFFFFF',
+    color: 'white',
     textAlign: 'center'
   }
 })

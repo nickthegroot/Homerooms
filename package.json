@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "ios": "react-native run-ios --simulator=\"iPhone X\"",
+    "ios": "react-native run-ios --simulator=\"iPhone X\" && yarn start",
     "android": "~/Library/Android/sdk/tools/emulator -avd Nexus_5X_API_26 -netdelay none -netspeed full & react-native run-android",
     "test": "jest",
     "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && yarn cache clean --force",
@@ -32,12 +32,16 @@
     "android:devices": "$ANDROID_HOME/platform-tools/adb devices",
     "android:logcat": "$ANDROID_HOME/platform-tools/adb logcat *:S ReactNative:V ReactNativeJS:V",
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82",
-    "storybook": "storybook start -p 7007",
     "lint": "standard --verbose | snazzy",
     "lintdiff": "git diff --name-only --cached --relative | grep '\\.js$' | xargs standard | snazzy",
     "fixcode": "standard --fix",
     "git-hook": "yarn run lint -s && yarn run test -s",
     "flow": "flow"
+  },
+  "rnpm": {
+    "assets": [
+      "./App/Assets/Fonts"
+    ]
   },
   "dependencies": {
     "apisauce": "^0.14.0",
@@ -51,6 +55,7 @@
     "react-native": "0.51.0",
     "react-native-animatable": "^1.2.4",
     "react-native-code-push": "^5.2.0-beta",
+    "react-native-device-info": "^0.13.0",
     "react-native-drawer": "^2.3.0",
     "react-native-elements": "^0.18.2",
     "react-native-firebase": "^3.0.5",
@@ -68,8 +73,6 @@
     "seamless-immutable": "^7.0.1"
   },
   "devDependencies": {
-    "@storybook/addon-storyshots": "^3.2.3",
-    "@storybook/react-native": "^3.2.3",
     "babel-eslint": "^8.0.3",
     "babel-jest": "22.0.4",
     "babel-plugin-ignite-ignore-reactotron": "^0.3.0",

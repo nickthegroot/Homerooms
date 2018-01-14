@@ -1,12 +1,13 @@
 // @flow
 import * as React from 'react'
 import { View, Text } from 'react-native'
-
-import Styles from './Styles/SettingsScreenStyles'
 import { firebaseConnect } from 'react-redux-firebase'
 import { Button, Card } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
+import { Fonts, Colors } from '../../Themes'
+
+import Styles from './Styles/SettingsScreenStyles'
 
 type Profile = {
   defaultSeminar: string,
@@ -51,8 +52,8 @@ class SettingsScreen extends React.Component<Props> {
             You're signed in as {this.props.profile.name}
           </Text>
           <Button
-            backgroundColor='#03A9F4'
-            fontFamily='Lato'
+            backgroundColor={Colors.lightBlue}
+            fontFamily={Fonts.type.headings}
             buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
             title='Sign Out'
             onPress={this.handleSignOut.bind(this)} />

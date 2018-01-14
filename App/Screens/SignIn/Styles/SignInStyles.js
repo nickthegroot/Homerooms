@@ -2,10 +2,7 @@ import { StyleSheet } from 'react-native'
 import { ApplicationStyles } from '../../../Themes/'
 
 export default StyleSheet.create({
-  mainComponent: {
-    ...ApplicationStyles.screen.mainContainer,
-    backgroundColor: 'transparent'
-  },
+  mainContainer: ApplicationStyles.mainContainer,
   form: {
     marginTop: 10
   },

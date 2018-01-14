@@ -1,28 +1,30 @@
 const type = {
-  base: 'OpenSans-Regular',
-  header: 'Lato-Regular'
+  headings: 'Josefin Slab',
+  content: 'Nunito'
 }
 
 const size = {
-  regular: 17,
-  medium: 15,
-  header: 27,
-  smallHeader: 20
+  regular: 14,
+  heading: 20,
+  largeHeading: 52
 }
 
 const style = {
-  header: {
-    fontFamily: type.header,
-    fontSize: size.header,
-    fontWeight: 'bold'
+  content: {
+    fontFamily: type.content,
+    fontSize: size.regular,
+    color: 'rgba(0, 0, 0, 0.87)',
+    lineHeight: 14
   },
-  normal: {
-    fontFamily: type.base,
-    fontSize: size.regular
+  largeHeading: {
+    fontFamily: type.content + '-Bold',
+    fontSize: size.largeHeading,
+    color: 'white'
   },
-  description: {
-    fontFamily: type.base,
-    fontSize: size.medium
+  heading: {
+    fontFamily: type.headings,
+    fontSize: size.heading,
+    color: 'black'
   }
 }
 

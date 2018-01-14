@@ -9,7 +9,6 @@ import { DateTime } from 'luxon'
 
 import { firebaseProfilePopulates } from '../../Config/FirebaseConfig'
 import CurrentSeminarCard from './Components/CurrentSeminarCard'
-import TitleText from './Components/TitleText'
 
 import Styles from './Styles/HomeScreenStyles'
 
@@ -62,10 +61,11 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props) {
+    console.tron.log(nextProps)
     let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 }) // day(7 + 2).hour(12).minute(30)
     let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
 
-    let nextSeminar = (nextSeminarTuesday > nextSeminarWednesday)
+    let nextSeminar = (nextSeminarTuesday < nextSeminarWednesday)
       ? nextSeminarTuesday
       : nextSeminarWednesday
 
@@ -108,18 +108,9 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   render () {
-    let date = DateTime.local().toFormat('cccc, LLL d')
-    let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 }) //day(7 + 2).hour(12).minute(30)
-    let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
-
-    let nextSeminar = (nextSeminarTuesday > nextSeminarWednesday)
-      ? nextSeminarTuesday
-      : nextSeminarWednesday
     return (
       <ScrollView style={Styles.mainContainer}>
         <View style={Styles.container}>
-          <TitleText date={date} name={this.props.populatedProfile.name} nextSeminar={nextSeminar.toFormat('cccc, LLL d')} />
-          <View style={Styles.break} />
           <CurrentSeminarCard seminarTeacher={this.state.seminarTeacher} />
         </View>
       </ScrollView>
