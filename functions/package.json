@@ -4,7 +4,16 @@
   "dependencies": {
     "firebase-admin": "~5.2.1",
     "firebase-functions": "^0.6.2",
+    "luxon": "^0.3.1",
     "nodemailer": "^4.4.0"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "flow-bin": "^0.63.1",
+    "flow-remove-types": "^1.2.3"
+  },
+  "scripts": {
+    "build": "flow-remove-types src/ -d lib/",
+    "prepublish": "yarn run build"
+  }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "Homeroom",
-  "version": "0.1.1",
+  "name": "homeroom",
+  "version": "1.0.0",
   "private": true,
   "description": "LOHS App to digitize Support Seminar",
   "author": {
@@ -81,8 +81,12 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "4.0.0",
     "enzyme": "^3.2.0",
-    "eslint-plugin-flowtype": "^2.39.1",
-    "eslint-plugin-react": "^7.4.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-config-standard-react": "^5.0.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "flow-bin": "0.62.0",
     "husky": "^0.14.3",
     "ignite-animatable": "^1.0.0",
@@ -110,12 +114,11 @@
     ],
     "preset": "react-native"
   },
-  "config": {},
   "standard": {
     "parser": "babel-eslint",
-    "plugins": [
-      "flowtype",
-      "react"
+    "extends": [
+      "standard",
+      "standard-react"
     ],
     "ignore": [
       "node_modules",

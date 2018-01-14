@@ -1,5 +1,5 @@
 // @flow
-import * as React from 'react'
+import React from 'react'
 import { ScrollView, Alert, Platform } from 'react-native'
 import { List, ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
@@ -7,27 +7,14 @@ import { firebaseConnect } from 'react-redux-firebase'
 import { DateTime } from 'luxon'
 import Firebase from 'react-native-firebase'
 
+import type { Teacher } from '../../Types/DatabaseTypes'
+
 // Styles
 import styles from './Styles/RequestScreenStyles'
 
-type Teacher = {
-  email: string,
-  firstName: string,
-  id: string,
-  lastName: string,
-  room: string | number,
-  taughtCourses: string,
-  picture?: string,
-  key: string
-}
-
 type Props = {
   teachers: [],
-  firebase: {
-    push: (path: string, data: {}) => any,
-    auth: () => any,
-    updateProfile: ({}) => any
-  }
+  firebase: Firebase
 }
 
 @firebaseConnect(

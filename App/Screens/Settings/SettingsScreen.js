@@ -7,18 +7,16 @@ import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { Fonts, Colors } from '../../Themes'
 
+import type { NavigationState } from 'react-navigation'
+import type { Student } from '../../Types/DatabaseTypes'
+import type Firebase from 'react-redux-firebase'
+
 import Styles from './Styles/SettingsScreenStyles'
 
-type Profile = {
-  defaultSeminar: string,
-  name: string,
-  lastRequest: string
-}
-
 type Props = {
-  firebase: any,
-  profile: Profile,
-  navigation: any
+  firebase: Firebase,
+  profile: Student,
+  navigation: NavigationState
 }
 
 @firebaseConnect()

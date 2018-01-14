@@ -1,8 +1,10 @@
-const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-const serviceAccount = require('./lohs-supportseminar-firebase-adminsdk-key.json')
-const nodemailer = require('nodemailer')
+//      
+import functions from 'firebase-functions'
+import admin from 'firebase-admin'
+import nodemailer from 'nodemailer'
+                                                                              
 
+const serviceAccount = require('./lohs-supportseminar-firebase-adminsdk-key.json')
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://lohs-supportseminar.firebaseio.com'
@@ -23,12 +25,107 @@ const mailTransport = nodemailer.createTransport({
   }
 })
 
+const generateRequestEmail = (teacher         , student         , date        , reason        ) => {
+  return (`
+<!doctype html>
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Josefin+Slab|Nunito');
+    body {
+      background: #3b5998;
+      font-family: 'Nunito', sans-serif;
+      color: #000;
+    }
+    #content-wrap {
+      background: #f7f7f7;
+      width: 80%;
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+    span {
+      color: #1E88E5;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    h5 {
+      font-family: 'Josefin Slab', serif;
+      font-weight: bold;
+      color: #1E88E5;
+      font-size: 2em;
+      text-align: left;
+      margin: 0;
+    }
+    button {
+      margin: 0 5px;
+      background: none;
+      border-radius: 10%;
+      width: 100px;
+      height: 50px;
+      color: #1E88E5;
+      border: 5px solid #1E88E5;
+      transition: all 1s ease;
+      opacity: 0.7;
+    }
+    button:hover {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    #accept-btn {
+      border-color: #46cc56;
+      color: #46cc56;
+    }
+    #reject-btn {
+      border-color: #cc4656;
+      color: #cc4656;
+    }
+    .wrapper {
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+    .center {
+      text-align: center;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 0.8em;
+      text-align: center;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div id="content-wrap">
+    <h5>Dear ${teacher.firstName} ${teacher.lastName}, </h5>
+    <p><span class="name">${student.name}</span> would like to attend your homeroom on <span class="date">${date}</span> because <span class="reason">"${reason}"</span>. </p>
+    <p class = "center"> Do you accept this request? </p>
+    <div class = "wrapper">
+      <button id="accept-btn"> Accept </button>
+      <button id="reject-btn"> Reject </button>
+    </div>
+    <p> Sincerely, <br>
+      <br>
+      The Homeroom Team </p>
+    <footer>
+      <p>This message is from Homeroom, an app to connect teachers and learners. <br>
+        Click here if you got this email by mistake. <br>
+        Contact us at <a href='mailto:contact@homeroom-app.com'>contact@homeroom-app.com <br>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
+`)
+}
+
 /**
  * Sends an email to the requested teacher, asking to accept the student into Support Seminar
  */
 exports.sendRequest = functions.database.ref('/requests/{pushId}')
   .onWrite(event => {
-    let val = event.data.val()
+    let val          = event.data.val()
 
     // Make sure there's a need to continue.
     if (val.accepted === false) {
@@ -42,15 +139,15 @@ exports.sendRequest = functions.database.ref('/requests/{pushId}')
       let studentRef = db.ref('users/' + studentKey)
 
       teacherRef.once('value', function (teacherSnapshot) {
-        let teacher = teacherSnapshot.val()
+        let teacher          = teacherSnapshot.val()
         studentRef.once('value', function (studentSnapshot) {
-          let student = studentSnapshot.val()
+          let student          = studentSnapshot.val()
           let mailOptions = {
             from: '"Support Seminar" <' + functions.config().gmail.email + '>',
             to: teacher.email,
             subject: 'Support Seminar Student Request',
             text: 'Hello ' + teacher.firstName + ' ' + teacher.lastName + ',\n' + student.name + ' has requested to come to your next Support Seminar. To accept the request, please click the link below.\n' + acceptLink,
-            html: '<h1>Hello ' + teacher.firstName + ' ' + teacher.lastName + ',</h1>\n<p>' + student.name + ' has requested to come to your next Support Seminar. To accept the request, please click <a href=' + acceptLink + ' />here.</p>'
+            html: generateRequestEmail()
           }
 
           return mailTransport.sendMail(mailOptions)
@@ -92,9 +189,9 @@ exports.acceptRequest = functions.https.onRequest((req, res) => {
   // Send e-mail to current support seminar teacher
   ref.once('value', function (requestSnapshot) {
     db.ref('users/' + requestSnapshot.val().user).once('value', function (userSnapshot) {
-      let student = userSnapshot.val()
+      let student          = userSnapshot.val()
       db.ref('teachers/' + userSnapshot.val().defaultSeminar).once('value', function (teacherSnapshot) {
-        let teacher = teacherSnapshot.val()
+        let teacher          = teacherSnapshot.val()
         let mailOptions = {
           from: '"Support Seminar" <' + functions.config().gmail.email + '>',
           to: teacher.email,
@@ -110,16 +207,22 @@ exports.acceptRequest = functions.https.onRequest((req, res) => {
 
   // Return HTML file.
   return ref.once('value', (requestSnapshot) => {
+    let request          = requestSnapshot.val()
+
     db.ref('users/' + requestSnapshot.val().user).once('value', function (studentSnapshot) {
+      let student          = studentSnapshot.val()
+
       db.ref('teachers/' + requestSnapshot.val().teacher).once('value', function (teacherSnapshot) {
-        if ('pushId' in requestSnapshot.val()) {
+        let teacher          = teacherSnapshot.val()
+
+        if ('pushId' in request) {
           let payload = {
             notification: {
               title: 'Support Seminar Request',
-              body: 'Your Support Seminar request for ' + teacherSnapshot.val().lastName + ' has been approved!'
+              body: 'Your Support Seminar request for ' + teacher.lastName + ' has been approved!'
             }
           }
-          admin.messaging().sendToDevice(requestSnapshot.val().pushId, payload)
+          admin.messaging().sendToDevice(request.pushId, payload)
         }
 
         return res.send(`
@@ -129,8 +232,8 @@ exports.acceptRequest = functions.https.onRequest((req, res) => {
                     <title>Support Seminar Request</title>
                 </head>
                 <body>
-                    <h1>Thank you, ${teacherSnapshot.val().firstName} ${teacherSnapshot.val().lastName}</h1>
-                    <p>The student ${studentSnapshot.val().name} has been accepted into your next Support Seminar.</p>
+                    <h1>Thank you, ${teacher.firstName} ${teacher.lastName}</h1>
+                    <p>The student ${student.name} has been accepted into your next Support Seminar.</p>
                 </body>
             </html>`
         )

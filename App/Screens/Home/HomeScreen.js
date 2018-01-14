@@ -8,28 +8,10 @@ import Mailer from 'react-native-mail'
 import { DateTime } from 'luxon'
 
 import { firebaseProfilePopulates } from '../../Config/FirebaseConfig'
+import type { Teacher, Request } from '../../Types/DatabaseTypes'
 import CurrentSeminarCard from './Components/CurrentSeminarCard'
 
 import Styles from './Styles/HomeScreenStyles'
-
-type Teacher = {
-  email: string,
-  firstName: string,
-  id: string,
-  lastName: string,
-  room: string | number,
-  taughtCourses: string,
-  picture?: string
-}
-
-type Request = {
-  user: string, // We only really care about the UID
-  pushID?: string,
-  teacher: string, // First comes in as key
-  accepted: boolean,
-  timestamp: string,
-  requestedTime: string
-}
 
 type Props = {
   profile: {
