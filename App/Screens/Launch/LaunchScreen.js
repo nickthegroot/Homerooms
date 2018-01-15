@@ -8,7 +8,7 @@ import Video from 'react-native-video'
 import { firebaseConnect } from 'react-redux-firebase'
 
 import Button from '../Components/Button'
-import BackgroundVideo from '../../Assets/Images/BackgroundVideo.mp4'
+import BackgroundVideo from '../../Assets/Videos/BackgroundVideo.mp4'
 
 import Styles from './Styles/LaunchStyles'
 

@@ -7,8 +7,9 @@ import { NavigationActions } from 'react-navigation'
 import Video from 'react-native-video'
 
 import Button from '../Components/Button'
-import BackgroundVideo from '../../Assets/Images/BackgroundVideo2.mp4'
+import BackgroundVideo from '../../Assets/Videos/BackgroundVideo2.mp4'
 
+import { Fonts } from '../../Themes'
 import Styles from './Styles/SignInStyles'
 
 @firebaseConnect()
@@ -71,7 +72,7 @@ class SignInScreen extends Component {
 
   render () {
     return (
-      <View style={Styles.mainComponent}>
+      <View style={Styles.mainContainer}>
 
         <Video
           source={BackgroundVideo}
@@ -85,23 +86,21 @@ class SignInScreen extends Component {
 
         <View style={Styles.contentView}>
           <View style={Styles.form}>
-            <FormLabel>E-Mail</FormLabel>
+            <FormLabel containerStyle={Styles.formLabelContainer} labelStyle={Styles.formLabelText} fontFamily={Fonts.type.content}>E-Mail</FormLabel>
             <FormInput
+              inputStyle={Styles.formInputText}
               autoCapitalize='none'
               keyboardType='email-address'
-              placeholder='Please enter your e-mail...'
               onChangeText={email => this.setState({ emailError: null, email: email })}
-              shake={this.state.emailError}
-          />
+              shake={this.state.emailError} />
             {this.state.emailError}
-            <FormLabel>Password</FormLabel>
+            <FormLabel containerStyle={Styles.formLabelContainer} labelStyle={Styles.formLabelText} fontFamily={Fonts.type.content}>Password</FormLabel>
             <FormInput
+              inputStyle={Styles.formInputText}
               autoCapitalize='none'
               secureTextEntry
-              placeholder='Please enter your password...'
-              onChangeText={password => this.setState({ password: password })}
-              shake={this.state.passwordError}
-          />
+              onChangeText={password => this.setState({ passwordError: null, password: password })}
+              shake={this.state.passwordError} />
             {this.state.passwordError}
           </View>
         </View>
