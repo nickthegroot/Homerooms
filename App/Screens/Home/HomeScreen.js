@@ -43,7 +43,6 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    console.tron.log(nextProps)
     let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 }) // day(7 + 2).hour(12).minute(30)
     let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
 

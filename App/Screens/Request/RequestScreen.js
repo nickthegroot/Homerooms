@@ -17,9 +17,9 @@ type Props = {
   firebase: Firebase
 }
 
-@firebaseConnect(
+@firebaseConnect(props => [
   { type: 'once', path: '/teachers', queryParams: ['orderByChild=lastName'] }
-)
+])
 @connect(({ firebase }) => ({
   teachers: firebase.ordered.teachers,
   profile: firebase.profile
@@ -106,7 +106,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
                 onPressRightIcon={function () {
                   Alert.alert(
                     'Are you sure?',
-                    `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.format('MM/DD/YYYY')}.`,
+                    `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.toLocalString(DateTime.DATE_HUGE)}.`,
                     [
                       { text: 'Yes', onPress: () => { this.handleRequest(teacherItem.key) } },
                       { text: 'No' }
@@ -127,7 +127,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
               function () {
                 Alert.alert(
                   'Are you sure?',
-                  `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.format('MM/DD/YYYY')}.`,
+                  `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.toLocalString(DateTime.DATE_HUGE)}.`,
                   [
                     { text: 'Yes', onPress: () => { this.handleRequest(teacherItem.key) } },
                     { text: 'No' }

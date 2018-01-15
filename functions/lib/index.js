@@ -27,7 +27,7 @@ const mailTransport = nodemailer.createTransport({
 });
 
 const generateRequestEmail = (teacher, student, reason, acceptLink, declineLink) => {
-  let date = DateTime.local().toFormat(DateTime.DATE_HUGE);
+  let date = DateTime.local().toLocaleString(DateTime.DATE_HUGE);
   return `
 <!doctype html>
 <html>
@@ -136,7 +136,7 @@ const generateRequestEmail = (teacher, student, reason, acceptLink, declineLink)
 };
 
 const generateAcceptedScreen = student => {
-  let date = DateTime.local().toFormat(DateTime.DATE_HUGE);
+  let date = DateTime.local().toLocaleString(DateTime.DATE_HUGE);
   return `
 <!doctype html>
 <html>

@@ -7,6 +7,7 @@ import Header from '../Screens/Components/Header'
 
 import SignInScreen from '../Screens/SignIn/SignInScreen'
 import LaunchScreen from '../Screens/Launch/LaunchScreen'
+import SearchScreen from '../Screens/Search/SearchScreen'
 
 import HomeScreen from '../Screens/Home/HomeScreen'
 import RequestScreen from '../Screens/Request/RequestScreen'
@@ -76,9 +77,23 @@ const PrimaryNav = StackNavigator({
     navigationOptions: {
       header: (<Header />)
     }
+  },
+  SearchScreen: {
+    screen: SearchScreen,
+    navigationOptions: {
+      header: (<Header />)
+    }
   }
 }, {
-  initialRouteName: 'LaunchScreen'
+  initialRouteName: 'LaunchScreen',
+  transitions: [
+    {
+      from: 'TabNav',
+      to: 'SearchScreen',
+      transition: null
+    }
+  ]
+
 })
 
 export default PrimaryNav
