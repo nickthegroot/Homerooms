@@ -14,7 +14,6 @@
 ; Ignore polyfills
 .*/Libraries/polyfills/.*
 
-[include]
 
 [libs]
 node_modules/react-native/Libraries/react-native/react-native-interface.js
@@ -40,8 +39,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(>=0\\.\\(5[0-3]\\|[1-4][0-9]\\|
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
-unsafe.enable_getters_and_setters=true
 esproposal.decorators=ignore
-
-[version]
-^0.61.0

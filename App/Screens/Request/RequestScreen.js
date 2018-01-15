@@ -1,38 +1,25 @@
 // @flow
-import * as React from 'react'
+import React from 'react'
 import { ScrollView, Alert, Platform } from 'react-native'
 import { List, ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
-import Moment from 'moment'
+import { DateTime } from 'luxon'
 import Firebase from 'react-native-firebase'
+
+import type { Teacher } from '../../Types/DatabaseTypes'
 
 // Styles
 import styles from './Styles/RequestScreenStyles'
 
-type Teacher = {
-  email: string,
-  firstName: string,
-  id: string,
-  lastName: string,
-  room: string | number,
-  taughtCourses: string,
-  picture?: string,
-  key: string
-}
-
 type Props = {
   teachers: [],
-  firebase: {
-    push: (path: string, data: {}) => any,
-    auth: () => any,
-    updateProfile: ({}) => any
-  }
+  firebase: Firebase
 }
 
-@firebaseConnect(
+@firebaseConnect(props => [
   { type: 'once', path: '/teachers', queryParams: ['orderByChild=lastName'] }
-)
+])
 @connect(({ firebase }) => ({
   teachers: firebase.ordered.teachers,
   profile: firebase.profile
@@ -40,10 +27,10 @@ type Props = {
 export default class RequestScreen extends React.Component<Props, {nextSeminar: any, teachers: []}> {
   constructor (props: Props) {
     super(props)
-    let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
-    let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
+    let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 }) // day(7 + 2).hour(12).minute(30)
+    let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
 
-    let nextSeminar = (nextSeminarTuesday.isBefore(nextSeminarWednesday))
+    let nextSeminar = (nextSeminarTuesday > nextSeminarWednesday)
       ? nextSeminarTuesday
       : nextSeminarWednesday
 
@@ -70,8 +57,8 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
             pushID: token,
             teacher: teacherKey,
             accepted: false,
-            timestamp: Moment().format(),
-            requestedTime: this.state.nextSeminar.format()
+            timestamp: DateTime.local.toString(),
+            requestedTime: this.state.nextSeminar.toString()
           })
           this.props.firebase.updateProfile({ lastRequest: requestRef.key })
         })
@@ -80,8 +67,8 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
           user: this.props.firebase.auth()._user.uid,
           teacher: teacherKey,
           accepted: false,
-          timestamp: Moment().format(),
-          requestedTime: this.state.nextSeminar.format()
+          timestamp: DateTime.local.toString(),
+          requestedTime: this.state.nextSeminar.toString()
         })
         this.props.firebase.updateProfile({ lastRequest: requestRef.key })
       }
@@ -116,18 +103,17 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
               <ListItem
                 roundAvatar
                 avatar={{ uri: teacher.picture }}
-                onPressRightIcon={
-              function () {
-                Alert.alert(
-                  'Are you sure?',
-                  `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.format('MM/DD/YYYY')}.`,
-                  [
-                    { text: 'Yes', onPress: () => { this.handleRequest(teacherItem.key) } },
-                    { text: 'No' }
-                  ],
-                  { cancelable: false }
-                    )
-              }.bind(this)
+                onPressRightIcon={function () {
+                  Alert.alert(
+                    'Are you sure?',
+                    `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.toLocalString(DateTime.DATE_HUGE)}.`,
+                    [
+                      { text: 'Yes', onPress: () => { this.handleRequest(teacherItem.key) } },
+                      { text: 'No' }
+                    ],
+                    { cancelable: false }
+                      )
+                }.bind(this)
                 }
                 key={teacherItem.key}
                 title={`${teacher.firstName} ${teacher.lastName}`}
@@ -141,7 +127,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
               function () {
                 Alert.alert(
                   'Are you sure?',
-                  `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.format('MM/DD/YYYY')}.`,
+                  `You're requesting ${teacher.firstName} ${teacher.lastName} for ${this.state.nextSeminar.toLocalString(DateTime.DATE_HUGE)}.`,
                   [
                     { text: 'Yes', onPress: () => { this.handleRequest(teacherItem.key) } },
                     { text: 'No' }

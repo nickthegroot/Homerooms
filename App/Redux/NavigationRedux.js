@@ -1,6 +1,11 @@
 import AppNavigation from '../Navigation/AppNavigation'
 
 export const reducer = (state, action) => {
-  const newState = AppNavigation.router.getStateForAction(action, state)
-  return newState || state
+  switch (action.type) {
+    case 'setQuery':
+      return {...state, searchQuery: action.query}
+    default:
+      const newState = AppNavigation.router.getStateForAction(action, state)
+      return newState || state
+  }
 }

@@ -103,7 +103,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.nbdeg.supportseminar"
+        applicationId "com.homeroom"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -154,10 +154,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
+    compile project(':react-native-video')
     compile project(':react-native-code-push')
-    compile project(':appcenter-crashes')
-    compile project(':appcenter-analytics')
-    compile project(':appcenter')
     compile project(':react-native-mail')
     compile(project(':react-native-firebase')) {
         transitive = false

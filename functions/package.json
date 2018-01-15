@@ -1,10 +1,23 @@
 {
   "name": "functions",
   "description": "Cloud Functions for Firebase",
+  "main": "./lib/index.js",
   "dependencies": {
     "firebase-admin": "~5.2.1",
     "firebase-functions": "^0.6.2",
+    "luxon": "^0.3.1",
     "nodemailer": "^4.4.0"
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.37",
+    "@babel/core": "^7.0.0-beta.37",
+    "@babel/preset-env": "^7.0.0-beta.37",
+    "@babel/preset-flow": "^7.0.0-beta.37",
+    "flow-bin": "^0.63.1"
+  },
+  "scripts": {
+    "build": "babel src/ -d lib/",
+    "prepublish": "yarn run build"
+  }
 }
