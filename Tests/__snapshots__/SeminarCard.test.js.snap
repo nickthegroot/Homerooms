@@ -92,6 +92,10 @@ exports[`renders correctly 1`] = `
           ellipsizeMode="tail"
           style={
             Object {
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Nunito",
+              "fontSize": 14,
+              "lineHeight": 14,
               "marginBottom": 10,
             }
           }
@@ -103,7 +107,11 @@ exports[`renders correctly 1`] = `
             ellipsizeMode="tail"
             style={
               Object {
+                "color": "rgba(0, 0, 0, 0.87)",
+                "fontFamily": "Nunito",
+                "fontSize": 14,
                 "fontWeight": "bold",
+                "lineHeight": 14,
               }
             }
           >
@@ -182,7 +190,7 @@ exports[`renders correctly 1`] = `
                   undefined,
                   undefined,
                   Object {
-                    "backgroundColor": "#03A9F4",
+                    "backgroundColor": "#1E88E5",
                   },
                   undefined,
                   Object {
@@ -257,7 +265,7 @@ exports[`renders correctly 1`] = `
                       undefined,
                       undefined,
                       Object {
-                        "fontFamily": "Lato",
+                        "fontFamily": "Josefin Slab",
                       },
                     ],
                   ]
