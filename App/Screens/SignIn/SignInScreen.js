@@ -44,7 +44,7 @@ class SignInScreen extends Component {
       .then(() => this.props.navigation.dispatch(NavigationActions.reset({
         index: 0,
         actions: [
-          NavigationActions.navigate({ routeName: 'TabNav' }, this.props.teachers)
+          NavigationActions.navigate({ routeName: 'TabNav' })
         ]
       })))
       .catch((error) => {
