@@ -10,10 +10,10 @@ import com.chirag.RNMail.RNMail;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
-import io.invertase.firebase.crash.RNFirebaseCrashPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.perf.RNFirebasePerformancePackage;
+import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
 
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
@@ -50,7 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new RNFirebaseAnalyticsPackage(),
             new RNFirebaseAuthPackage(),
-            new RNFirebaseCrashPackage(),
+            new RNFirebaseCrashlyticsPackage(),
             new RNFirebaseDatabasePackage(),
             new RNFirebaseMessagingPackage(),
             new RNFirebasePerformancePackage()

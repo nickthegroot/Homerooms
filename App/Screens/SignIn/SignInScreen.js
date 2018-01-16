@@ -63,8 +63,8 @@ class SignInScreen extends Component {
         break
       default:
         if (!__DEV__) {
-          Firebase.crash().log('Auth Error: Unknown Error Code')
-          Firebase.crash().report(error)
+          Firebase.fabric.crashlytics().log('Auth Error: Unknown Error Code')
+          Firebase.fabric.crashlytics().report(error)
         }
         break
     }

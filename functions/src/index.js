@@ -118,8 +118,8 @@ const generateRequestEmail = (teacher: Teacher, student: Student, reason: string
     <p><span class="name">${student.name}</span> would like to attend your homeroom on <span class="date">${date}</span> because <span class="reason">"${reason}"</span>. </p>
     <p class = "center"> Do you accept this request? </p>
     <div class = "wrapper">
-      <button id="accept-btn" href=${acceptLink}> Accept </button>
-      <button id="reject-btn" href=${declineLink}> Reject </button>
+      <button id="accept-btn" onclick="location.href='${acceptLink}';"> Accept </button>
+      <button id="reject-btn" onclick="location.href='${declineLink}';"> Reject </button>
     </div>
     <p> Sincerely, <br>
       <br>

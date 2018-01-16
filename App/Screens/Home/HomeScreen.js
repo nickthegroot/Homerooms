@@ -39,7 +39,7 @@ type State = {
 }))
 export default class HomeScreen extends React.Component<Props, State> {
   state = {
-    seminarTeacher: undefined
+    seminarTeachers: [ null, null ]
   }
 
   componentWillReceiveProps (nextProps: Props) {
@@ -57,12 +57,12 @@ export default class HomeScreen extends React.Component<Props, State> {
       DateTime.fromISO(nextProps.populatedProfile.lastRequest.requestedTime) > nextSeminar) {
       Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
         this.setState({
-          seminarTeacher: teacherSnapshot.val()
+          seminarTeacher: [teacherSnapshot.val(), null]
         })
       }.bind(this))
     } else {
       this.setState({
-        seminarTeacher: nextProps.populatedProfile.defaultSeminar
+        seminarTeachers: [nextProps.populatedProfile.seminars.a, nextProps.populatedProfile.seminars.b]
       })
     }
   }
@@ -89,10 +89,12 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   render () {
+    console.tron.log(this.state.seminarTeachers)
     return (
       <ScrollView style={Styles.mainContainer}>
         <View style={Styles.container}>
-          <CurrentSeminarCard seminarTeacher={this.state.seminarTeacher} />
+          <CurrentSeminarCard day='A' seminarTeacher={this.state.seminarTeachers[0]} />
+          <CurrentSeminarCard day='B' seminarTeacher={this.state.seminarTeachers[1]} />
         </View>
       </ScrollView>
     )

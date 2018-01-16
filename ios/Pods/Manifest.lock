@@ -28,7 +28,10 @@ PODS:
     - React
   - CodePush/SSZipArchive (5.2.0):
     - React
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
   - DoubleConversion (1.1.5)
+  - Fabric (1.7.2)
   - Firebase/Analytics (4.8.0):
     - Firebase/Core
   - Firebase/Auth (4.8.0):
@@ -165,7 +168,9 @@ PODS:
 
 DEPENDENCIES:
   - CodePush (from `../node_modules/react-native-code-push`)
+  - Crashlytics
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - Fabric
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
@@ -219,7 +224,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 30a15ffb6d9aa4646dd3caffc960753f4cb4ca4e
   CodePush: a85a8e109af0e413be8472a89f7c6a7184cf85b2
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   DoubleConversion: ebb6747c5b66026ad4f97b789c3ceac6f18e57a6
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   Firebase: 710decbbc6d9d48530e9a5dba3209740c3532e05
   FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
   FirebaseAuth: dc0dd403beca5b2b016aac89c2d0b8dad1c81926
@@ -245,6 +252,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: c1821d56c775cc5a3bca66c77dfc8cb4a90d27e2
   yoga: b5d96400ca8b2936965a7a6516da7c1177f432a3
 
-PODFILE CHECKSUM: ea3b95f50756bf1110c6d3e110ccdf2720eb196b
+PODFILE CHECKSUM: 8d69577ecbfe82402aa61687aea02282e1952cad
 
 COCOAPODS: 1.3.1
