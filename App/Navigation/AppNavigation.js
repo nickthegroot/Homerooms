@@ -85,15 +85,7 @@ const PrimaryNav = StackNavigator({
     }
   }
 }, {
-  initialRouteName: 'LaunchScreen',
-  transitions: [
-    {
-      from: 'TabNav',
-      to: 'SearchScreen',
-      transition: null
-    }
-  ]
-
+  initialRouteName: 'LaunchScreen'
 })
 
 export default PrimaryNav

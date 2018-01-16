@@ -1,4 +1,4 @@
-package com.homeroom;
+package com.nbdeg.homeroom;
 
 import android.app.Application;
 
