@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { ApplicationStyles } from '../../../Themes/'
+import { ApplicationStyles, Fonts } from '../../../Themes/'
 
 export default StyleSheet.create({
   mainContainer: ApplicationStyles.mainContainer,
@@ -29,5 +29,15 @@ export default StyleSheet.create({
     backgroundColor: 'black',
     opacity: 0.3
   },
-  contentView: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 10 }
+  contentView: { flex: 1, justifyContent: 'center', padding: 10 },
+  formLabelContainer: {
+    backgroundColor: 'transparent'
+  },
+  formLabelText: {
+    color: 'white'
+  },
+  formInputText: {
+    ...Fonts.style.content,
+    color: 'white'
+  }
 })
