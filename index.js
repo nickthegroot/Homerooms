@@ -2,4 +2,4 @@ import './App/Config/ReactotronConfig'
 import { AppRegistry } from 'react-native'
 import App from './App/Screens/App'
 
-AppRegistry.registerComponent('SupportSeminar', () => App)
+AppRegistry.registerComponent('Homeroom', () => App)

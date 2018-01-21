@@ -15,5 +15,8 @@
         "function": "acceptRequest"
       }
     ]
+  },
+  "functions": {
+    "predeploy": "npm --prefix functions run prepublish"
   }
 }
