@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '8.0'
+# platform :ios, '8.0'
 
 target 'Homeroom' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
@@ -7,8 +7,9 @@ target 'Homeroom' do
 
   pod 'React', :path => '../node_modules/react-native', :subspecs => [
     'Core',
-    'BatchedBridge',
+    'CxxBridge',
     'DevSupport', # Include this to enable In-App Devmenu if RN >= 0.43
+    'RCTLinkingIOS',
     'RCTText',
     'RCTActionSheet',
     'RCTNetwork',
@@ -19,7 +20,12 @@ target 'Homeroom' do
   # Explicitly include Yoga if you are using RN >= 0.42.0
   pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
 
-  # Pods for Homeroom
+  # Third party deps podspec link
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'GLog', :podspec => '../node_modules/react-native/third-party-podspecs/GLog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+
+  # Pods for Firebase
   pod 'Firebase/Core'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
@@ -31,7 +37,6 @@ target 'Homeroom' do
 
   pod 'react-native-video', :path => '../node_modules/react-native-video'
   pod 'react-native-mail', :path => '../node_modules/react-native-mail'
-  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
