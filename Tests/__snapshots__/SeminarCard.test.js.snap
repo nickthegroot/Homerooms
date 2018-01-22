@@ -100,7 +100,22 @@ exports[`renders correctly 1`] = `
             }
           }
         >
-          Your next Support Seminar is with 
+          Your 
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "rgba(0, 0, 0, 0.87)",
+                "fontFamily": "Nunito",
+                "fontSize": 14,
+                "fontWeight": "bold",
+                "lineHeight": 14,
+              }
+            }
+          />
+           day Support Seminar is with 
           <Text
             accessible={true}
             allowFontScaling={true}

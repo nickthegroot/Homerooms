@@ -7,7 +7,6 @@ import { Fonts, Colors } from '../../../Themes'
 import type { Teacher } from '../../../Types/DatabaseTypes'
 
 const CurrentSeminarCard = ({ day, seminarTeacher }: { day: string, seminarTeacher?: Teacher }) => {
-  console.tron.log(seminarTeacher)
   let teacherPic = (seminarTeacher && 'picture' in seminarTeacher) ? {uri: seminarTeacher.picture} : null
   if (seminarTeacher) {
     return (<Card
