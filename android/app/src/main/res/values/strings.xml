@@ -1,0 +1,4 @@
+<resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">5q33FXnVi-VN2YsV1QdPtUGscWqKHJpe3ul-z</string>
+    <string name="app_name">Homeroom</string>
+</resources>

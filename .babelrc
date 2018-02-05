@@ -1,0 +1,16 @@
+{
+  "presets": [
+    "react-native",
+    "flow"
+  ],
+  "plugins": [
+    "transform-decorators-legacy"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "ignite-ignore-reactotron"
+      ]
+    }
+  }
+}

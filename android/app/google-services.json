@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "781236960586",
+    "firebase_url": "https://lohs-supportseminar.firebaseio.com",
+    "project_id": "lohs-supportseminar",
+    "storage_bucket": "lohs-supportseminar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781236960586:android:309b53c0245628a6",
+        "android_client_info": {
+          "package_name": "com.nbdeg.homeroom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781236960586-pc4qlbt7b3i3iupfu4lfn32h1p6dpe30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtDeLNRi6B1_fu4zJVTRDH1h1VNkAmDGg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
