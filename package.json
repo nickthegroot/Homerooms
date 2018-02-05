@@ -65,5 +65,21 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "ignore": [
+      "node_modules",
+      "flow-typed"
+    ],
+    "globals": [
+      "test",
+      "jest",
+      "expect",
+      "fetch",
+      "navigator",
+      "__DEV__",
+      "console.tron"
+    ]
   }
 }
