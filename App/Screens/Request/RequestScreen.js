@@ -86,10 +86,10 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
             {teacherList}
           </List>
         </ScrollView>
-        <RequestTeacherPopup
+        {/* <RequestTeacherPopup
           isVisible={this.state.requestVisibility}
           requestedTeacher={this.state.requestedTeacher}
-          onFinish={() => this.setState({ requestVisibility: false })} />
+          onFinish={() => this.setState({ requestVisibility: false })} /> */}
       </View>
     )
   }

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { View, Image, Text } from 'react-native'
-import { Divider } from 'react-native-elements'
+import { Divider, Overlay } from 'react-native-elements'
 import { Calendar } from 'react-native-calendars'
 import Modal from 'react-native-modal'
 import { DateTime } from 'luxon'
@@ -12,13 +12,12 @@ import requestTeacher from '../../Services/requestTeacher'
 import type { Teacher } from '../../Types/DatabaseTypes'
 
 import Styles from './Styles/RequestPopupStyles'
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase'
 
-const DISABLED_DAYS = [1, 4, 5, 6 ,7] // Thursday - Monday
+const DISABLED_DAYS = [1, 4, 5, 6, 7] // Thursday - Monday
 
 @firebaseConnect()
 class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeacher: Teacher, onFinish: () => void}> {
-
   // TODO: Set A/B day
 
   state = {
@@ -34,14 +33,14 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
     })
   }
 
-  getDaysInMonth(month, year, days) {
+  getDaysInMonth (month, year, days) {
     let pivot = DateTime.local(year, month).startOf('month')
     const end = DateTime.local(year, month).endOf('month')
 
     let dates = {}
     const disabled = { disabled: true }
 
-    while (pivot < end) {
+    while (pivot < end) { // eslint-disable-line
       days.forEach((day) => {
         dates[pivot.set({weekday: day}).toISODate()] = disabled
       })
@@ -53,24 +52,22 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
 
   handleRequest = () => {
     // Check to make sure all info is entered correctly.
-    if (requestedTeacher && this.state.requestedDate && (this.state.requestedDay == 'A' || this.state.requestedDay == 'B') && this.props.firebase.auth()._user.uid) {
+    if (this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid) {
       // Verify user with touch ID
       TouchID.isSupported()
         .then(biometryType => {
-
           // TouchID Supported, Request ID
           TouchID.authenticate('Verify Your Identity')
             .then(success => {
-              this.props.firebase.updateProfile(requestTeacher(teacherItem.key, this.state.requestedDate, this.props.firebase.auth()._user.uid, this.state.requestedDay))
+              this.props.firebase.updateProfile(requestTeacher(this.props.requestedTeacher.key, this.state.requestedDate, this.props.firebase.auth()._user.uid, this.state.requestedDay))
               this.props.onFinish()
             })
             .catch(error => {
-              // TODO: Alert user.
+              // TODO: Alert User
             })
-
         })
         .catch(error => {
-          this.props.firebase.updateProfile(requestTeacher(teacherItem.key, this.state.requestedDate, this.props.firebase.auth()._user.uid, this.state.requestedDay))
+          this.props.firebase.updateProfile(requestTeacher(this.props.requestedTeacher.key, this.state.requestedDate, this.props.firebase.auth()._user.uid, this.state.requestedDay))
           this.props.onFinish()
         })
     }
@@ -101,8 +98,8 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
           <Calendar
             markedDates={this.state.markedDates}
             markingType={'interactive'}
-            onMonthChange={(date) => this.onMonthChange(date) }
-            onDayPress={(date) => this.handleDatePress(date) }
+            onMonthChange={(date) => this.onMonthChange(date)}
+            onDayPress={(date) => this.handleDatePress(date)}
           />
         </Overlay>
 

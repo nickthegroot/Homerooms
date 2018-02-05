@@ -73,8 +73,8 @@ export default class HomeScreen extends React.Component<Props, State> {
       recipients: [email]
     }, (error, event) => {
       if (!__DEV__) {
-        Firebase.crash().log('Mailer Error on HomeScreen')
-        Firebase.crash().report(error)
+        Firebase.fabric.crashlytics().log('Mailer Error on HomeScreen')
+        Firebase.fabric.crashlytics().recordError(100, error)
       }
 
       Alert.alert(

@@ -2,7 +2,6 @@ import Config from './DebugConfig'
 import Reactotron from 'reactotron-react-native'
 import { reactotronRedux } from 'reactotron-redux'
 
-
 if (Config.useReactotron) {
   // https://github.com/infinitered/reactotron for more options!
   Reactotron
