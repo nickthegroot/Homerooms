@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   title: {
-    fontFamily: 'JosefinSlab-Regular',
+    fontFamily: 'JosefinSlab-Bold',
     fontSize: 13,
     color: '#8E8E93',
     letterSpacing: 0.08,
@@ -16,14 +16,24 @@ export default StyleSheet.create({
     lineHeight: 16
   },
   titleSection: {
-    flex: 1
+    flex: 2
   },
   contentSection: {
-    flex: 5
+    flex: 5,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   section: {
     flex: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  contentText: {
+    flex: 5
+  },
+  editContent: {
+    flex: 1,
+    justifyContent: 'center'
   }
 })

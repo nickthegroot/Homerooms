@@ -8,30 +8,28 @@ import Styles from './Styles/RequestSectionStyles'
 const RequestSection = ({ title, content, onEditClick }) => {
   return (
     <View style={Styles.section}>
+
       <View style={Styles.titleSection}>
         {/* Title */}
         <Text style={Styles.title}>{title.toUpperCase()}</Text>
       </View>
 
-      <Divider />
-
       <View style={Styles.contentSection}>
-        <View>
+        <View style={Styles.contentText}>
           {/* Content */}
           <Text style={Styles.content}>{content}</Text>
         </View>
+      </View>
 
-        {/* Only Show Edit Button When Needed */}
-        {(onEditClick)
+      <View onClick={onEditClick} style={Styles.editContent}>
+        {(onEditClick) // only show edit button when needed
           ? (
-            <View onClick={onEditClick}>
-              <Icon name='chevron-right' size={30} color='black' />
-            </View>
-            )
+            <Icon name='chevron-right' size={30} color='black' />
+          )
           : null
         }
-
       </View>
+
     </View>
   )
 }

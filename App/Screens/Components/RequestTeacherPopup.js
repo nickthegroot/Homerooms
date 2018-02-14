@@ -14,41 +14,43 @@ import type { Teacher } from '../../Types/DatabaseTypes'
 import Styles from './Styles/RequestPopupStyles'
 import { firebaseConnect } from 'react-redux-firebase'
 
-const DISABLED_DAYS = [1, 4, 5, 6, 7] // Thursday - Monday
+// const DISABLED_DAYS = [1, 4, 5, 6, 7] // Thursday - Monday
+// function getDaysInMonth (month, year, days) {
+//   let pivot = DateTime.local(year, month).startOf('month')
+//   const end = DateTime.local(year, month).endOf('month')
+
+//   let dates = {}
+//   const disabled = { disabled: true }
+
+//   while (pivot < end) { // eslint-disable-line
+//     days.forEach((day) => {
+//       dates[pivot.set({ weekday: day }).toISODate()] = disabled
+//     })
+//     pivot.plus({ days: 7 })
+//   }
+
+//   return dates
+// }
 
 @firebaseConnect()
 class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeacher: Teacher, onFinish: () => void}> {
   // TODO: Set A/B day
 
-  state = {
-    markedDates: this.getDaysInMonth(DateTime.local().month, DateTime.local().year, DISABLED_DAYS),
-    calVisiblity: false,
-    requestedDate: null,
-    requestedDay: null
-  }
-
-  onMonthChange = (date) => {
-    this.setState({
-      markedDates: this.getDaysInMonth(date.month - 1, date.year, DISABLED_DAYS)
-    })
-  }
-
-  getDaysInMonth (month, year, days) {
-    let pivot = DateTime.local(year, month).startOf('month')
-    const end = DateTime.local(year, month).endOf('month')
-
-    let dates = {}
-    const disabled = { disabled: true }
-
-    while (pivot < end) { // eslint-disable-line
-      days.forEach((day) => {
-        dates[pivot.set({weekday: day}).toISODate()] = disabled
-      })
-      pivot.plus({days: 7})
+  constructor (props) {
+    super(props)
+    this.state = {
+      // markedDates: getDaysInMonth(DateTime.local().month, DateTime.local().year, DISABLED_DAYS),
+      calVisiblity: false,
+      requestedDate: null,
+      requestedDay: null
     }
+  } 
 
-    return dates
-  }
+  // onMonthChange = (date) => {
+  //   this.setState({
+  //     markedDates: getDaysInMonth(date.month - 1, date.year, DISABLED_DAYS)
+  //   })
+  // }
 
   handleRequest = () => {
     // Check to make sure all info is entered correctly.
@@ -73,51 +75,63 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
     }
   }
 
-  handleDatePress = (date) => {
-    this.setState({
-      requestedDate: DateTime.fromISO(date.dateString).set({ hour: 13, minute: 30 }),
-      calVisiblity: false
-    })
-  }
+  // handleDatePress = (date) => {
+  //   this.setState({
+  //     requestedDate: DateTime.fromISO(date.dateString).set({ hour: 13, minute: 30 }),
+  //     calVisiblity: false
+  //   })
+  // }
 
   render () {
     return (
       <Modal
         style={Styles.bottomModal}
         isVisible={this.props.isVisible}
-        onSwipe={this.handleRequest}
+        onSwipe={this.props.onFinish}
         swipeDirection='up' >
 
-        <View style={Styles.header}>
-          {/* Top View + Header */}
-          <Image source={require('../../Assets/Images/logo.png')} />
-          <Text style={Styles.subsectionTitle}>REQUEST A TEACHER</Text>
-        </View>
-
-        <Overlay isVisible={this.state.calVisiblity}>
+        {/* <Overlay isVisible={this.state.calVisiblity}>
           <Calendar
             markedDates={this.state.markedDates}
             markingType={'interactive'}
             onMonthChange={(date) => this.onMonthChange(date)}
             onDayPress={(date) => this.handleDatePress(date)}
           />
-        </Overlay>
+        </Overlay> */}
 
-        <RequestSection
-          title='Requested Teacher'
-          content={`${this.props.requestedTeacher.firstName} ${this.props.requestedTeacher.lastName}`} />
+        <View style={{ backgroundColor: 'white', height: 300 }}>
 
-        <Divider />
+          <View style={Styles.header}>
+            <Image source={require('../../Assets/Images/logo.png')} style={{ width: 30, height: 30 }} />
+            <Text style={Styles.subsectionTitle}>REQUEST A TEACHER</Text>
+          </View>
 
-        <RequestSection
-          title='Requested Teacher'
-          content={(this.state.requestedDate) ? this.state.requestedDate.toLocaleString(DateTime.DATE_HUGE) : 'Set a date'}
-          onEditClick={() => this.setState({calVisiblity: true})} />
+          <Divider />
 
-        <Divider />
+          <RequestSection
+            title='Requested Teacher'
+            content={(this.props.requestedTeacher) ? `${this.props.requestedTeacher.firstName} ${this.props.requestedTeacher.lastName}` : 'No Teacher Selected'} />
 
-        <View>
-          <Text style={Styles.footerText}>Slide up to request</Text>
+          <Divider />
+
+          <RequestSection
+            title='Requested Date'
+            content={(this.state.requestedDate) ? this.state.requestedDate.toLocaleString(DateTime.DATE_HUGE) : 'Set a date'}
+            onEditClick={() => this.setState({ calVisiblity: true })} />
+
+          <Divider />
+
+          <RequestSection
+            title='Reason'
+            content={(this.state.reason) ? this.state.reason : 'Set a reason'}
+            onEditClick={() => this.setState({ reasonVisiblity: true })} />
+
+          <Divider />
+
+          <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
+            <Text style={Styles.footerText}>Slide up to request</Text>
+          </View>
+
         </View>
 
       </Modal>

@@ -59,6 +59,8 @@ class SearchScreen extends Component {
   }
 
   render () {
+    console.tron.log(this.state)
+
     let teacherCards = []
 
     for (let result in this.state.matches) {
@@ -84,11 +86,11 @@ class SearchScreen extends Component {
 
     return (
       <View style={Styles.mainContainer}>
-        {teacherCards}
-        {/* <RequestTeacherPopup
-          isVisible={this.state.requestVisibility}
+        <RequestTeacherPopup
           requestedTeacher={this.state.requestedTeacher}
-          onFinish={() => this.setState({ requestVisibility: false })} /> */}
+          onFinish={() => this.setState({ requestVisibility: false })}
+          isVisible={this.state.requestVisibility} />
+        {teacherCards}
       </View>
     )
   }
