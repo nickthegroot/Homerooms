@@ -4,8 +4,8 @@ import { ScrollView, View } from 'react-native'
 import { List, ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
-import { DateTime } from 'luxon'
 import RequestTeacherPopup from '../Components/RequestTeacherPopup'
+import getNextSeminar from '../../Services/getNextSeminar'
 
 import type { Teacher } from '../../Types/DatabaseTypes'
 import type Firebase from 'react-native-firebase'
@@ -25,18 +25,12 @@ type Props = {
   teachers: firebase.ordered.teachers,
   profile: firebase.profile
 }))
-export default class RequestScreen extends React.Component<Props, {nextSeminar: DateTime, teachers: []}> {
+export default class RequestScreen extends React.Component<Props, {nextSeminar: any, teachers: []}> {
   constructor (props: Props) {
     super(props)
-    let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 })
-    let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
-
-    let nextSeminar = (nextSeminarTuesday > nextSeminarWednesday)
-      ? nextSeminarTuesday
-      : nextSeminarWednesday
 
     this.state = {
-      nextSeminar: nextSeminar,
+      nextSeminar: getNextSeminar(),
       teachers: null,
       requestVisibility: false,
       requestedTeacher: null
@@ -86,10 +80,10 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
             {teacherList}
           </List>
         </ScrollView>
-        {/* <RequestTeacherPopup
+        <RequestTeacherPopup
           isVisible={this.state.requestVisibility}
           requestedTeacher={this.state.requestedTeacher}
-          onFinish={() => this.setState({ requestVisibility: false })} /> */}
+          onFinish={() => this.setState({ requestVisibility: false })} />
       </View>
     )
   }

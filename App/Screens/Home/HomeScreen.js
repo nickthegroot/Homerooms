@@ -5,7 +5,8 @@ import Firebase from 'react-native-firebase'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import Mailer from 'react-native-mail'
-import { DateTime } from 'luxon'
+import getNextSeminar from '../../Services/getNextSeminar'
+import Moment from 'moment'
 
 import { firebaseProfilePopulates } from '../../Config/FirebaseConfig'
 import type { Teacher, Request } from '../../Types/DatabaseTypes'
@@ -43,18 +44,13 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 }) // day(7 + 2).hour(12).minute(30)
-    let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
+    let nextSeminar = getNextSeminar()
 
-    let nextSeminar = (nextSeminarTuesday < nextSeminarWednesday)
-      ? nextSeminarTuesday
-      : nextSeminarWednesday
-
-      // TODO: Attach a requsted timestamp onto every reqest
+    // TODO: Attach a requsted timestamp onto every reqest
     if (nextProps.populatedProfile.lastRequest &&
       nextProps.populatedProfile.lastRequest.accepted &&
       nextProps.populatedProfile.lastRequest.teacher &&
-      DateTime.fromISO(nextProps.populatedProfile.lastRequest.requestedTime) > nextSeminar) {
+      Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminar)) {
       Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
         this.setState({
           seminarTeacher: [teacherSnapshot.val(), null]

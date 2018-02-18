@@ -1,10 +1,10 @@
 // @flow
 
 import Firebase from 'react-native-firebase'
-import { DateTime } from 'luxon'
+import Moment from 'moment'
 import { Platform, Alert } from 'react-native'
 
-const handleRequest = (teacherKey: string, nextSeminar: DateTime, uid: string, day: 'A' | 'B') => {
+const handleRequest = (teacherKey: string, nextSeminar: any, uid: string, day: 'A' | 'B') => {
   var requestKey: { lastRequest: string } = {}
   try {
     // TODO: Change when Push Notifications are enabled on iOS.
@@ -15,7 +15,7 @@ const handleRequest = (teacherKey: string, nextSeminar: DateTime, uid: string, d
           pushID: token,
           teacher: teacherKey,
           accepted: false,
-          timestamp: DateTime.local().toString(),
+          timestamp: Moment.format(),
           requestedTime: nextSeminar.toString(),
           day: day
         })
@@ -26,7 +26,7 @@ const handleRequest = (teacherKey: string, nextSeminar: DateTime, uid: string, d
         user: uid,
         teacher: teacherKey,
         accepted: false,
-        timestamp: DateTime.local().toString(),
+        timestamp: Moment.format(),
         requestedTime: nextSeminar.toString(),
         day: day
       })

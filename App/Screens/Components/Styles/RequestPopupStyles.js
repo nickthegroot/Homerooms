@@ -15,7 +15,9 @@ export default StyleSheet.create({
   },
   header: {
     flex: 1,
-    flexDirection: 'row'
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   footerText: {
     ...Fonts.style.content

@@ -1,13 +1,13 @@
 // @flow
 
 import React, { Component } from 'react'
-import { View, Alert } from 'react-native'
+import { View } from 'react-native'
 import { ListItem } from 'react-native-elements'
-import { DateTime } from 'luxon'
 import { firebaseConnect } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import filter from 'lodash.filter'
 import RequestTeacherPopup from '../Components/RequestTeacherPopup'
+import getNextSeminar from '../../Services/getNextSeminar'
 
 import Styles from './Styles/SearchStyles'
 import type { Teacher } from '../../Types/DatabaseTypes'
@@ -30,15 +30,9 @@ class SearchScreen extends Component {
 
   constructor (props) {
     super(props)
-    let nextSeminarTuesday = DateTime.local().set({ weekday: 2, hour: 12, minute: 30 }) // day(7 + 2).hour(12).minute(30)
-    let nextSeminarWednesday = DateTime.local().set({ weekday: 3, hour: 12, minute: 30 })
-
-    let nextSeminar = (nextSeminarTuesday > nextSeminarWednesday)
-      ? nextSeminarTuesday
-      : nextSeminarWednesday
 
     this.state = {
-      nextSeminar: nextSeminar,
+      nextSeminar: getNextSeminar(),
       matches: null,
       requestVisibility: false,
       requestedTeacher: null
@@ -59,8 +53,6 @@ class SearchScreen extends Component {
   }
 
   render () {
-    console.tron.log(this.state)
-
     let teacherCards = []
 
     for (let result in this.state.matches) {

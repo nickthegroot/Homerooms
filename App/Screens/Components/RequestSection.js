@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { Divider } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Styles from './Styles/RequestSectionStyles'
@@ -16,15 +15,14 @@ const RequestSection = ({ title, content, onEditClick }) => {
 
       <View style={Styles.contentSection}>
         <View style={Styles.contentText}>
-          {/* Content */}
           <Text style={Styles.content}>{content}</Text>
         </View>
       </View>
 
-      <View onClick={onEditClick} style={Styles.editContent}>
+      <View style={Styles.editContent}>
         {(onEditClick) // only show edit button when needed
           ? (
-            <Icon name='chevron-right' size={30} color='black' />
+            <Icon onPress={onEditClick} name='chevron-right' size={30} color='black' />
           )
           : null
         }
