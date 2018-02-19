@@ -1,15 +1,15 @@
 // @flow
 
 import React, { Component } from 'react'
-import { View, Image, Text } from 'react-native'
+import { View, Image, Text, TextInput, Button } from 'react-native'
 import { Divider } from 'react-native-elements'
 import { Calendar } from 'react-native-calendars'
 import Modal from 'react-native-modal'
 import moment from 'moment'
 import RequestSection from './RequestSection'
 import TouchID from 'react-native-touch-id'
-import Prompt from 'rn-prompt'
 import requestTeacher from '../../Services/requestTeacher'
+import getNextSeminar from '../../Services/getNextSeminar'
 import type { Teacher } from '../../Types/DatabaseTypes'
 
 import Styles from './Styles/RequestPopupStyles'
@@ -31,7 +31,7 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
   }
 
   getDaysInMonth (month, year) {
-    const DISABLED_DAYS = ['Tuesday', 'Wednesday']
+    const DISABLED_DAYS = ['Monday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     let pivot = moment().month(month).year(year).startOf('month')
     const end = moment().month(month).year(year).endOf('month')
 
@@ -51,6 +51,16 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
     this.setState({
       markedDates: this.getDaysInMonth(date.month - 1, date.year)
     })
+  }
+
+  handleDatePress = (date) => {
+    console.tron.log(moment(date.dateString).weekday())
+    if (moment(date.dateString).weekday() === 2 || moment(date.dateString).weekday() === 3) {
+      this.setState({
+        requestedDate: moment(date.dateString).hour(13).minute(30),
+        calVisiblity: false
+      })
+    }
   }
 
   handleRequest = () => {
@@ -73,6 +83,9 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
           this.props.firebase.updateProfile(requestTeacher(this.props.requestedTeacher.key, this.state.requestedDate, this.props.firebase.auth()._user.uid, this.state.requestedDay))
           this.props.onFinish()
         })
+    } else {
+      // TODO: alert user not everything is in
+      this.props.onFinish()
     }
   }
 
@@ -83,27 +96,30 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
         <Modal
           style={Styles.bottomModal}
           isVisible={this.props.isVisible}
-          onSwipe={this.props.onFinish}
-          swipeDirection='up' >
+          onSwipe={this.handleRequest}
+          swipeDirection='up'
+          onBackdropPress={this.props.onFinish} >
 
-          <Modal isVisible={this.state.calVisiblity}>
+          <Modal isVisible={this.state.calVisiblity} onBackdropPress={() => this.setState({ calVisiblity: false })}>
             <Calendar
+              style={{ flex: 0 }}
               markedDates={this.state.markedDates}
+              minDate={getNextSeminar().format('YYYY-MM-DD')}
               onMonthChange={(date) => this.onMonthChange(date)}
               onDayPress={(date) => this.handleDatePress(date)} />
           </Modal>
 
-          <Prompt
-            title='Request Reason'
-            placeholder='I need some help with my essay'
-            visible={this.state.reasonVisiblity}
-            onCancel={() => this.setState({
-              reasonVisiblity: false
-            })}
-            onSubmit={(reason) => this.setState({
-              reasonVisiblity: false,
-              reason: reason
-            })} />
+          <Modal isVisible={this.state.reasonVisiblity} onBackdropPress={() => this.setState({ reasonVisiblity: false, reason: '' })}>
+            <View style={{ backgroundColor: 'white' }}>
+              <Text style={Styles.reasonTitle}>Reason</Text>
+              <TextInput
+                style={Styles.reasonInput}
+                onChangeText={(text) => this.setState({reason: text})}
+                value={this.state.reason} />
+              <Button title='Enter' onPress={() => this.setState({reasonVisiblity: false})} />
+              <Button title='Cancel' onPress={() => this.setState({ reasonVisiblity: false, reason: '' })} />
+            </View>
+          </Modal>
 
           <View style={{ backgroundColor: 'white', height: 350 }}>
 
