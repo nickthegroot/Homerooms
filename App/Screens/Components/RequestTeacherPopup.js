@@ -6,8 +6,9 @@ import { Divider } from 'react-native-elements'
 import { Calendar } from 'react-native-calendars'
 import Modal from 'react-native-modal'
 import moment from 'moment'
-import RequestSection from './RequestSection'
 import TouchID from 'react-native-touch-id'
+import RequestSection from './RequestSection'
+import BlueButton from './Button'
 import requestTeacher from '../../Services/requestTeacher'
 import getNextSeminar from '../../Services/getNextSeminar'
 import type { Teacher } from '../../Types/DatabaseTypes'
@@ -54,11 +55,10 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
   }
 
   handleDatePress = (date) => {
-    console.tron.log(moment(date.dateString).weekday())
     if (moment(date.dateString).weekday() === 2 || moment(date.dateString).weekday() === 3) {
       this.setState({
         requestedDate: moment(date.dateString).hour(13).minute(30),
-        calVisiblity: false
+        dayVisiblity: true
       })
     }
   }
@@ -67,21 +67,28 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
     // Check to make sure all info is entered correctly.
     if (this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid) {
       // Verify user with touch ID
-      TouchID.isSupported()
-        .then(biometryType => {
-          // TouchID Supported, Request ID
-          TouchID.authenticate('Verify Your Identity')
-            .then(success => {
+      TouchID.authenticate('Verify your Identity')
+        .then(success => {
+          this.props.firebase.updateProfile(requestTeacher(
+            this.props.requestedTeacher.id,
+            this.state.requestedDate,
+            this.props.firebase.auth()._user.uid,
+            this.state.requestedDay,
+            this.state.reason
+            ))
+          this.props.onFinish()
+        })
+        .catch(error => {
+          switch (error) {
+            case 'RCTTouchIDNotSupported':
+            case 'LAErrorTouchIDNotAvailable':
+            case 'LAErrorTouchIDNotEnrolled':
               this.props.firebase.updateProfile(requestTeacher(this.props.requestedTeacher.key, this.state.requestedDate, this.props.firebase.auth()._user.uid, this.state.requestedDay))
               this.props.onFinish()
-            })
-            .catch(() => {
-              // TODO: Alert User
-            })
-        })
-        .catch(() => {
-          this.props.firebase.updateProfile(requestTeacher(this.props.requestedTeacher.key, this.state.requestedDate, this.props.firebase.auth()._user.uid, this.state.requestedDay))
-          this.props.onFinish()
+              break
+            default:
+              break
+          }
         })
     } else {
       // TODO: alert user not everything is in
@@ -96,11 +103,16 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
         <Modal
           style={Styles.bottomModal}
           isVisible={this.props.isVisible}
-          onSwipe={this.handleRequest}
-          swipeDirection='up'
           onBackdropPress={this.props.onFinish} >
 
-          <Modal isVisible={this.state.calVisiblity} onBackdropPress={() => this.setState({ calVisiblity: false })}>
+          <Modal isVisible={this.state.calVisiblity} onBackdropPress={() => this.setState({ requestedDay: null, requestedDate: null, calVisiblity: false })}>
+            <Modal isVisible={this.state.dayVisiblity} onBackdropPress={() => this.setState({ dayVisiblity: false, requestedDay: null, requestedDate: null, calVisiblity: false })}>
+              <View style={Styles.dayView}>
+                <Text style={Styles.dayTitle}>Is this an A or B day?</Text>
+                <Button style={Styles.dayButtons} title='A' onPress={() => { this.setState({ requestedDay: 'A', dayVisiblity: false }); setTimeout(() => this.setState({calVisiblity: false}), 320) }} />
+                <Button style={Styles.dayButtons} title='B' onPress={() => { this.setState({ requestedDay: 'B', dayVisiblity: false }); setTimeout(() => this.setState({ calVisiblity: false }), 320) }} />
+              </View>
+            </Modal>
             <Calendar
               style={{ flex: 0 }}
               markedDates={this.state.markedDates}
@@ -110,14 +122,15 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
           </Modal>
 
           <Modal isVisible={this.state.reasonVisiblity} onBackdropPress={() => this.setState({ reasonVisiblity: false, reason: '' })}>
-            <View style={{ backgroundColor: 'white' }}>
+            <View style={Styles.reasonView}>
               <Text style={Styles.reasonTitle}>Reason</Text>
               <TextInput
                 style={Styles.reasonInput}
                 onChangeText={(text) => this.setState({reason: text})}
-                value={this.state.reason} />
-              <Button title='Enter' onPress={() => this.setState({reasonVisiblity: false})} />
-              <Button title='Cancel' onPress={() => this.setState({ reasonVisiblity: false, reason: '' })} />
+                value={this.state.reason}
+                placeholder='I need some advice on my research paper' />
+              <Button style={Styles.reasonButtons} title='Enter' onPress={() => this.setState({ reasonVisiblity: false })} />
+              <Button style={Styles.reasonButtons} title='Cancel' onPress={() => this.setState({ reasonVisiblity: false, reason: '' })} />
             </View>
           </Modal>
 
@@ -138,7 +151,7 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
 
             <RequestSection
               title='Requested Date'
-              content={(this.state.requestedDate) ? this.state.requestedDate.format('dddd, MMMM Do') : 'Set a date'}
+              content={(this.state.requestedDate && this.state.requestedDay) ? `${this.state.requestedDate.format('dddd, MMMM Do')} | ${this.state.requestedDay} Day` : 'Set a date'}
               onEditClick={() => this.setState({ calVisiblity: true })} />
 
             <Divider />
@@ -148,10 +161,11 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
               content={(this.state.reason) ? this.state.reason : 'Set a reason'}
               onEditClick={() => this.setState({ reasonVisiblity: true })} />
 
-            <Divider />
-
-            <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }}>
-              <Text style={Styles.footerText}>Slide up to request</Text>
+            <View style={Styles.confirmView}>
+              <BlueButton
+                text='Confirm Request'
+                disabled={this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid}
+                onPress={this.handleRequest} />
             </View>
 
           </View>

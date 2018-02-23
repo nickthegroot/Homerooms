@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { ScrollView, View } from 'react-native'
-import { List, ListItem } from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import RequestTeacherPopup from '../Components/RequestTeacherPopup'
@@ -12,6 +12,7 @@ import type Firebase from 'react-native-firebase'
 
 // Styles
 import styles from './Styles/RequestScreenStyles'
+import { Fonts } from '../../Themes'
 
 type Props = {
   teachers: [],
@@ -56,7 +57,9 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
           teacherList.push(
             <ListItem
               roundAvatar
+              fontFamily={Fonts.type.content}
               avatar={teacherPic}
+              containerStyle={{ borderBottomWidth: 0 }}
               onPressRightIcon={
                 function () {
                   this.setState({
@@ -76,9 +79,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
     return (
       <View style={styles.mainContainer}>
         <ScrollView>
-          <List>
-            {teacherList}
-          </List>
+          {teacherList}
         </ScrollView>
         <RequestTeacherPopup
           isVisible={this.state.requestVisibility}

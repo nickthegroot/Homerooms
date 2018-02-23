@@ -1,10 +1,10 @@
 // @flow
 
 import Firebase from 'react-native-firebase'
-import Moment from 'moment'
+import moment from 'moment'
 import { Platform, Alert } from 'react-native'
 
-const handleRequest = (teacherKey: string, nextSeminar: any, uid: string, day: 'A' | 'B') => {
+function handleRequest (teacherKey: string, nextSeminar: any, uid: string, day: 'A' | 'B', reason?: string) {
   var requestKey: { lastRequest: string } = {}
   try {
     // TODO: Change when Push Notifications are enabled on iOS.
@@ -15,9 +15,11 @@ const handleRequest = (teacherKey: string, nextSeminar: any, uid: string, day: '
           pushID: token,
           teacher: teacherKey,
           accepted: false,
-          timestamp: Moment.format(),
-          requestedTime: nextSeminar.toString(),
-          day: day
+          denied: false,
+          timestamp: moment().format(),
+          requestedTime: nextSeminar.format(),
+          day: day,
+          reason: reason
         })
         requestKey = { lastRequest: requestRef.key }
       })
@@ -26,9 +28,11 @@ const handleRequest = (teacherKey: string, nextSeminar: any, uid: string, day: '
         user: uid,
         teacher: teacherKey,
         accepted: false,
-        timestamp: Moment.format(),
-        requestedTime: nextSeminar.toString(),
-        day: day
+        denied: false,
+        timestamp: moment().format(),
+        requestedTime: nextSeminar.format(),
+        day: day,
+        reason: reason
       })
       requestKey = { lastRequest: requestRef.key }
     }
@@ -38,7 +42,7 @@ const handleRequest = (teacherKey: string, nextSeminar: any, uid: string, day: '
       Firebase.crash().log('Push to Database Error on RequestScreen')
       Firebase.crash().report(err)
     } else {
-      console.tron.log(err)
+      console.tron.error(err)
     }
 
     Alert.alert(

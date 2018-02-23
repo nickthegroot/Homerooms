@@ -10,6 +10,7 @@ import RequestTeacherPopup from '../Components/RequestTeacherPopup'
 import getNextSeminar from '../../Services/getNextSeminar'
 
 import Styles from './Styles/SearchStyles'
+import { Fonts } from '../../Themes'
 import type { Teacher } from '../../Types/DatabaseTypes'
 
 const mapStateToProps = state => {
@@ -61,7 +62,9 @@ class SearchScreen extends Component {
       teacherCards.push(
         <ListItem
           roundAvatar
+          fontFamily={Fonts.type.content}
           avatar={teacherPic}
+          containerStyle={{ borderBottomWidth: 0 }}
           onPressRightIcon={
             function () {
               this.setState({
