@@ -1,4 +1,4 @@
-package com.nbdeg.Homeroom;
+package com.nbdeg.homeroom;
 
 import com.facebook.react.ReactActivity;
 
