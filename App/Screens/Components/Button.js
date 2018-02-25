@@ -2,9 +2,9 @@ import React from 'react'
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { Fonts, Colors } from '../../Themes'
 
-const Button = ({text, onPress, disabled}) => {
+const Button = ({text, onPress, disabled = false}) => {
   return (
-    <TouchableOpacity style={(disabled) ? styles.button : styles.disabledButton} onPress={(disabled) ? onPress : null} >
+    <TouchableOpacity style={(disabled) ? styles.disabledButton : styles.button} onPress={(disabled) ? null : onPress} >
       <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity>
   )

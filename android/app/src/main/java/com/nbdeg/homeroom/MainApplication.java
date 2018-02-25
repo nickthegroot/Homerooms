@@ -8,6 +8,14 @@ import com.oblador.vectoricons.VectorIconsPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.chirag.RNMail.RNMail;
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
+import io.invertase.firebase.database.RNFirebaseDatabasePackage;
+import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.perf.RNFirebasePerformancePackage;
+
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.microsoft.codepush.react.CodePush;
 import com.facebook.react.ReactNativeHost;
@@ -36,13 +44,20 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReactVideoPackage(),
-            new VectorIconsPackage(),
-            new FingerprintAuthPackage(),
-            new RNMail(),
-            new RNFirebasePackage(),
-            new RNDeviceInfo(),
-            new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG)
+          new ReactVideoPackage(),
+          new VectorIconsPackage(),
+          new FingerprintAuthPackage(),
+          new RNMail(),
+          new RNFirebasePackage(),
+          new RNFirebaseAnalyticsPackage(),
+          new RNFirebaseAuthPackage(),
+          new RNFirebaseCrashlyticsPackage(),
+          new RNFirebaseDatabasePackage(),
+          new RNFirebasePerformancePackage(),
+          new RNFirebaseMessagingPackage(),
+          new RNFirebaseRemoteConfigPackage(),
+          new RNDeviceInfo(),
+          new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG)
       );
     }
 
