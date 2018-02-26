@@ -164,7 +164,7 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
             <View style={Styles.confirmView}>
               <BlueButton
                 text='Confirm Request'
-                disabled={this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid}
+                disabled={!(this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid)}
                 onPress={this.handleRequest} />
             </View>
 
