@@ -5,7 +5,7 @@ import Firebase from 'react-native-firebase'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import Mailer from 'react-native-mail'
-import getNextSeminar from '../../Services/getNextSeminar'
+import { getBothSeminars } from '../../Services/getNextSeminar'
 import Moment from 'moment'
 
 import { firebaseProfilePopulates } from '../../Config/FirebaseConfig'
@@ -44,16 +44,17 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    let nextSeminar = getNextSeminar()
+    let nextSeminars = getBothSeminars()
 
     // TODO: Attach a requsted timestamp onto every reqest
     if (nextProps.populatedProfile.lastRequest &&
       nextProps.populatedProfile.lastRequest.accepted &&
       nextProps.populatedProfile.lastRequest.teacher &&
-      Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminar)) {
+      (Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminars[0]) || Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminars[1]))
+    ) {
       Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
         this.setState({
-          seminarTeacher: [teacherSnapshot.val(), null]
+          seminarTeachers: (nextProps.populatedProfile.lastRequest.day === 'A') ? [teacherSnapshot.val(), nextProps.populatedProfile.seminars.b] : [nextProps.populatedProfile.seminars.a, teacherSnapshot.val()]
         })
       }.bind(this))
     } else {
@@ -65,7 +66,7 @@ export default class HomeScreen extends React.Component<Props, State> {
 
   handleEmail = (email: string) => {
     Mailer.mail({
-      subject: 'Support Seminar Help',
+      subject: 'Homeroom Help',
       recipients: [email]
     }, (error, event) => {
       if (!__DEV__) {

@@ -5,7 +5,7 @@ import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import RequestTeacherPopup from '../Components/RequestTeacherPopup'
-import getNextSeminar from '../../Services/getNextSeminar'
+import { getNextSeminar } from '../../Services/getNextSeminar'
 
 import type { Teacher } from '../../Types/DatabaseTypes'
 import type Firebase from 'react-native-firebase'

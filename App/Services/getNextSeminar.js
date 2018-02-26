@@ -1,6 +1,6 @@
 import Moment from 'moment'
 
-function getNextSeminar () {
+export function getNextSeminar () {
   let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
   let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
 
@@ -9,4 +9,9 @@ function getNextSeminar () {
     : nextSeminarWednesday
 }
 
-export default getNextSeminar
+export function getBothSeminars () {
+  let nextSeminarTuesday = Moment().day(7 + 2).hour(12).minute(30)
+  let nextSeminarWednesday = Moment().day(7 + 3).hour(12).minute(30)
+
+  return [ nextSeminarTuesday, nextSeminarWednesday ]
+}
