@@ -5,6 +5,7 @@ import { firebaseConnect } from 'react-redux-firebase'
 import Firebase from 'react-native-firebase'
 import { NavigationActions } from 'react-navigation'
 import Video from 'react-native-video'
+import RNRestart from 'react-native-restart'
 
 import Button from '../Components/Button'
 import BackgroundVideo from '../../Assets/Videos/BackgroundVideo2.mp4'
@@ -41,12 +42,7 @@ class SignInScreen extends Component {
 
   handleSignIn () {
     this.props.firebase.login({email: this.state.email, password: this.state.password})
-      .then(() => this.props.navigation.dispatch(NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'TabNav' })
-        ]
-      })))
+      .then(() => RNRestart.Restart()) // Part time fix for sign in bug
       .catch((error) => {
         this.handleError(error)
       })

@@ -42,6 +42,7 @@
     "react-native-material-bottom-navigation": "^0.7.0",
     "react-native-modal": "^5.0.0",
     "react-native-modal-overlay": "^1.2.3",
+    "react-native-restart": "^0.0.6",
     "react-native-touch-id": "^4.0.0",
     "react-native-vector-icons": "^4.5.0",
     "react-native-video": "^2.0.0",

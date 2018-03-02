@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => {
       }))
     },
     setQuery: (query: string) => {
-      dispatch({ type: 'setQuery', query: query })
+      dispatch({ type: 'NAVIGATION/setQuery', query: query })
     }
   }
 }

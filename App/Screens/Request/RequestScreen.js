@@ -51,7 +51,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
 
     if (this.state.teachers) {
       for (let teacherItem of this.state.teachers) {
-        if (teacherItem.key !== this.props.profile.defaultSeminar) {
+        if (teacherItem.key !== this.props.profile.seminars.a || teacherItem.key !== this.props.profile.seminars.b) {
           let teacher: Teacher = teacherItem.value
           let teacherPic: {uri: string} = ('picture' in teacher) ? { uri: teacher.picture } : null
           teacherList.push(
