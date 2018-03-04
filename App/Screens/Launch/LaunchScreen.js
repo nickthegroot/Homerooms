@@ -3,7 +3,6 @@ import {
   View,
   Text
 } from 'react-native'
-import { NavigationActions } from 'react-navigation'
 import Video from 'react-native-video'
 import { firebaseConnect } from 'react-redux-firebase'
 
@@ -14,20 +13,6 @@ import Styles from './Styles/LaunchStyles'
 
 @firebaseConnect()
 class LaunchScreen extends Component {
-  constructor (props) {
-    super(props)
-    props.firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        props.navigation.dispatch(NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'TabNav' })
-          ]
-        }))
-      }
-    })
-  }
-
   onPressStarted = () => {
     this.props.navigation.navigate('SignInScreen')
   }

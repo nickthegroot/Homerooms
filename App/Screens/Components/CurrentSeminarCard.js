@@ -14,14 +14,14 @@ const CurrentSeminarCard = ({ day, seminarTeacher, onClick, icon = 'email', titl
       <Card image={teacherPic}>
         {(nextDay)
           ? (
-          <Text style={{ ...Fonts.style.content, marginBottom: 10 }}>
+            <Text style={{ ...Fonts.style.content, marginBottom: 10 }}>
               Your next <Text style={{ ...Fonts.style.content, fontWeight: 'bold' }}>{day}</Text> day Homeroom is with <Text style={{ ...Fonts.style.content, fontWeight: 'bold' }}>{seminarTeacher.firstName} {seminarTeacher.lastName}</Text> in room <Text style={{ fontWeight: 'bold' }}>{seminarTeacher.room}</Text> on <Text style={{ fontWeight: 'bold' }}>{nextDay.format('dddd, MMMM Do')}</Text>
-          </Text>
+            </Text>
           )
           : <Text style={{ ...Fonts.style.content, marginBottom: 10 }}>
             Your <Text style={{ ...Fonts.style.content, fontWeight: 'bold' }}>{day}</Text> day Homerooms are with <Text style={{ ...Fonts.style.content, fontWeight: 'bold' }}>{seminarTeacher.firstName} {seminarTeacher.lastName}</Text>
           </Text>}
-        
+
         <Button
           icon={{ name: icon }}
           backgroundColor={Colors.lightBlue}

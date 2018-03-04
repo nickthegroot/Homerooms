@@ -56,14 +56,18 @@ class Header extends Component {
             source={require('../../Assets/Images/logo.png')}
             style={Styles.logo}
             resizeMode='contain' />
-          <SearchBar
-            round
-            lightTheme
-            clearIcon={{ color: '#86939e', name: 'clear' }}
-            containerStyle={Styles.searchBar}
-            onChangeText={this.onSearchChange}
-            onClearText={this.onClearText}
-            placeholder='Search' />
+          {(this.props.dayChange)
+          ? null
+          : (
+            <SearchBar
+              round
+              lightTheme
+              clearIcon={{ color: '#86939e', name: 'clear' }}
+              containerStyle={Styles.searchBar}
+              onChangeText={this.onSearchChange}
+              onClearText={this.onClearText}
+              placeholder='Search' />
+          )}
         </View>
       </View>
     )

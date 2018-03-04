@@ -47,7 +47,7 @@ export default class HomeScreen extends React.Component<Props, State> {
     let nextSeminars = getBothSeminars()
 
     // TODO: Attach a requsted timestamp onto every reqest
-    if (nextProps.populatedProfile) {
+    if (!nextProps.populatedProfile.isEmpty && nextProps.populatedProfile.isLoaded) {
       if (
         nextProps.populatedProfile.lastRequest &&
         nextProps.populatedProfile.lastRequest.accepted &&
