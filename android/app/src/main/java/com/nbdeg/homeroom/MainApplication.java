@@ -3,7 +3,6 @@ package com.nbdeg.homeroom;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
@@ -45,7 +44,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReactNativeRestartPackage(),
           new ReactVideoPackage(),
           new VectorIconsPackage(),
           new FingerprintAuthPackage(),
