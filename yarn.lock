@@ -4665,8 +4665,8 @@ react-native-elements@^0.19.0:
     prop-types "^15.5.8"
 
 react-native-firebase@^3.2.4:
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-3.2.5.tgz#95ea8c89fa29a6bf0b7b94d5b9959362fdd90a44"
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-3.2.7.tgz#e439e40c8a6f382dff5f08ae313f917d0783c211"
   dependencies:
     bows "^1.6.0"
     opencollective "^1.0.3"

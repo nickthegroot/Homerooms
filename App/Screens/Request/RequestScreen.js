@@ -5,7 +5,7 @@ import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import RequestTeacherPopup from '../Components/RequestTeacherPopup'
-import getNextSeminar from '../../Services/getNextSeminar'
+import { getNextSeminar } from '../../Services/getNextSeminar'
 
 import type { Teacher } from '../../Types/DatabaseTypes'
 import type Firebase from 'react-native-firebase'
@@ -49,9 +49,9 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
   render () {
     var teacherList = []
 
-    if (this.state.teachers) {
+    if (this.state.teachers && !this.props.profile.isEmpty) {
       for (let teacherItem of this.state.teachers) {
-        if (teacherItem.key !== this.props.profile.defaultSeminar) {
+        if (teacherItem.key !== this.props.profile.seminars.a || teacherItem.key !== this.props.profile.seminars.b) {
           let teacher: Teacher = teacherItem.value
           let teacherPic: {uri: string} = ('picture' in teacher) ? { uri: teacher.picture } : null
           teacherList.push(

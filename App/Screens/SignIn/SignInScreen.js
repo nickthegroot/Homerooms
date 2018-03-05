@@ -3,7 +3,6 @@ import { View } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { firebaseConnect } from 'react-redux-firebase'
 import Firebase from 'react-native-firebase'
-import { NavigationActions } from 'react-navigation'
 import Video from 'react-native-video'
 
 import Button from '../Components/Button'
@@ -25,28 +24,11 @@ class SignInScreen extends Component {
       email: null,
       password: null
     }
-
-    // Checks to see if the user is logged in - and if so redirect them to HomeScreen
-    props.firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        props.navigation.dispatch(NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'TabNav' })
-          ]
-        }))
-      }
-    })
   }
 
   handleSignIn () {
     this.props.firebase.login({email: this.state.email, password: this.state.password})
-      .then(() => this.props.navigation.dispatch(NavigationActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'TabNav' })
-        ]
-      })))
+      // .then(() => RNRestart.Restart()) // Part time fix for sign in bug
       .catch((error) => {
         this.handleError(error)
       })

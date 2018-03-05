@@ -7,7 +7,7 @@ import { firebaseConnect } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import filter from 'lodash.filter'
 import RequestTeacherPopup from '../Components/RequestTeacherPopup'
-import getNextSeminar from '../../Services/getNextSeminar'
+import { getNextSeminar } from '../../Services/getNextSeminar'
 
 import Styles from './Styles/SearchStyles'
 import { Fonts } from '../../Themes'

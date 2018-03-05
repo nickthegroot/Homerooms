@@ -8,6 +8,7 @@ import Header from '../Screens/Components/Header'
 import SignInScreen from '../Screens/SignIn/SignInScreen'
 import LaunchScreen from '../Screens/Launch/LaunchScreen'
 import SearchScreen from '../Screens/Search/SearchScreen'
+import ChangeScreen from '../Screens/Change/ChangeScreen'
 
 import HomeScreen from '../Screens/Home/HomeScreen'
 import RequestScreen from '../Screens/Request/RequestScreen'
@@ -80,6 +81,12 @@ const PrimaryNav = StackNavigator({
   },
   SearchScreen: {
     screen: SearchScreen,
+    navigationOptions: {
+      header: (<Header />)
+    }
+  },
+  ChangeScreen: {
+    screen: ChangeScreen,
     navigationOptions: {
       header: (<Header />)
     }

@@ -5,12 +5,12 @@ import Firebase from 'react-native-firebase'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import Mailer from 'react-native-mail'
-import getNextSeminar from '../../Services/getNextSeminar'
+import { getBothSeminars } from '../../Services/getNextSeminar'
 import Moment from 'moment'
 
 import { firebaseProfilePopulates } from '../../Config/FirebaseConfig'
 import type { Teacher, Request } from '../../Types/DatabaseTypes'
-import CurrentSeminarCard from './Components/CurrentSeminarCard'
+import CurrentSeminarCard from '../Components/CurrentSeminarCard'
 
 import Styles from './Styles/HomeScreenStyles'
 
@@ -44,28 +44,32 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    let nextSeminar = getNextSeminar()
+    let nextSeminars = getBothSeminars()
 
     // TODO: Attach a requsted timestamp onto every reqest
-    if (nextProps.populatedProfile.lastRequest &&
-      nextProps.populatedProfile.lastRequest.accepted &&
-      nextProps.populatedProfile.lastRequest.teacher &&
-      Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminar)) {
-      Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
+    if (!nextProps.populatedProfile.isEmpty && nextProps.populatedProfile.isLoaded) {
+      if (
+        nextProps.populatedProfile.lastRequest &&
+        nextProps.populatedProfile.lastRequest.accepted &&
+        nextProps.populatedProfile.lastRequest.teacher &&
+        (Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminars[0]) || Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminars[1]))
+      ) {
+        Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
+          this.setState({
+            seminarTeachers: (nextProps.populatedProfile.lastRequest.day === 'A') ? [teacherSnapshot.val(), nextProps.populatedProfile.seminars.b] : [nextProps.populatedProfile.seminars.a, teacherSnapshot.val()]
+          })
+        }.bind(this))
+      } else {
         this.setState({
-          seminarTeacher: [teacherSnapshot.val(), null]
+          seminarTeachers: [nextProps.populatedProfile.seminars.a, nextProps.populatedProfile.seminars.b]
         })
-      }.bind(this))
-    } else {
-      this.setState({
-        seminarTeachers: [nextProps.populatedProfile.seminars.a, nextProps.populatedProfile.seminars.b]
-      })
+      }
     }
   }
 
   handleEmail = (email: string) => {
     Mailer.mail({
-      subject: 'Support Seminar Help',
+      subject: 'Homeroom Help',
       recipients: [email]
     }, (error, event) => {
       if (!__DEV__) {
@@ -85,11 +89,12 @@ export default class HomeScreen extends React.Component<Props, State> {
   }
 
   render () {
+    let bothSeminars = getBothSeminars()
     return (
       <ScrollView style={Styles.mainContainer}>
         <View style={Styles.container}>
-          <CurrentSeminarCard day='A' seminarTeacher={this.state.seminarTeachers[0]} onClick={this.handleEmail} />
-          <CurrentSeminarCard day='B' seminarTeacher={this.state.seminarTeachers[1]} onClick={this.handleEmail} />
+          <CurrentSeminarCard day='A' seminarTeacher={this.state.seminarTeachers[0]} onClick={this.handleEmail} nextDay={bothSeminars[0]} />
+          <CurrentSeminarCard day='B' seminarTeacher={this.state.seminarTeachers[1]} onClick={this.handleEmail} nextDay={bothSeminars[1]} />
         </View>
       </ScrollView>
     )

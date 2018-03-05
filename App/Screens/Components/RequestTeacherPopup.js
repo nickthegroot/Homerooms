@@ -10,7 +10,7 @@ import TouchID from 'react-native-touch-id'
 import RequestSection from './RequestSection'
 import BlueButton from './Button'
 import requestTeacher from '../../Services/requestTeacher'
-import getNextSeminar from '../../Services/getNextSeminar'
+import { getNextSeminar } from '../../Services/getNextSeminar'
 import type { Teacher } from '../../Types/DatabaseTypes'
 
 import Styles from './Styles/RequestPopupStyles'
