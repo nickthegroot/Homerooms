@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, Text, View, Platform } from 'react-native'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { Button, Card } from 'react-native-elements'
 import { connect } from 'react-redux'
@@ -54,7 +54,7 @@ class SettingsScreen extends React.Component<Props> {
               </Text>
               <Button
                 backgroundColor={Colors.lightBlue}
-                fontFamily={Fonts.type.headings}
+                fontFamily={(Platform.OS === 'ios') ? Fonts.type.headings : Fonts.type.headings + '-Regular'}
                 buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
                 title='Sign Out'
                 onPress={this.handleSignOut.bind(this)} />

@@ -1,5 +1,7 @@
+import { Platform } from 'react-native'
+
 const type = {
-  headings: 'Josefin Slab',
+  headings: (Platform.OS === 'ios') ? 'Josefin Slab' : 'JosefinSlab',
   content: 'Nunito'
 }
 
@@ -12,6 +14,12 @@ const size = {
 const style = {
   content: {
     fontFamily: type.content,
+    fontSize: size.regular,
+    color: 'rgba(0, 0, 0, 0.87)',
+    lineHeight: 14
+  },
+  boldContent: {
+    fontFamily: type.content + '-Bold',
     fontSize: size.regular,
     color: 'rgba(0, 0, 0, 0.87)',
     lineHeight: 14
