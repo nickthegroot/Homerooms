@@ -1,14 +1,14 @@
 // @flow
 
 import React from 'react'
-import { Text, Platform } from 'react-native'
+import { Text } from 'react-native'
 import { Card, Button } from 'react-native-elements'
 import Moment from 'moment'
 import { Fonts, Colors } from '../../Themes'
 import type { Teacher } from '../../Types/DatabaseTypes'
 
-const CurrentSeminarCard = ({ day, seminarTeacher, onClick, icon = 'email', title = 'E-Mail Teacher', nextDay }: { day: string, seminarTeacher: Teacher, onClick: (email: string) => void, icon: string, title: string, nextDay: Moment }) => {
-  let teacherPic = (seminarTeacher && 'picture' in seminarTeacher) ? {uri: seminarTeacher.picture} : null
+const CurrentSeminarCard = ({ day, seminarTeacher, onClick, icon = 'email', title = 'E-Mail Teacher', nextDay, isSettings }: { day: string, seminarTeacher: Teacher, onClick: (email: string) => void, icon: string, title: string, nextDay: Moment }) => {
+  let teacherPic = (seminarTeacher && 'picture' in seminarTeacher && !isSettings) ? {uri: seminarTeacher.picture} : null
   if (seminarTeacher) {
     return (
       <Card image={teacherPic}>
@@ -25,7 +25,7 @@ const CurrentSeminarCard = ({ day, seminarTeacher, onClick, icon = 'email', titl
         <Button
           icon={{ name: icon }}
           backgroundColor={Colors.lightBlue}
-          fontFamily={(Platform.OS === 'ios') ? Fonts.type.headings : Fonts.type.headings + '-Regular'}
+          fontFamily={Fonts.type.headings}
           buttonStyle={{ borderRadius: 2, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
           title={title}
           onPress={() => onClick(seminarTeacher.email)} />

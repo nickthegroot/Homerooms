@@ -37,11 +37,6 @@ class SettingsScreen extends React.Component<Props> {
     this.props.firebase.logout()
   }
 
-  onHomeroomChange = (day: 'A' | 'B') => {
-    this.props.setDayForChange(day)
-    this.props.navigation.navigate({ routeName: 'ChangeScreen' })
-  }
-
   render () {
     return (
       <ScrollView style={Styles.mainContainer} >
@@ -60,8 +55,8 @@ class SettingsScreen extends React.Component<Props> {
                 onPress={this.handleSignOut.bind(this)} />
             </Card>
 
-            <CurrentSeminarCard day='A' seminarTeacher={this.props.populatedProfile.seminars.a} onClick={() => this.onHomeroomChange('A')} icon='edit' title='Change Default Homeroom' />
-            <CurrentSeminarCard day='B' seminarTeacher={this.props.populatedProfile.seminars.b} onClick={() => this.onHomeroomChange('B')} icon='edit' title='Change Default Homeroom' />
+            <CurrentSeminarCard day='A' seminarTeacher={this.props.populatedProfile.seminars.a} onClick={() => this.props.navigation.navigate('ChangeScreen', { dayChange: 'A' })} icon='edit' title='Change Default Homeroom' isSettings />
+            <CurrentSeminarCard day='B' seminarTeacher={this.props.populatedProfile.seminars.b} onClick={() => this.props.navigation.navigate('ChangeScreen', { dayChange: 'B' })} icon='edit' title='Change Default Homeroom' isSettings />
           </View>
         )
       : null

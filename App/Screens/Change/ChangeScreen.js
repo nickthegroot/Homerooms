@@ -23,8 +23,7 @@ type Props = {
 ])
 @connect(({ firebase, dayChange }) => ({
   teachers: firebase.ordered.teachers,
-  profile: firebase.profile,
-  changeDay: dayChange
+  profile: firebase.profile
 }))
 export default class ChangeScreen extends React.Component<Props, { nextSeminar: any, teachers: [] }> {
   componentWillReceiveProps (nextProps: Props) {
@@ -36,7 +35,7 @@ export default class ChangeScreen extends React.Component<Props, { nextSeminar: 
   }
 
   changeHomeroom = (teacherKey: string) => {
-    let updatedProfile = (this.props.changeDay === 'A') ? { seminars: { a: teacherKey, b: this.props.profile.seminars.b } } : { seminars: { a: this.props.profile.seminars.a, b: teacherKey } }
+    let updatedProfile = (this.props.navigation.state.params.dayChange === 'A') ? { seminars: { a: teacherKey, b: this.props.profile.seminars.b } } : { seminars: { a: this.props.profile.seminars.a, b: teacherKey } }
     this.props.firebase.updateProfile(updatedProfile)
     this.props.navigation.dispatch(NavigationActions.reset({
       index: 0,
@@ -51,33 +50,31 @@ export default class ChangeScreen extends React.Component<Props, { nextSeminar: 
 
     if (this.props.teachers) {
       for (let teacherItem of this.props.teachers) {
-        if (teacherItem.key !== this.props.profile.seminars.a && teacherItem.key !== this.props.profile.seminars.b) {
-          let teacher: Teacher = teacherItem.value
-          let teacherPic: { uri: string } = ('picture' in teacher) ? { uri: teacher.picture } : null
-          teacherList.push(
-            <ListItem
-              roundAvatar
-              fontFamily={Fonts.type.content}
-              avatar={teacherPic}
-              containerStyle={{ borderBottomWidth: 0 }}
-              onPressRightIcon={
-                function () {
-                  Alert.alert(
-                    'Are You Sure?',
-                    'If you picked the wrong teacher, it could result in unexcused absances when you go to another Homeroom.',
-                    [
-                      { text: 'OK', onPress: () => this.changeHomeroom(teacherItem.key) },
-                      { text: 'Cancel' }
-                    ],
-                    { cancelable: false }
-                  )
-                }.bind(this)
-              }
-              key={teacherItem.key}
-              title={`${teacher.firstName} ${teacher.lastName}`}
-              subtitle={`${teacher.taughtCourses} | Room ${teacher.room}`} />
-            )
-        }
+        let teacher: Teacher = teacherItem.value
+        let teacherPic: { uri: string } = ('picture' in teacher) ? { uri: teacher.picture } : null
+        teacherList.push(
+          <ListItem
+            roundAvatar
+            fontFamily={Fonts.type.content}
+            avatar={teacherPic}
+            containerStyle={{ borderBottomWidth: 0 }}
+            onPressRightIcon={
+              function () {
+                Alert.alert(
+                  'Are You Sure?',
+                  'If you picked the wrong teacher, it could result in unexcused absances when you go to another Homeroom.',
+                  [
+                    { text: 'OK', onPress: () => this.changeHomeroom(teacherItem.key) },
+                    { text: 'Cancel' }
+                  ],
+                  { cancelable: false }
+                )
+              }.bind(this)
+            }
+            key={teacherItem.key}
+            title={`${teacher.firstName} ${teacher.lastName}`}
+            subtitle={`${teacher.taughtCourses} | Room ${teacher.room}`} />
+          )
       }
     }
 
