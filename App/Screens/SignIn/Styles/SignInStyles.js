@@ -13,13 +13,6 @@ export default StyleSheet.create({
     bottom: 0,
     right: 0
   },
-  bottomButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 375,
-    height: 100,
-    marginBottom: 20
-  },
   overlay: {
     position: 'absolute',
     top: 0,
@@ -29,7 +22,6 @@ export default StyleSheet.create({
     backgroundColor: 'black',
     opacity: 0.3
   },
-  contentView: { flex: 1, justifyContent: 'center', padding: 10 },
   formLabelContainer: {
     backgroundColor: 'transparent'
   },
