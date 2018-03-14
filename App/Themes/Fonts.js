@@ -7,7 +7,7 @@ const families = {
 
 const type = {
   headings: (Platform.OS === 'ios') ? families.headings : families.headings + '-Regular',
-  content: (Platform.OS === 'ios') ? families.content : families.content + '-Regular',
+  content: (Platform.OS === 'ios') ? families.content : families.content + '-Regular'
 }
 
 const size = {
