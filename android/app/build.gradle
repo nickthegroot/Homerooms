@@ -4,6 +4,19 @@ apply plugin: "io.fabric"
 
 import com.android.build.OutputFile
 
+def getPassword(String currentUser, String keyChain) {
+   def stdout = new ByteArrayOutputStream()
+   def stderr = new ByteArrayOutputStream()
+   exec {
+       commandLine 'security', '-q', 'find-generic-password', '-a', currentUser, '-s', keyChain, '-w'
+       standardOutput = stdout
+       errorOutput = stderr
+       ignoreExitValue true
+   }
+   //noinspection GroovyAssignabilityCheck
+      stdout.toString().trim()
+}
+
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -81,9 +94,6 @@ project.ext.react = [
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
-/* Uncomment for local builds */
-// apply from: "$gradle.gradleUserHomeDir/keystores/seminar.gradle"
-
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -99,28 +109,33 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+def pass = getPassword("nbdeg","homeroom_keystore")
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
+
+    dexOptions {
+        preDexLibraries false
+        javaMaxHeapSize "8g"
+    }
 
     defaultConfig {
         applicationId "com.nbdeg.homeroom"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
     }
     signingConfigs {
         release {
-            if (project.hasProperty('SUPPORTSEMINAR_RELEASE_STORE_FILE')) {
-                storeFile file(SUPPORTSEMINAR_RELEASE_STORE_FILE)
-                storePassword SUPPORTSEMINAR_RELEASE_STORE_PASSWORD
-                keyAlias SUPPORTSEMINAR_RELEASE_KEY_ALIAS
-                keyPassword SUPPORTSEMINAR_RELEASE_KEY_PASSWORD
-            }
+            storeFile file(HOMEROOM_RELEASE_STORE_FILE)
+            storePassword pass
+            keyAlias HOMEROOM_RELEASE_KEY_ALIAS
+            keyPassword pass
         }
     }
     splits {
@@ -135,8 +150,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            /* Uncomment for local builds */
-            // signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release

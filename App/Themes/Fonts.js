@@ -1,6 +1,13 @@
-const type = {
-  headings: 'Josefin Slab',
+import { Platform } from 'react-native'
+
+const families = {
+  headings: (Platform.OS === 'ios') ? 'Josefin Slab' : 'JosefinSlab',
   content: 'Nunito'
+}
+
+const type = {
+  headings: (Platform.OS === 'ios') ? families.headings : families.headings + '-Regular',
+  content: (Platform.OS === 'ios') ? families.content : families.content + '-Regular'
 }
 
 const size = {
@@ -11,18 +18,24 @@ const size = {
 
 const style = {
   content: {
-    fontFamily: type.content,
+    fontFamily: families.content + '-Regular',
+    fontSize: size.regular,
+    color: 'rgba(0, 0, 0, 0.87)',
+    lineHeight: 14
+  },
+  boldContent: {
+    fontFamily: families.content + '-Bold',
     fontSize: size.regular,
     color: 'rgba(0, 0, 0, 0.87)',
     lineHeight: 14
   },
   largeHeading: {
-    fontFamily: type.content + '-Bold',
+    fontFamily: families.content + '-Bold',
     fontSize: size.largeHeading,
     color: 'white'
   },
   heading: {
-    fontFamily: type.headings,
+    fontFamily: families.headings,
     fontSize: size.heading,
     color: 'black'
   }

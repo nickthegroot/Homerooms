@@ -13,13 +13,6 @@ export default StyleSheet.create({
     bottom: 0,
     right: 0
   },
-  bottomButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 375,
-    height: 100,
-    marginBottom: 20
-  },
   overlay: {
     position: 'absolute',
     top: 0,
@@ -28,11 +21,6 @@ export default StyleSheet.create({
     left: 0,
     backgroundColor: 'black',
     opacity: 0.3
-  },
-  contentView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   },
   lakeOswegoTitle: {
     fontFamily: Fonts.type.headings,

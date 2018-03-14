@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Dimensions } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { firebaseConnect } from 'react-redux-firebase'
 import Firebase from 'react-native-firebase'
@@ -22,8 +22,13 @@ class SignInScreen extends Component {
       emailError: null,
       passwordError: null,
       email: null,
-      password: null
+      password: null,
+      width: Dimensions.get('window').width
     }
+
+    Dimensions.addEventListener('change', (e) => {
+      this.setState({ width: e.window.width })
+    })
   }
 
   handleSignIn () {
@@ -64,9 +69,10 @@ class SignInScreen extends Component {
           repeat
           style={Styles.video}
         />
+
         <View style={Styles.overlay} />
 
-        <View style={Styles.contentView}>
+        <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center', width: this.state.width }}>
           <View style={Styles.form}>
             <FormLabel containerStyle={Styles.formLabelContainer} labelStyle={Styles.formLabelText} fontFamily={Fonts.type.content}>E-Mail</FormLabel>
             <FormInput
@@ -88,7 +94,7 @@ class SignInScreen extends Component {
         </View>
 
         {/* Footer */}
-        <View style={Styles.bottomButton}>
+        <View style={{ flex: 1, justifyContent: 'center', height: this.state.width, margin: 20 }}>
           <Button text={'Log In'} onPress={this.handleSignIn} />
         </View>
 

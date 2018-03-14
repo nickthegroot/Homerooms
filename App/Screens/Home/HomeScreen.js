@@ -46,23 +46,24 @@ export default class HomeScreen extends React.Component<Props, State> {
   componentWillReceiveProps (nextProps: Props) {
     let nextSeminars = getBothSeminars()
 
-    // TODO: Attach a requsted timestamp onto every reqest
     if (!nextProps.populatedProfile.isEmpty && nextProps.populatedProfile.isLoaded) {
-      if (
-        nextProps.populatedProfile.lastRequest &&
-        nextProps.populatedProfile.lastRequest.accepted &&
-        nextProps.populatedProfile.lastRequest.teacher &&
-        (Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminars[0]) || Moment(nextProps.populatedProfile.lastRequest.requestedTime).isBefore(nextSeminars[1]))
-      ) {
-        Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
+      if (nextProps.populatedProfile.lastRequest) {
+        let requestedTime = Moment(nextProps.profile.lastRequest.requestedTime)
+        if (
+          nextProps.populatedProfile.lastRequest.accepted &&
+          nextProps.populatedProfile.lastRequest.teacher &&
+          (requestedTime.isSame(nextSeminars[0]) || requestedTime.isSame(nextSeminars[1]))
+        ) {
+          Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
+            this.setState({
+              seminarTeachers: (nextProps.populatedProfile.lastRequest.day === 'A') ? [teacherSnapshot.val(), nextProps.populatedProfile.seminars.b] : [nextProps.populatedProfile.seminars.a, teacherSnapshot.val()]
+            })
+          }.bind(this))
+        } else {
           this.setState({
-            seminarTeachers: (nextProps.populatedProfile.lastRequest.day === 'A') ? [teacherSnapshot.val(), nextProps.populatedProfile.seminars.b] : [nextProps.populatedProfile.seminars.a, teacherSnapshot.val()]
+            seminarTeachers: [nextProps.populatedProfile.seminars.a, nextProps.populatedProfile.seminars.b]
           })
-        }.bind(this))
-      } else {
-        this.setState({
-          seminarTeachers: [nextProps.populatedProfile.seminars.a, nextProps.populatedProfile.seminars.b]
-        })
+        }
       }
     }
   }

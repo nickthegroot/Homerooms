@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import {
   View,
-  Text
+  Text,
+  Dimensions
 } from 'react-native'
 import Video from 'react-native-video'
 import { firebaseConnect } from 'react-redux-firebase'
@@ -13,6 +14,18 @@ import Styles from './Styles/LaunchStyles'
 
 @firebaseConnect()
 class LaunchScreen extends Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      width: Dimensions.get('window').width
+    }
+
+    Dimensions.addEventListener('change', (e) => {
+      this.setState({width: e.window.width})
+    })
+  }
+
   onPressStarted = () => {
     this.props.navigation.navigate('SignInScreen')
   }
@@ -32,14 +45,14 @@ class LaunchScreen extends Component {
 
         <View style={Styles.overlay} />
 
-        <View style={Styles.contentView}>
+        <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center', width: this.state.width }}>
           <Text style={Styles.lakeOswegoTitle}>Lake Oswego High School's</Text>
           <View style={Styles.line} />
           <Text style={Styles.supportSeminarTitleWhite}>Homeroom<Text style={Styles.supportSeminarTitleBlue}>.</Text></Text>
         </View>
 
         {/* Footer */}
-        <View style={Styles.bottomButton}>
+        <View style={{ flex: 1, justifyContent: 'center', height: this.state.width, margin: 20 }}>
           <Button text={'Let\'s get started'} onPress={this.onPressStarted} />
         </View>
 

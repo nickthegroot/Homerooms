@@ -4,7 +4,7 @@ import Firebase from 'react-native-firebase'
 import moment from 'moment'
 import { Platform, Alert } from 'react-native'
 
-function handleRequest (teacherKey: string, nextSeminar: any, uid: string, day: 'A' | 'B', reason?: string) {
+function handleRequest (teacherKey: string, nextSeminar: moment, uid: string, day: 'A' | 'B', reason?: string) {
   var requestKey: { lastRequest: string } = {}
   try {
     // TODO: Change when Push Notifications are enabled on iOS.
