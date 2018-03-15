@@ -48,7 +48,7 @@ export default class HomeScreen extends React.Component<Props, State> {
 
     if (!nextProps.populatedProfile.isEmpty && nextProps.populatedProfile.isLoaded) {
       if (nextProps.populatedProfile.lastRequest) {
-        let requestedTime = Moment(nextProps.profile.lastRequest.requestedTime)
+        let requestedTime = Moment(nextProps.populatedProfile.lastRequest.requestedTime)
         if (
           nextProps.populatedProfile.lastRequest.accepted &&
           nextProps.populatedProfile.lastRequest.teacher &&
@@ -59,12 +59,12 @@ export default class HomeScreen extends React.Component<Props, State> {
               seminarTeachers: (nextProps.populatedProfile.lastRequest.day === 'A') ? [teacherSnapshot.val(), nextProps.populatedProfile.seminars.b] : [nextProps.populatedProfile.seminars.a, teacherSnapshot.val()]
             })
           }.bind(this))
-        } else {
-          this.setState({
-            seminarTeachers: [nextProps.populatedProfile.seminars.a, nextProps.populatedProfile.seminars.b]
-          })
+          return
         }
       }
+      this.setState({
+        seminarTeachers: [nextProps.populatedProfile.seminars.a, nextProps.populatedProfile.seminars.b]
+      })
     }
   }
 
