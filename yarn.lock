@@ -4681,12 +4681,6 @@ react-native-material-bottom-navigation@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-native-material-bottom-navigation/-/react-native-material-bottom-navigation-0.7.0.tgz#bc3e9d5c86ada5a4d5d6a47722b3db233cc6906c"
 
-react-native-modal-overlay@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/react-native-modal-overlay/-/react-native-modal-overlay-1.2.3.tgz#e28ef249544c46e5ab1f292287efe9fca3cee4f1"
-  dependencies:
-    react-native-animatable "^1.2.4"
-
 react-native-modal@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-5.0.0.tgz#d9a056e68a985678d9545fce38dcc1ac3299ba31"
