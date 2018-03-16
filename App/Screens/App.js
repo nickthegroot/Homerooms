@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import createStore from '../Redux'
 import { View, StatusBar } from 'react-native'
 import ReduxNavigation from '../Navigation/ReduxNavigation'
+import codePush from 'react-native-code-push'
 
 import Styles from './RootContainerStyles'
 
@@ -20,6 +21,8 @@ const store = createStore()
  *
  * We separate like this to play nice with React Native's hot reloading.
  */
+
+@codePush
 class App extends Component {
   render () {
     return (
