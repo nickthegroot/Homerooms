@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react'
-import { View, ScrollView, Alert } from 'react-native'
+import { View, ScrollView, Alert, ActivityIndicator } from 'react-native'
 import Firebase from 'react-native-firebase'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
@@ -94,6 +94,9 @@ export default class HomeScreen extends React.Component<Props, State> {
     return (
       <ScrollView style={Styles.mainContainer}>
         <View style={Styles.container}>
+          {!(this.props.populatedProfile.isLoaded)
+            ? <ActivityIndicator size='large' animating={!this.props.firebase.isLoaded} />
+            : null }
           <CurrentSeminarCard day='A' seminarTeacher={this.state.seminarTeachers[0]} onClick={this.handleEmail} nextDay={bothSeminars[0]} />
           <CurrentSeminarCard day='B' seminarTeacher={this.state.seminarTeachers[1]} onClick={this.handleEmail} nextDay={bothSeminars[1]} />
         </View>
