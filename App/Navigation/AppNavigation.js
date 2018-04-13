@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavigationComponent } from 'react-native-material-bottom-navigation'
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import DeviceInfo from 'react-native-device-info'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Header from '../Screens/Components/Header'
 
@@ -16,8 +15,6 @@ import SettingsScreen from '../Screens/Settings/SettingsScreen'
 
 import { Colors } from '../Themes'
 
-const model = DeviceInfo.getModel()
-
 // Manifest of possible screens
 const TabNav = TabNavigator({
   RequestScreen: { screen: RequestScreen },
@@ -31,11 +28,6 @@ const TabNav = TabNavigator({
   tabBarPosition: 'bottom',
   tabBarOptions: {
     bottomNavigationOptions: {
-      style: (model === 'iPhone X') ? {
-        paddingBottom: 30,
-        paddingTop: 20,
-        backgroundColor: 'white'
-      } : null,
       labelColor: 'gray',
       shifting: true,
       activeLabelColor: Colors.darkBlue,

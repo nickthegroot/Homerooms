@@ -105,10 +105,6 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-andlog@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/andlog/-/andlog-1.0.1.tgz#afc6512b6e809f5bba63c6646d8685ccead19f11"
-
 ansi-escapes@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
@@ -1038,12 +1034,6 @@ boom@5.x.x:
   resolved "https://registry.yarnpkg.com/boom/-/boom-5.2.0.tgz#5dd9da6ee3a5f302077436290cb717d3f4a54e02"
   dependencies:
     hoek "4.x.x"
-
-bows@^1.6.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/bows/-/bows-1.7.0.tgz#a3598ed9cef61a7a0cab1a7240f291654865ec76"
-  dependencies:
-    andlog "^1.0.0"
 
 bplist-creator@0.0.4:
   version "0.0.4"
@@ -4501,6 +4491,14 @@ prop-types@15.6.0, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
 
+prop-types@^15.6.1:
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
+
 proxy-agent@2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/proxy-agent/-/proxy-agent-2.2.0.tgz#e853cd8400013562d23c8dc9e1deaf9b0b0a153a"
@@ -4635,10 +4633,6 @@ react-native-code-push@^5.2.1:
     plist "1.2.0"
     xcode "0.9.2"
 
-react-native-device-info@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.14.0.tgz#b77d0368e197c7a6fc8de612f8272d3526847bd4"
-
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
@@ -4664,14 +4658,13 @@ react-native-elements@^0.19.0:
     opencollective "^1.0.3"
     prop-types "^15.5.8"
 
-react-native-firebase@^3.2.4:
-  version "3.2.7"
-  resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-3.2.7.tgz#e439e40c8a6f382dff5f08ae313f917d0783c211"
+react-native-firebase@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-firebase/-/react-native-firebase-4.0.3.tgz#141fbf7e27e93e5b95d7a87d92a3b50c258fd92f"
   dependencies:
-    bows "^1.6.0"
     opencollective "^1.0.3"
     postinstall-build "^5.0.1"
-    prop-types "^15.6.0"
+    prop-types "^15.6.1"
 
 react-native-mail@^3.0.5:
   version "3.0.5"
@@ -4803,9 +4796,9 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-redux-firebase@^2.0.3:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-2.0.4.tgz#12846c9a8deba7a66d8261d1cb3886f0056b4ee4"
+react-redux-firebase@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-2.0.6.tgz#7080e12df358f992c3ad9fdc8f0c9336c1b5bc0d"
   dependencies:
     hoist-non-react-statics "^2.3.1"
     lodash "^4.17.4"

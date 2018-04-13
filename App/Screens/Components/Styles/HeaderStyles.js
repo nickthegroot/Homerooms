@@ -1,8 +1,5 @@
 import { StyleSheet } from 'react-native'
 import { Colors } from '../../../Themes'
-import DeviceInfo from 'react-native-device-info'
-
-const model = DeviceInfo.getModel()
 
 export default StyleSheet.create({
   mainContainer: {
@@ -13,7 +10,7 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: (model === 'iPhone X') ? 'flex-end' : 'center'
+    alignItems: 'center'
   },
   logo: {
     height: 32,

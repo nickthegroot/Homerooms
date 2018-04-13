@@ -1,21 +1,17 @@
 // @flow
 import React, { Component } from 'react'
-import { View, Image } from 'react-native'
+import { Image, View } from 'react-native'
 import { SearchBar } from 'react-native-elements'
-import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation'
-
+import { connect } from 'react-redux'
 import Styles from './Styles/HeaderStyles'
 
 const mapDispatchToProps = dispatch => {
   return {
     navigate: (routeName: string, params: {}) => {
-      dispatch(NavigationActions.reset({
-        index: 0,
-        actions: [
+      dispatch(
           NavigationActions.navigate({ routeName: routeName, params: params })
-        ]
-      }))
+        )
     },
     setQuery: (query: string) => {
       dispatch({ type: 'NAVIGATION/setQuery', query: query })
@@ -41,9 +37,8 @@ class Header extends Component {
   }
 
   onSearchChange = (query: string) => {
-    if (this.props.nav.routes[this.props.nav.routes.length - 1].routeName === 'SearchScreen') {
-      this.props.setQuery(query)
-    } else {
+    this.props.setQuery(query)
+    if (!this.props.nav.routes[this.props.nav.routes.length - 1].routeName === 'SearchScreen') {
       this.props.navigate('SearchScreen', { searchQuery: '' })
     }
   }
