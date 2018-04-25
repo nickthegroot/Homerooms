@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react'
-import { View, ScrollView, Alert, ActivityIndicator, SafeAreaView } from 'react-native'
+import { View, ScrollView, Alert, ActivityIndicator } from 'react-native'
 import Firebase from 'react-native-firebase'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
