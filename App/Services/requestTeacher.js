@@ -36,6 +36,7 @@ function handleRequest (teacherKey: string, nextSeminar: moment, uid: string, da
       })
       requestKey = { lastRequest: requestRef.key }
     }
+    Firebase.analytics.logEvent('requestTeacher', { teacher: teacherKey, day: day })
     return requestKey
   } catch (err) {
     if (!__DEV__) {

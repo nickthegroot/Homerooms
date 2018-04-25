@@ -1,4 +1,5 @@
 import React from 'react'
+import { SafeAreaView } from 'react-native'
 import { NavigationComponent } from 'react-native-material-bottom-navigation'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -15,7 +16,15 @@ import SettingsScreen from '../Screens/Settings/SettingsScreen'
 
 import { Colors } from '../Themes'
 
-// Manifest of possible screens
+const BottomNav = props => (
+  <SafeAreaView
+    forceInset={{ top: 'never', bottom: 'always', horizontal: 'never' }}
+    style={{ backgroundColor: '#fff' }}
+  >
+    <NavigationComponent {...props} />
+  </SafeAreaView>
+)
+
 const TabNav = TabNavigator({
   RequestScreen: { screen: RequestScreen },
   HomeScreen: { screen: HomeScreen },
@@ -24,7 +33,7 @@ const TabNav = TabNavigator({
   initialRouteName: 'HomeScreen',
   swipeEnabled: true,
   animationEnabled: true,
-  tabBarComponent: NavigationComponent,
+  tabBarComponent: BottomNav,
   tabBarPosition: 'bottom',
   tabBarOptions: {
     bottomNavigationOptions: {

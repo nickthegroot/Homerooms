@@ -1,16 +1,15 @@
 // @flow
-
+import filter from 'lodash.filter'
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { ListItem } from 'react-native-elements'
-import { firebaseConnect } from 'react-redux-firebase'
 import { connect } from 'react-redux'
-import filter from 'lodash.filter'
-import RequestTeacherPopup from '../Components/RequestTeacherPopup'
+import { firebaseConnect } from 'react-redux-firebase'
 import { getNextSeminar } from '../../Services/getNextSeminar'
-
-import Styles from './Styles/SearchStyles'
 import { Fonts } from '../../Themes'
+import RequestTeacherPopup from '../Components/RequestTeacherPopup'
+import Styles from './Styles/SearchStyles'
+
 import type { Teacher } from '../../Types/DatabaseTypes'
 
 const mapStateToProps = state => {
@@ -31,6 +30,10 @@ class SearchScreen extends Component {
 
   constructor (props) {
     super(props)
+
+    if (props.navigation.state.params) {
+      props.navigation.state.params.focusSearch()
+    }
 
     this.state = {
       nextSeminar: getNextSeminar(),

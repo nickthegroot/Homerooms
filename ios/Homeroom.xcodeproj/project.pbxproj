@@ -51,7 +51,6 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		5F81CDBE8D020E858143DF7F /* libPods-Homeroom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93D8DE6EBE381980089F5E22 /* libPods-Homeroom.a */; };
 		6790F7A8F5174508AAE4CB52 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B9B6C01C45A044BA832B2575 /* Nunito-Regular.ttf */; };
-		74780AC1A1614CF09DC0A178 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A455F199B4B4326AD2279DE /* libRNDeviceInfo.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8788061E3CC54D2B85CF5EE7 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D00345E7318B473587764C26 /* Entypo.ttf */; };
 		99403A13915E40BA92E15748 /* JosefinSlab-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6C4E7635D8D4B0BA43551A3 /* JosefinSlab-Bold.ttf */; };
@@ -520,7 +519,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				B4569B8766774AF69108843C /* libCodePush.a in Frameworks */,
 				C0102E131E4F4D45BDA160EC /* libz.tbd in Frameworks */,
-				74780AC1A1614CF09DC0A178 /* libRNDeviceInfo.a in Frameworks */,
 				E484CD366EF24D75A9FDE34A /* libRNFirebase.a in Frameworks */,
 				45332CA7DC2145E7A2B18EE5 /* libRNMail.a in Frameworks */,
 				A1AE0A3C24C041C49EC9FEBF /* libTouchID.a in Frameworks */,
