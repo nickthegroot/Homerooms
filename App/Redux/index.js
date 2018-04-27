@@ -8,6 +8,4 @@ export const reducers = combineReducers({
   firebase: firebaseReducer
 })
 
-export default () => {
-  return configureStore(reducers)
-}
+export default configureStore(reducers)

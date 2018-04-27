@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Colors } from '../../../Themes'
+import { Colors, Fonts } from '../Themes'
 
 export default StyleSheet.create({
   mainContainer: {
@@ -17,11 +17,11 @@ export default StyleSheet.create({
     width: 28,
     margin: 7
   },
-  searchBar: {
-    flex: 4,
-    backgroundColor: 'transparent',
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-    width: 300
+  supportSeminarTitleWhite: {
+    ...Fonts.style.header
+  },
+  supportSeminarTitleBlue: {
+    ...Fonts.style.header,
+    color: Colors.lightBlue
   }
 })

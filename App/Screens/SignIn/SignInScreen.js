@@ -22,8 +22,7 @@ class SignInScreen extends Component {
       emailError: null,
       passwordError: null,
       email: null,
-      password: null,
-      width: Dimensions.get('window').width
+      password: null
     }
 
     Dimensions.addEventListener('change', (e) => {
@@ -72,7 +71,7 @@ class SignInScreen extends Component {
 
         <View style={Styles.overlay} />
 
-        <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center', width: this.state.width }}>
+        <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
           <View style={Styles.form}>
             <FormLabel containerStyle={Styles.formLabelContainer} labelStyle={Styles.formLabelText} fontFamily={Fonts.type.content}>E-Mail</FormLabel>
             <FormInput

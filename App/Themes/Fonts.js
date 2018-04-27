@@ -38,6 +38,11 @@ const style = {
     fontFamily: families.headings,
     fontSize: size.heading,
     color: 'black'
+  },
+  header: {
+    fontFamily: families.content + '-Bold',
+    fontSize: 25,
+    color: 'white'
   }
 }
 
