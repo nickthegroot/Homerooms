@@ -39,7 +39,7 @@ class SignInScreen extends Component {
   }
 
   handleError (error) {
-    console.tron.error(error)
+    // console.tron.error(error)
     switch (error.code) {
       case 'auth/invalid-email':
         this.setState({ emailError: <FormValidationMessage>{'An invalid email was entered. Please check again.'}</FormValidationMessage> })

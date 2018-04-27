@@ -14,6 +14,7 @@ import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
 import io.invertase.firebase.perf.RNFirebasePerformancePackage;
 
 import com.microsoft.codepush.react.CodePush;
@@ -29,8 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 
-        @Override
-        protected String getJSBundleFile() {
+    @Override
+    protected String getJSBundleFile() {
         return CodePush.getJSBundleFile();
         }
 
@@ -55,6 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
           new RNFirebasePerformancePackage(),
           new RNFirebaseMessagingPackage(),
           new RNFirebaseRemoteConfigPackage(),
+          new RNFirebaseNotificationsPackage(),
           new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG)
       );
     }
