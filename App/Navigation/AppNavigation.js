@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, Text, Image } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
 import { NavigationComponent } from 'react-native-material-bottom-navigation'
 import { TabNavigator, StackNavigator, NavigationActions } from 'react-navigation'
 import HeaderButtons from 'react-navigation-header-buttons'
