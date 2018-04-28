@@ -95,8 +95,8 @@ export default class HomeScreen extends React.Component<Props, State> {
       <ScrollView style={Styles.mainContainer}>
         <View style={Styles.container}>
           {!(this.props.populatedProfile.isLoaded)
-            ? <ActivityIndicator size='large' animating={!this.props.firebase.isLoaded} />
-            : null }
+              ? <ActivityIndicator size='large' animating={!this.props.firebase.isLoaded} />
+              : null }
           <CurrentSeminarCard day='A' seminarTeacher={this.state.seminarTeachers[0]} onClick={this.handleEmail} nextDay={bothSeminars[0]} />
           <CurrentSeminarCard day='B' seminarTeacher={this.state.seminarTeachers[1]} onClick={this.handleEmail} nextDay={bothSeminars[1]} />
         </View>

@@ -4,7 +4,8 @@ import { ApplicationStyles, Fonts } from '../../../Themes/'
 export default StyleSheet.create({
   mainContainer: ApplicationStyles.mainContainer,
   form: {
-    marginTop: 10
+    marginTop: 10,
+    padding: 10
   },
   video: {
     position: 'absolute',

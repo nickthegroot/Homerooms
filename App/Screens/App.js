@@ -2,15 +2,12 @@ import '../Config'
 import DebugConfig from '../Config/DebugConfig'
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import createStore from '../Redux'
+import store from '../Redux'
 import { View, StatusBar } from 'react-native'
 import ReduxNavigation from '../Navigation/ReduxNavigation'
 import codePush from 'react-native-code-push'
 
 import Styles from './RootContainerStyles'
-
-// create our store
-const store = createStore()
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
