@@ -1,21 +1,19 @@
 // @flow
-
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { ListItem } from 'react-native-elements'
-import { firebaseConnect } from 'react-redux-firebase'
 import { connect } from 'react-redux'
-import filter from 'lodash.filter'
-import RequestTeacherPopup from '../Components/RequestTeacherPopup'
+import { firebaseConnect } from 'react-redux-firebase'
 import { getNextSeminar } from '../../Services/getNextSeminar'
-
+import { Fonts, Colors } from '../../Themes'
+import RequestTeacherPopup from '../Components/RequestTeacherPopup'
+import SearchBar from 'react-native-searchbar'
 import Styles from './Styles/SearchStyles'
-import { Fonts } from '../../Themes'
+
 import type { Teacher } from '../../Types/DatabaseTypes'
 
 const mapStateToProps = state => {
   return {
-    searchQuery: state.nav.searchQuery,
     teachers: state.firebase.data.teachers
   }
 }
@@ -25,39 +23,35 @@ const mapStateToProps = state => {
 ])
 @connect(mapStateToProps)
 class SearchScreen extends Component {
-  state = {
-    matches: null
-  }
-
   constructor (props) {
     super(props)
-
     this.state = {
       nextSeminar: getNextSeminar(),
-      matches: null,
+      teachers: null,
+      loading: true,
       requestVisibility: false,
       requestedTeacher: null
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.searchQuery) {
-      let query = nextProps.searchQuery.toLowerCase()
-      let matches = filter(nextProps.teachers, (teacher) => {
-        return (teacher.firstName.toLowerCase().includes(query) || teacher.lastName.toLowerCase().includes(query) || teacher.room.toString().includes(query))
-      })
+  handleResults = (results) => {
+    this.setState({ results: results })
+  }
 
-      this.setState({
-        matches: matches
-      })
+  componentWillReceiveProps (nextProps) {
+    if (this.state.loading && 'teachers' in nextProps) {
+      let teachers = Object.values(nextProps.teachers)
+      console.tron.log(teachers)
+      this.setState({loading: false, teachers: teachers})
+      this.searchBar.show()
     }
   }
 
   render () {
     let teacherCards = []
 
-    for (let result in this.state.matches) {
-      let teacher: Teacher = this.state.matches[result]
+    for (let result in this.state.results) {
+      let teacher: Teacher = this.state.results[result]
       let teacherPic = ('picture' in teacher) ? { uri: teacher.picture } : null
       teacherCards.push(
         <ListItem
@@ -81,11 +75,23 @@ class SearchScreen extends Component {
 
     return (
       <View style={Styles.mainContainer}>
+        <SearchBar
+          ref={(ref) => (this.searchBar = ref)}
+          data={this.state.teachers}
+          handleResults={this.handleResults}
+          fontFamily={Fonts.type.content}
+          hideBack
+          selectionColor={Colors.lightBlue}
+          autoCorrect={false}
+          iOSPadding={false}
+        />
         <RequestTeacherPopup
           requestedTeacher={this.state.requestedTeacher}
           onFinish={() => this.setState({ requestVisibility: false })}
           isVisible={this.state.requestVisibility} />
-        {teacherCards}
+        <View style={{ marginTop: 50 }}>
+          {teacherCards}
+        </View>
       </View>
     )
   }

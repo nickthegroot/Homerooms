@@ -1,9 +1,12 @@
+// @flow
 import React from 'react'
+import { SafeAreaView, Text } from 'react-native'
 import { NavigationComponent } from 'react-native-material-bottom-navigation'
-import { TabNavigator, StackNavigator } from 'react-navigation'
-import DeviceInfo from 'react-native-device-info'
+import { TabNavigator, StackNavigator, NavigationActions } from 'react-navigation'
+import HeaderButtons from 'react-navigation-header-buttons'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import Header from '../Screens/Components/Header'
+import store from '../Redux'
+import Styles from './HeaderStyles'
 
 import SignInScreen from '../Screens/SignIn/SignInScreen'
 import LaunchScreen from '../Screens/Launch/LaunchScreen'
@@ -16,9 +19,31 @@ import SettingsScreen from '../Screens/Settings/SettingsScreen'
 
 import { Colors } from '../Themes'
 
-const model = DeviceInfo.getModel()
+const headerButtons = (
+  <HeaderButtons IconComponent={Icon} iconSize={23} color='white'>
+    <HeaderButtons.Item title='search' iconName='search' onPress={() => store.dispatch(NavigationActions.navigate({ routeName: 'SearchScreen' }))} />
+  </HeaderButtons >
+)
 
-// Manifest of possible screens
+const generateHeaderTitle = (title: string) => {
+  return <Text style={Styles.supportSeminarTitleWhite}>{title}<Text style={Styles.supportSeminarTitleBlue}>.</Text></Text>
+}
+
+// const logoImage = (
+//   <Image
+//     source={require('../Assets/Images/logo.png')}
+//     style={Styles.logo}
+//     resizeMode='contain' />
+// )
+
+const BottomNav = props => (
+  <SafeAreaView
+    forceInset={{ top: 'never', bottom: 'always', horizontal: 'never' }}
+    style={{ backgroundColor: '#fff' }}>
+    <NavigationComponent {...props} />
+  </SafeAreaView>
+)
+
 const TabNav = TabNavigator({
   RequestScreen: { screen: RequestScreen },
   HomeScreen: { screen: HomeScreen },
@@ -27,15 +52,10 @@ const TabNav = TabNavigator({
   initialRouteName: 'HomeScreen',
   swipeEnabled: true,
   animationEnabled: true,
-  tabBarComponent: NavigationComponent,
+  tabBarComponent: BottomNav,
   tabBarPosition: 'bottom',
   tabBarOptions: {
     bottomNavigationOptions: {
-      style: (model === 'iPhone X') ? {
-        paddingBottom: 30,
-        paddingTop: 20,
-        backgroundColor: 'white'
-      } : null,
       labelColor: 'gray',
       shifting: true,
       activeLabelColor: Colors.darkBlue,
@@ -76,19 +96,33 @@ const PrimaryNav = StackNavigator({
   TabNav: {
     screen: TabNav,
     navigationOptions: {
-      header: (<Header />)
+      headerStyle: {
+        backgroundColor: Colors.darkBlue
+      },
+      headerTintColor: '#fff',
+      headerTitle: generateHeaderTitle('Homeroom'),
+      headerRight: headerButtons
+      // headerLeft: logoImage
     }
   },
   SearchScreen: {
     screen: SearchScreen,
     navigationOptions: {
-      header: (<Header />)
+      headerStyle: {
+        backgroundColor: Colors.darkBlue
+      },
+      headerTintColor: '#fff',
+      headerTitle: generateHeaderTitle('Search')
     }
   },
   ChangeScreen: {
     screen: ChangeScreen,
     navigationOptions: {
-      header: (<Header />)
+      headerStyle: {
+        backgroundColor: Colors.darkBlue
+      },
+      headerTitle: generateHeaderTitle('Change'),
+      headerTintColor: '#fff'
     }
   }
 }, {

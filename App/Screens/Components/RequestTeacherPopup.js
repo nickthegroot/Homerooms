@@ -10,7 +10,6 @@ import TouchID from 'react-native-touch-id'
 import RequestSection from './RequestSection'
 import BlueButton from './Button'
 import requestTeacher from '../../Services/requestTeacher'
-import { getNextSeminar } from '../../Services/getNextSeminar'
 import type { Teacher } from '../../Types/DatabaseTypes'
 
 import Styles from './Styles/RequestPopupStyles'
@@ -116,7 +115,7 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
             <Calendar
               style={{ flex: 0 }}
               markedDates={this.state.markedDates}
-              minDate={getNextSeminar().format('YYYY-MM-DD')}
+              minDate={moment().format('YYYY-MM-DD')}
               onMonthChange={(date) => this.onMonthChange(date)}
               onDayPress={(date) => this.handleDatePress(date)} />
           </Modal>
@@ -128,7 +127,7 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
                 style={Styles.reasonInput}
                 onChangeText={(text) => this.setState({reason: text})}
                 value={this.state.reason}
-                placeholder='I need some advice on my research paper' />
+                placeholder='Need some advice on my research paper' />
               <Button style={Styles.reasonButtons} title='Enter' onPress={() => this.setState({ reasonVisiblity: false })} />
               <Button style={Styles.reasonButtons} title='Cancel' onPress={() => this.setState({ reasonVisiblity: false, reason: '' })} />
             </View>
