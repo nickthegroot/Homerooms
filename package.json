@@ -22,7 +22,8 @@
     "newclear": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build && rm -rf node_modules/ && yarn cache clean --force && yarn",
     "flow": "flow",
     "lint": "standard --verbose | snazzy",
-    "postinstall": "rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json"
+    "postinstall": "rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json",
+    "postversion": "git push && git push --tags"
   },
   "rnpm": {
     "assets": [
