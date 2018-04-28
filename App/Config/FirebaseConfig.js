@@ -34,6 +34,10 @@ function onFirebaseStateChange (authData, firebase, dispatch) {
             })
             .catch(error => {
               // User has rejected permissions
+              if (__DEV__) {
+                console.tron.log(error)
+              }
+
               Alert.alert(
                 'Notification Permissions',
                 'Without this permission, you won\'t get notifications. Are you sure you want to continue?',

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import { SafeAreaView, Text } from 'react-native'
 import { NavigationComponent } from 'react-native-material-bottom-navigation'
@@ -24,9 +25,9 @@ const headerButtons = (
   </HeaderButtons >
 )
 
-const headerText = (
-  <Text style={Styles.supportSeminarTitleWhite}>Homeroom<Text style={Styles.supportSeminarTitleBlue}>.</Text></Text>
-)
+const generateHeaderTitle = (title: string) => {
+  return <Text style={Styles.supportSeminarTitleWhite}>{title}<Text style={Styles.supportSeminarTitleBlue}>.</Text></Text>
+}
 
 // const logoImage = (
 //   <Image
@@ -98,7 +99,8 @@ const PrimaryNav = StackNavigator({
       headerStyle: {
         backgroundColor: Colors.darkBlue
       },
-      headerTitle: headerText,
+      headerTintColor: '#fff',
+      headerTitle: generateHeaderTitle('Homeroom'),
       headerRight: headerButtons
       // headerLeft: logoImage
     }
@@ -109,7 +111,8 @@ const PrimaryNav = StackNavigator({
       headerStyle: {
         backgroundColor: Colors.darkBlue
       },
-      headerTitle: headerText
+      headerTintColor: '#fff',
+      headerTitle: generateHeaderTitle('Search')
     }
   },
   ChangeScreen: {
@@ -118,8 +121,8 @@ const PrimaryNav = StackNavigator({
       headerStyle: {
         backgroundColor: Colors.darkBlue
       },
-      headerTitle: headerText,
-      headerRight: headerButtons
+      headerTitle: generateHeaderTitle('Change'),
+      headerTintColor: '#fff'
     }
   }
 }, {
