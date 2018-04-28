@@ -16,15 +16,6 @@ def getNpmVersionArray() { // major [0], minor [1], patch [2]
     return [Integer.parseInt(major), Integer.parseInt(minor), Integer.parseInt(patch)] as int[]
 }
 
-subprojects {
-    ext {
-        def npmVersion = getNpmVersionArray()
-        versionMajor = npmVersion[0]
-        versionMinor = npmVersion[1]
-        versionPatch = npmVersion[2]
-    }
-}
-
 project.ext.react = [
         entryFile: "index.js"
 ]
@@ -48,6 +39,11 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 def pass = ''
+
+def npmVersion = getNpmVersionArray()
+def versionMajor = npmVersion[0]
+def versionMinor = npmVersion[1]
+def versionPatch = npmVersion[2]
 
 android {
     compileSdkVersion 26
