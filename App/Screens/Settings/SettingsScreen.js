@@ -4,6 +4,7 @@ import { ScrollView, Text, View, Platform } from 'react-native'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { Button, Card } from 'react-native-elements'
 import { connect } from 'react-redux'
+import codePush from 'react-native-code-push'
 import { Fonts, Colors } from '../../Themes'
 import { firebaseProfilePopulates } from '../../Config/FirebaseConfig'
 import CurrentSeminarCard from '../Components/CurrentSeminarCard'
@@ -33,8 +34,15 @@ const mapDispatchToProps = dispatch => {
   populatedProfile: populate(firebase, 'profile', firebaseProfilePopulates)
 }), mapDispatchToProps)
 class SettingsScreen extends React.Component<Props> {
-  handleSignOut () {
+  handleSignOut = () => {
     this.props.firebase.logout()
+  }
+
+  handleUpdate = () => {
+    codePush.sync({
+      updateDialog: true,
+      installMode: codePush.InstallMode.IMMEDIATE
+    })
   }
 
   render () {
@@ -52,7 +60,19 @@ class SettingsScreen extends React.Component<Props> {
                 fontFamily={(Platform.OS === 'ios') ? Fonts.type.headings : Fonts.type.headings + '-Regular'}
                 buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
                 title='Sign Out'
-                onPress={this.handleSignOut.bind(this)} />
+                onPress={this.handleSignOut} />
+            </Card>
+
+            <Card>
+              <Text style={{ marginBottom: 10 }}>
+                Check for updates
+              </Text>
+              <Button
+                backgroundColor={Colors.lightBlue}
+                fontFamily={(Platform.OS === 'ios') ? Fonts.type.headings : Fonts.type.headings + '-Regular'}
+                buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
+                title='Check'
+                onPress={this.handleUpdate} />
             </Card>
 
             <CurrentSeminarCard day='A' seminarTeacher={this.props.populatedProfile.seminars.a} onClick={() => this.props.navigation.navigate('ChangeScreen', { dayChange: 'A' })} icon='edit' title='Change Default Homeroom' isSettings />

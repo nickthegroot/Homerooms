@@ -47,24 +47,22 @@ export default class HomeScreen extends React.Component<Props, State> {
     let nextSeminars = getBothSeminars()
 
     if (!nextProps.populatedProfile.isEmpty && nextProps.populatedProfile.isLoaded) {
-      if (nextProps.populatedProfile.lastRequest) {
-        let requestedTime = Moment(nextProps.populatedProfile.lastRequest.requestedTime)
-        if (
-          nextProps.populatedProfile.lastRequest.accepted &&
-          nextProps.populatedProfile.lastRequest.teacher &&
-          (requestedTime.isSame(nextSeminars[0]) || requestedTime.isSame(nextSeminars[1]))
-        ) {
-          Firebase.database().ref('teachers/' + nextProps.populatedProfile.lastRequest.teacher).once('value', function (teacherSnapshot) {
-            this.setState({
-              seminarTeachers: (nextProps.populatedProfile.lastRequest.day === 'A') ? [teacherSnapshot.val(), nextProps.populatedProfile.seminars.b] : [nextProps.populatedProfile.seminars.a, teacherSnapshot.val()]
-            })
-          }.bind(this))
-          return
-        }
-      }
       this.setState({
         seminarTeachers: [nextProps.populatedProfile.seminars.a, nextProps.populatedProfile.seminars.b]
       })
+      if (nextProps.populatedProfile.requests) {
+        for (let id in nextProps.populatedProfile.requests) {
+          let request = nextProps.populatedProfile.requests[id]
+          let requestedTime = Moment(request.requestedTime)
+          if (requestedTime.isSame(nextSeminars[0]) || requestedTime.isSame(nextSeminars[1] && request.accepted)) {
+            Firebase.database().ref('teachers/' + request.teacher).once('value', function (teacherSnapshot) {
+              this.setState({
+                seminarTeachers: (request.day === 'A') ? [teacherSnapshot.val(), nextProps.populatedProfile.seminars.b] : [nextProps.populatedProfile.seminars.a, teacherSnapshot.val()]
+              })
+            }.bind(this))
+          }
+        }
+      }
     }
   }
 

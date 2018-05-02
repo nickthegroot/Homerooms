@@ -35,7 +35,7 @@
     "react": "16.2.0",
     "react-native": "0.52.2",
     "react-native-calendars": "^1.17.1",
-    "react-native-code-push": "^5.2.1",
+    "react-native-code-push": "^5.3.2",
     "react-native-elements": "^0.19.1",
     "react-native-firebase": "^4.0.3",
     "react-native-mail": "^3.0.5",
