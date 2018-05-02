@@ -15,10 +15,6 @@
 
 default_platform(:ios)
 
-before_all do
-    ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
-  end
-
 platform :ios do
   desc "Push a new release build to the App Store"
   lane :release do
@@ -30,5 +26,15 @@ platform :ios do
     gym(workspace: "Homeroom.xcworkspace", scheme: "Homeroom")
     upload_to_app_store
     slack(message: 'App released to iOS App Store')
+  end
+
+  desc "Upload a path or minor version to CodePush"
+  lane :codepush do
+    version = JSON.parse(File.read('../../package.json'))["version"]
+    major_version = version.split('.')[0]
+    minor_version = version.split('.')[1]
+
+    sh "cd ../.. && appcenter codepush release-react -a nbd9/Support-Seminar --quiet -d Production --env prod --target-binary-version " + major_version + "." + minor_version + ".x --token " + ENV["APPCENTER_TOKEN"]
+    slack(message: 'New version released to CodePush')
   end
 end

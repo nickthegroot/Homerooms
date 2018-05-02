@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { View, Image, Text, TextInput, Button } from 'react-native'
+import { View, Image, Text, TextInput, Button, ActivityIndicator, Alert } from 'react-native'
 import { Divider } from 'react-native-elements'
 import { Calendar } from 'react-native-calendars'
 import Modal from 'react-native-modal'
@@ -26,7 +26,8 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
       markedDates: this.getDaysInMonth(moment().month(), moment().year()),
       requestedDate: null,
       requestedDay: null,
-      isVisible: true
+      isVisible: true,
+      requesting: false
     }
   }
 
@@ -37,6 +38,8 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
 
     let dates = {}
     const disabled = { disabled: true }
+
+    dates[moment().format('YYYY-MM-DD')] = { marked: true }
     while (pivot.isBefore(end)) {
       DISABLED_DAYS.forEach((day) => {
         dates[pivot.day(day).format('YYYY-MM-DD')] = disabled
@@ -62,27 +65,55 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
     }
   }
 
+  sendRequest = () => {
+    try {
+      this.props.firebase.updateProfile(
+        requestTeacher(
+          this.props.requestedTeacher.id,
+          this.state.requestedDate,
+          this.props.firebase.auth()._user.uid,
+          this.state.requestedDay,
+          this.state.reason
+        )
+      )
+
+      Alert.alert(
+        'Success!',
+        `Your request for ${this.props.requestedTeacher.firstName} ${this.props.requestedTeacher.lastName}, has been sent. You'll recieve a notification when it is accepted or denied.`,
+        [
+          { text: 'OK' }
+        ],
+        { cancelable: true }
+      )
+    } catch (err) {
+      Alert.alert(
+        'Error',
+        'An error occured when trying to submit your request. Please try again.',
+        [
+          { text: 'OK' }
+        ],
+        { cancelable: true }
+      )
+    }
+  }
+
   handleRequest = () => {
     // Check to make sure all info is entered correctly.
     if (this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid) {
+      this.setState({ requesting: true })
       // Verify user with touch ID
       TouchID.authenticate('Verify your Identity')
         .then(success => {
-          this.props.firebase.updateProfile(requestTeacher(
-            this.props.requestedTeacher.id,
-            this.state.requestedDate,
-            this.props.firebase.auth()._user.uid,
-            this.state.requestedDay,
-            this.state.reason
-            ))
+          console.tron.log(this.sendRequest)
+          this.sendRequest()
           this.props.onFinish()
         })
         .catch(error => {
-          switch (error) {
+          switch (error.name) {
             case 'RCTTouchIDNotSupported':
             case 'LAErrorTouchIDNotAvailable':
             case 'LAErrorTouchIDNotEnrolled':
-              this.props.firebase.updateProfile(requestTeacher(this.props.requestedTeacher.key, this.state.requestedDate, this.props.firebase.auth()._user.uid, this.state.requestedDay))
+              this.sendRequest()
               this.props.onFinish()
               break
             default:
@@ -162,9 +193,14 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
 
             <View style={Styles.confirmView}>
               <BlueButton
-                text='Confirm Request'
-                disabled={!(this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid)}
-                onPress={this.handleRequest} />
+                text={(!this.state.requesting) ? 'Confirm Request' : null}
+                disabled={!(this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid && !this.state.requesting)}
+                onPress={this.handleRequest}>
+                {(this.state.requesting)
+                  ? <ActivityIndicator size='large' animating />
+                  : null
+                }
+              </BlueButton>
             </View>
 
           </View>

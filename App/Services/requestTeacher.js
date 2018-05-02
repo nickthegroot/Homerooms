@@ -2,7 +2,6 @@
 
 import Firebase from 'react-native-firebase'
 import moment from 'moment'
-import { Alert } from 'react-native'
 
 function handleRequest (teacherKey: string, nextSeminar: moment, uid: string, day: 'A' | 'B', reason?: string) {
   var requestKey: { lastRequest: string } = {}
@@ -31,14 +30,7 @@ function handleRequest (teacherKey: string, nextSeminar: moment, uid: string, da
       console.tron.error(err)
     }
 
-    Alert.alert(
-      'Error',
-      'An error occured when trying to submit your request. Please try again.',
-      [
-        { text: 'OK' }
-      ],
-      { cancelable: true }
-    )
+    throw err
   }
 }
 

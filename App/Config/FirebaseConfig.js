@@ -20,6 +20,7 @@ function onFirebaseStateChange (authData, firebase, dispatch) {
   }
 
   if (authData) {
+    firebase.crashlytics().setUserIdentifier(authData.uid)
     firebase.messaging().hasPermission()
       .then(enabled => {
         if (enabled) {

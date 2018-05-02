@@ -31,7 +31,7 @@
     ]
   },
   "dependencies": {
-    "moment": "^2.20.1",
+    "moment": "^2.22.1",
     "react": "16.2.0",
     "react-native": "0.52.2",
     "react-native-calendars": "^1.17.1",
