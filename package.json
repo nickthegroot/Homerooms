@@ -23,7 +23,7 @@
     "flow": "flow",
     "lint": "standard --verbose | snazzy",
     "postinstall": "rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json",
-    "postversion": "./bumpIOS.sh && git push && git push --tags"
+    "postversion": "./bumpIOS.sh && && git add . && git commit \"Bumped version.\" && git push && git push --tags"
   },
   "rnpm": {
     "assets": [
