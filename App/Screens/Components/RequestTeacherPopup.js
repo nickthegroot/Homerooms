@@ -67,14 +67,12 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
 
   sendRequest = () => {
     try {
-      this.props.firebase.updateProfile(
-        requestTeacher(
-          this.props.requestedTeacher.id,
-          this.state.requestedDate,
-          this.props.firebase.auth()._user.uid,
-          this.state.requestedDay,
-          this.state.reason
-        )
+      requestTeacher(
+        this.props.requestedTeacher.id,
+        this.state.requestedDate,
+        this.props.firebase.auth()._user.uid,
+        this.state.requestedDay,
+        this.state.reason
       )
 
       Alert.alert(
@@ -104,7 +102,6 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
       // Verify user with touch ID
       TouchID.authenticate('Verify your Identity')
         .then(success => {
-          console.tron.log(this.sendRequest)
           this.sendRequest()
           this.props.onFinish()
         })
