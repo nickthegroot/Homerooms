@@ -54,7 +54,7 @@ export default class HomeScreen extends React.Component<Props, State> {
         for (let id in nextProps.populatedProfile.requests) {
           let request = nextProps.populatedProfile.requests[id]
           let requestedTime = Moment(request.requestedTime)
-          if ((requestedTime.isSame(nextSeminars[0]) || requestedTime.isSame(nextSeminars[1]) && request.accepted)) {
+          if ((requestedTime.isSame(nextSeminars[0]) || requestedTime.isSame(nextSeminars[1])) && request.accepted) {
             Firebase.database().ref('teachers/' + request.teacher).once('value', function (teacherSnapshot) {
               this.setState({
                 seminarTeachers: (request.day === 'A') ? [teacherSnapshot.val(), nextProps.populatedProfile.seminars.b] : [nextProps.populatedProfile.seminars.a, teacherSnapshot.val()]
