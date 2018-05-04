@@ -4,6 +4,10 @@ import Firebase from 'react-native-firebase'
 import moment from 'moment'
 
 function handleRequest (teacherKey: string, nextSeminar: moment, uid: string, day: 'A' | 'B', reason?: string) {
+  if (__DEV__) {
+    return
+  }
+
   try {
     Firebase.messaging().getToken().then((token) => {
       let requestRef = Firebase.database().ref('/requests').push({

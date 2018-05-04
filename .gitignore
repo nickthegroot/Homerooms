@@ -50,3 +50,7 @@ buck-out/
 */fastlane/screenshots
 android/app/fastlane-googleplay-credentials.json
 *.env
+
+# Misc Unnecessary Files
+ios/Homeroom.app.dSYM.zip
+ios/Preview.html

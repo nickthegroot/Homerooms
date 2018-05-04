@@ -16,7 +16,7 @@ import Styles from './Styles/RequestPopupStyles'
 import { firebaseConnect } from 'react-redux-firebase'
 
 @firebaseConnect()
-class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeacher: Teacher, onFinish: () => void}> {
+class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeacher: Teacher, onFinish: ({}) => void}> {
   // TODO: Set A/B day
 
   constructor (props) {
@@ -74,15 +74,6 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
         this.state.requestedDay,
         this.state.reason
       )
-
-      Alert.alert(
-        'Success!',
-        `Your request for ${this.props.requestedTeacher.firstName} ${this.props.requestedTeacher.lastName}, has been sent. You'll recieve a notification when it is accepted or denied.`,
-        [
-          { text: 'OK' }
-        ],
-        { cancelable: true }
-      )
     } catch (err) {
       Alert.alert(
         'Error',
@@ -117,9 +108,6 @@ class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeache
               break
           }
         })
-    } else {
-      // TODO: alert user not everything is in
-      this.props.onFinish()
     }
   }
 
