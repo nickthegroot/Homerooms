@@ -21,7 +21,6 @@ DerivedData
 project.xcworkspace
 
 # Android/IntelliJ
-#
 build/
 .idea
 .gradle
@@ -32,11 +31,6 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
-
-# BUCK
-buck-out/
-\.buckd/
-*.keystore
 
 # fastlane
 #
@@ -54,3 +48,4 @@ android/app/fastlane-googleplay-credentials.json
 # Misc Unnecessary Files
 ios/Homeroom.app.dSYM.zip
 ios/Preview.html
+android/app/homeroom-release.keystore
