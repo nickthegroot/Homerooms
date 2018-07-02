@@ -7,6 +7,18 @@
       "image": "assets/Images/SplashScreen.png",
       "resizeMode": "cover"
     },
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "nbdeg",
+            "project": "homerooms",
+            "authToken": "48668575225e4b48adfb4aae69b006a849cade57335b4998af0fe8e5134656f4"
+          }
+        }
+      ]
+    }
   }
 }

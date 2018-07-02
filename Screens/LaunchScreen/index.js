@@ -16,7 +16,7 @@ class LaunchScreen extends Component {
   }
 
   onPressStarted = () => {
-    this.props.navigation.navigate('SignInScreen')
+    this.props.navigation.navigate('LoginScreen')
   }
 
   render() {

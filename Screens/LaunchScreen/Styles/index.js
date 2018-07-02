@@ -1,11 +1,8 @@
 import { StyleSheet } from 'react-native'
-import { Colors, Fonts } from '../../../Themes/'
+import { ApplicationStyles, Colors, Fonts } from '../../../Themes/'
 
 export default StyleSheet.create({
-  mainComponent: {
-    flex: 1,
-    backgroundColor: Colors.background
-  },
+  mainComponent: ApplicationStyles.mainContainer,
   video: {
     position: 'absolute',
     top: 0,

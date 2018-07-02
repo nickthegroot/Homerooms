@@ -1,13 +1,14 @@
 import React from 'react'
-import { SafeAreaView, Text } from 'react-native'
+// import { SafeAreaView, Text } from 'react-native'
 import { TabNavigator, createStackNavigator, NavigationActions } from 'react-navigation'
-import { NavigationComponent } from 'react-native-material-bottom-navigation'
-import HeaderButtons from 'react-navigation-header-buttons'
-import Icon from '@expo/vector-icons/MaterialIcons'
+// import { NavigationComponent } from 'react-native-material-bottom-navigation'
+// import HeaderButtons from 'react-navigation-header-buttons'
+// import Icon from '@expo/vector-icons/MaterialIcons'
 
-import { Colors } from '../Themes'
+// import { Colors } from '../Themes'
 
 import LaunchScreen from '../Screens/LaunchScreen'
+import LoginScreen from '../Screens/LoginScreen'
 
 // const headerButtons = (
 //   <HeaderButtons IconComponent={Icon} iconSize={23} color='white'>
@@ -69,14 +70,13 @@ const PrimaryNav = createStackNavigator({
     navigationOptions: {
       header: null
     }
+  },
+  LoginScreen: {
+    screen: LoginScreen,
+    navigationOptions: {
+      header: null
+    }
   }
-  // },
-  // SignInScreen: {
-  //   screen: null,
-  //   navigationOptions: {
-  //     header: null
-  //   }
-  // },
   // TabNav: {
   //   screen: null,
   //   navigationOptions: {

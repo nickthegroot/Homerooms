@@ -1,4 +1,5 @@
 import Colors from './Colors'
 import Fonts from './Fonts'
+import ApplicationStyles from './ApplicationStyles'
 
-export { Colors, Fonts }
+export { ApplicationStyles, Colors, Fonts }

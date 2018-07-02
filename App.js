@@ -2,10 +2,13 @@ import React from 'react'
 import { View, StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 import { Font } from 'expo'
+import Sentry from 'sentry-expo'
 import store from './Redux'
 
 import Styles from './RootContainerStyles'
 import Navigation from './Navigation/AppNavigation'
+
+Sentry.config('https://36afc4db76d8467b9c6e4a4f86522796@sentry.io/1236299').install()
 
 export default class App extends React.Component {
   constructor (props) {
