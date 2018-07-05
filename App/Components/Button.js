@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
-import { Fonts, Colors } from '../Themes'
+import { Fonts, Colors } from '../../Extras/Themes'
 
 const Button = ({text, onPress, disabled = false, children}) => {
   return (

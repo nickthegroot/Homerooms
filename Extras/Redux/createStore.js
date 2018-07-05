@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import { reactReduxFirebase } from 'react-redux-firebase'
 import { firebaseConfig, reduxFirebaseConfig } from '../Config/FirebaseConfig.js'
-import { createStore, compose, applyMiddleware } from 'redux'
+import { createStore, compose } from 'redux'
 
 // Creating the store
 export default (rootReducer) => {

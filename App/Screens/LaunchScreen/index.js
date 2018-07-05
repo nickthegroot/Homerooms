@@ -25,7 +25,7 @@ class LaunchScreen extends Component {
 
         <Video
           shouldPlay
-          source={require('../../Assets/Videos/BackgroundVideo.mp4')}
+          source={require('../../../Extras/Assets/Videos/BackgroundVideo.mp4')}
           rate={1.0}
           resizeMode={Video.RESIZE_MODE_COVER}
           isMuted

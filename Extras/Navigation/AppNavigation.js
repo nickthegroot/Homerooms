@@ -7,8 +7,8 @@ import { TabNavigator, createStackNavigator, NavigationActions } from 'react-nav
 
 // import { Colors } from '../Themes'
 
-import LaunchScreen from '../Screens/LaunchScreen'
-import LoginScreen from '../Screens/LoginScreen'
+import LaunchScreen from '../../App/Screens/LaunchScreen'
+import LoginScreen from '../../App/Screens/LoginScreen'
 
 // const headerButtons = (
 //   <HeaderButtons IconComponent={Icon} iconSize={23} color='white'>

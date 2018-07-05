@@ -2,9 +2,9 @@
   "expo": {
     "name": "Homerooms",
     "sdkVersion": "27.0.0",
-    "icon": "assets/Images/Icon.png",
+    "icon": "Extras/Assets/Images/Icon.png",
     "splash": {
-      "image": "assets/Images/SplashScreen.png",
+      "image": "Extras/Assets/Images/SplashScreen.png",
       "resizeMode": "cover"
     },
     "orientation": "portrait",

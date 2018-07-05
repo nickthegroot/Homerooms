@@ -1,12 +1,9 @@
-// @flow
-
 import React from 'react'
 import { Text } from 'react-native'
 import { Card, Button } from 'react-native-elements'
-import Moment from 'moment'
 import { Fonts, Colors } from '../../Themes'
 
-const CurrentSeminarCard = ({ day, seminarTeacher, onClick, icon = 'email', title = 'E-Mail Teacher', nextDay, isSettings }: { day: string, seminarTeacher: Teacher, onClick: (email: string) => void, icon: string, title: string, nextDay: Moment }) => {
+const CurrentSeminarCard = ({ day, seminarTeacher, onClick, icon = 'email', title = 'E-Mail Teacher' }) => {
   let teacherPic = (seminarTeacher && 'picture' in seminarTeacher && !isSettings) ? {uri: seminarTeacher.picture} : null
   if (seminarTeacher) {
     return (

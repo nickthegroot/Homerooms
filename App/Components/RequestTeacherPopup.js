@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component } from 'react'
 import { View, Image, Text, TextInput, Button, ActivityIndicator, Alert } from 'react-native'
 import { Divider } from 'react-native-elements'
@@ -14,7 +12,7 @@ import Styles from './Styles/RequestPopupStyles'
 import { firebaseConnect } from 'react-redux-firebase'
 
 @firebaseConnect()
-class RequestTeacherPopup extends Component<{isVisible: boolean, requestedTeacher: Teacher, onFinish: ({}) => void}> {
+class RequestTeacherPopup extends Component {
   // TODO: Set A/B day
 
   constructor (props) {

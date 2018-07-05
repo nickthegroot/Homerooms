@@ -6,7 +6,7 @@ import { Video } from 'expo'
 
 import Button from '../../Components/Button'
 
-import { Fonts } from '../../Themes'
+import { Fonts } from '../../../Extras/Themes'
 import Styles from './Styles'
 
 @firebaseConnect()
@@ -51,7 +51,7 @@ export default class LoginScreen extends Component {
 
                 <Video
                     shouldPlay
-                    source={require('../../Assets/Videos/BackgroundVideo2.mp4')}
+                    source={require('../../../Extras/Assets/Videos/BackgroundVideo2.mp4')}
                     rate={1.0}
                     resizeMode={Video.RESIZE_MODE_COVER}
                     isMuted
