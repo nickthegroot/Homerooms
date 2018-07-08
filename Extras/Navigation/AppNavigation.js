@@ -1,68 +1,16 @@
 import React from 'react'
-// import { SafeAreaView, Text } from 'react-native'
-import { TabNavigator, createStackNavigator, NavigationActions } from 'react-navigation'
-// import { NavigationComponent } from 'react-native-material-bottom-navigation'
-// import HeaderButtons from 'react-navigation-header-buttons'
-// import Icon from '@expo/vector-icons/MaterialIcons'
+import { Text } from 'react-native'
+import { createStackNavigator } from 'react-navigation'
 
-// import { Colors } from '../Themes'
+import { Colors, ApplicationStyles as Styles } from '../Themes'
 
 import LaunchScreen from '../../App/Screens/LaunchScreen'
 import LoginScreen from '../../App/Screens/LoginScreen'
+import HomeScreen from '../../App/Screens/HomeScreen'
 
-// const headerButtons = (
-//   <HeaderButtons IconComponent={Icon} iconSize={23} color='white'>
-//     <HeaderButtons.Item title='search' iconName='search' onPress={() => store.dispatch(NavigationActions.navigate({ routeName: 'SearchScreen' }))} />
-//   </HeaderButtons >
-// )
-
-// const generateHeaderTitle = (title) => {
-//   return <Text style={Styles.supportSeminarTitleWhite}>{title}<Text style={Styles.supportSeminarTitleBlue}>.</Text></Text>
-// }
-
-// const BottomNav = props => (
-//   <SafeAreaView
-//     forceInset={{ top: 'never', bottom: 'always', horizontal: 'never' }}
-//     style={{ backgroundColor: '#fff' }}>
-//     <NavigationComponent {...props} />
-//   </SafeAreaView>
-// )
-
-// const TabNav = TabNavigator({
-//   RequestScreen: { screen: null },
-//   HomeScreen: { screen: null },
-//   SettingsScreen: { screen: null }
-// }, {
-//   initialRouteName: 'HomeScreen',
-//   swipeEnabled: true,
-//   animationEnabled: true,
-//   tabBarComponent: BottomNav,
-//   tabBarPosition: 'bottom',
-//   tabBarOptions: {
-//     bottomNavigationOptions: {
-//       labelColor: 'gray',
-//       shifting: true,
-//       activeLabelColor: Colors.darkBlue,
-//       tabs: {
-//         HomeScreen: {
-//           activeIcon: <Icon size={24} color={Colors.darkBlue} name='home' />,
-//           icon: <Icon size={24} color='gray' name='home' />,
-//           label: 'Home'
-//         },
-//         RequestScreen: {
-//           activeIcon: <Icon size={24} color={Colors.darkBlue} name='swap-horiz' />,
-//           icon: <Icon size={24} color='gray' name='swap-horiz' />,
-//           label: 'Request'
-//         },
-//         SettingsScreen: {
-//           activeIcon: <Icon size={24} color={Colors.darkBlue} name='settings' />,
-//           icon: <Icon size={24} color='gray' name='settings' />,
-//           label: 'Settings'
-//         }
-//       }
-//     }
-//   }
-// })
+const generateHeaderTitle = (title) => {
+  return <Text style={Styles.largeTitleWhite}>{title}<Text style={Styles.largeTitleBlue}>.</Text></Text>
+}
 
 const PrimaryNav = createStackNavigator({
   LaunchScreen: {
@@ -76,19 +24,17 @@ const PrimaryNav = createStackNavigator({
     navigationOptions: {
       header: null
     }
+  },
+  HomeScreen: {
+    screen: HomeScreen,
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: Colors.darkBlue
+      },
+      headerTintColor: '#fff',
+      headerTitle: generateHeaderTitle('Homerooms')
+    }
   }
-  // TabNav: {
-  //   screen: null,
-  //   navigationOptions: {
-  //     headerStyle: {
-  //       backgroundColor: Colors.darkBlue
-  //     },
-  //     headerTintColor: '#fff',
-  //     headerTitle: generateHeaderTitle('Homeroom'),
-  //     headerRight: headerButtons
-  //     // headerLeft: logoImage
-  //   }
-  // },
   // SearchScreen: {
   //   screen: null,
   //   navigationOptions: {

@@ -1,5 +1,6 @@
 import { NavigationActions } from 'react-navigation'
 import { Permissions, Notifications } from 'expo'
+import NavigationService from '../Navigation/NavigationService'
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyAsDkP98e6lKa2rVfwjlOD-HQmpx3xn-6E',
@@ -14,18 +15,12 @@ export const reduxFirebaseConfig = {
   userProfile: 'users',
   profileParamsToPopulate: firebaseProfilePopulates, // populate list of todos from todos ref
   enableRedirectHandling: false,
-  onAuthStateChanged: onFirebaseStateChange,
-  useFirestoreForProfile: true
+  onAuthStateChanged: onFirebaseStateChange
 }
 
 async function onFirebaseStateChange (authData, firebase, dispatch) {
   const goToHome = () => {
-    dispatch(NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'TabNav' })
-      ]
-    }))
+    NavigationService.clearStackAndNavigate('HomeScreen')
   }
 
   if (authData) {
@@ -46,9 +41,7 @@ async function onFirebaseStateChange (authData, firebase, dispatch) {
 
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExpoPushTokenAsync()
-    firebase.firestore().collection('users').doc(authData.uid).update({
-      notificationToken: token
-    })
+    firebase.database().ref(`/users/${authData.uid}/token`).set(token)
     goToHome()
   }
 }

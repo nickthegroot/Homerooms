@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Linking, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, Linking, ActivityIndicator } from 'react-native'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import { connect } from 'react-redux'
 import Moment from 'moment'
 
-import { firebaseProfilePopulates } from '../../Config/FirebaseConfig'
+import { firebaseProfilePopulates } from '../../../Extras/Config/FirebaseConfig'
 import Styles from './Styles'
 
 @firebaseConnect()
@@ -14,6 +14,10 @@ import Styles from './Styles'
 }))
 export default class HomeScreen extends Component {
   render () {
-        
+    return (
+      <View>
+        <Text>Hello World</Text>
+      </View>
+    )
   }
 }

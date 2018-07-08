@@ -3,6 +3,7 @@ import { View, StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 import { Font } from 'expo'
 import Sentry from 'sentry-expo'
+import NavigationService from './Extras/Navigation/NavigationService'
 import store from './Extras/Redux'
 
 import Styles from './RootContainerStyles'
@@ -41,7 +42,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <View style={Styles.applicationView}>
           <StatusBar barStyle='light-content' />
-          {this.state.fontsLoaded ? <Navigation /> : null}
+          {this.state.fontsLoaded ? <Navigation ref={navigatorRef => { NavigationService.setTopLevelNavigator(navigatorRef) }} /> : null}
         </View>
       </Provider>
     )
