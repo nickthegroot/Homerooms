@@ -1,35 +1,31 @@
 import React from 'react'
-import { Text } from 'react-native'
-import { Card, Button } from 'react-native-elements'
-import { Fonts, Colors } from '../../Themes'
+import { Text, View } from 'react-native'
+import { Avatar } from 'react-native-elements'
+import Styles from './Styles/CurrentSeminarsStyles'
 
-const CurrentSeminarCard = ({ day, seminarTeacher, onClick, icon = 'email', title = 'E-Mail Teacher' }) => {
-  let teacherPic = (seminarTeacher && 'picture' in seminarTeacher && !isSettings) ? {uri: seminarTeacher.picture} : null
-  if (seminarTeacher) {
-    return (
-      <Card image={teacherPic}>
-        {(nextDay)
-          ? (
-            <Text style={{ ...Fonts.style.content, marginBottom: 10 }}>
-              Your next <Text style={{ ...Fonts.style.boldContent }}>{day}</Text> day Homeroom is with <Text style={Fonts.style.boldContent}>{seminarTeacher.firstName} {seminarTeacher.lastName}</Text> in room <Text style={{ fontWeight: 'bold' }}>{seminarTeacher.room}</Text> on <Text style={{ fontWeight: 'bold' }}>{nextDay.format('dddd, MMMM Do')}</Text>
-            </Text>
-          )
-          : <Text style={{ ...Fonts.style.content, marginBottom: 10 }}>
-            Your <Text style={Fonts.style.boldContent}>{day}</Text> day Homerooms are with <Text style={Fonts.style.boldContent}>{seminarTeacher.firstName} {seminarTeacher.lastName}</Text>
-          </Text>}
+const CurrentSeminarCard = ({ day, teacher, onPress }) => {
+  console.log(teacher)
+  return (
+    <View style={Styles.cardView} onPress={onPress}>
+      {('picture' in teacher)
+        ? <Avatar
+          size='large'
+          rounded
+          source={{ uri: teacher.picture }}
+        />
+        : <Avatar
+          size='large'
+          rounded
+          title={teacher.name.split(' ').map((n) => n[0]).join('')}
+        />
+      }
 
-        <Button
-          icon={{ name: icon }}
-          backgroundColor={Colors.lightBlue}
-          fontFamily={Fonts.type.headings}
-          buttonStyle={{ borderRadius: 2, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
-          title={title}
-          onPress={() => onClick(seminarTeacher.email)} />
-      </Card>
-    )
-  }
-
-  return null
+      <View style={Styles.textView}>
+        <Text style={Styles.header}>{`"${day}" Days`}</Text>
+        <Text style={Styles.body}>You’re currently scheduled with <Text style={Styles.bodyImportant}>{teacher.name}</Text> on all <Text style={Styles.bodyImportant}>{day} Days</Text>. To make request another teacher, search for one!</Text>
+      </View>
+    </View>
+  )
 }
 
 export default CurrentSeminarCard

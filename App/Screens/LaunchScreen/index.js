@@ -7,7 +7,7 @@ import Button from '../../Components/Button'
 import Styles from './Styles'
 
 class LaunchScreen extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -19,7 +19,7 @@ class LaunchScreen extends Component {
     this.props.navigation.navigate('LoginScreen')
   }
 
-  render() {
+  render () {
     return (
       <View style={Styles.mainComponent}>
 

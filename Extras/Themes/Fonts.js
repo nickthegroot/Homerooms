@@ -33,7 +33,7 @@ const style = {
     color: 'white'
   },
   heading: {
-    fontFamily: families.headings,
+    fontFamily: families.headings + '-Light',
     fontSize: size.heading,
     color: 'black'
   },
@@ -45,6 +45,7 @@ const style = {
 }
 
 export default {
+  families,
   type,
   size,
   style

@@ -1,6 +1,9 @@
-import { NavigationActions } from 'react-navigation'
 import { Permissions, Notifications } from 'expo'
 import NavigationService from '../Navigation/NavigationService'
+
+export const profilePopulates = [
+  { child: 'school', root: 'schools' }
+]
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyAsDkP98e6lKa2rVfwjlOD-HQmpx3xn-6E',
@@ -10,11 +13,11 @@ export const firebaseConfig = {
   storageBucket: 'homerooms-nbdeg.appspot.com',
   messagingSenderId: '455349106342'
 }
-export const firebaseProfilePopulates = [{ child: 'requests', root: 'requests' }, { child: 'seminars', root: 'teachers' }]
+
 export const reduxFirebaseConfig = {
   userProfile: 'users',
-  profileParamsToPopulate: firebaseProfilePopulates, // populate list of todos from todos ref
   enableRedirectHandling: false,
+  profileParamsToPopulate: profilePopulates,
   onAuthStateChanged: onFirebaseStateChange
 }
 
@@ -43,5 +46,7 @@ async function onFirebaseStateChange (authData, firebase, dispatch) {
     let token = await Notifications.getExpoPushTokenAsync()
     firebase.database().ref(`/users/${authData.uid}/token`).set(token)
     goToHome()
+  } else {
+    NavigationService.clearStackAndNavigate('LaunchScreen')
   }
 }
