@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ScrollView, ActivityIndicator, Button } from 'react-native'
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import CurrentSeminarCard from '../../Components/CurrentSeminarCard'
 import { connect } from 'react-redux'
@@ -11,12 +11,12 @@ import Styles from './Styles'
 @firebaseConnect()
 @connect(
   ({ firebase }) => {
-    return { populatedProfile: populate(firebase, 'profile', profilePopulates) }
+    return { profile: populate(firebase, 'profile', profilePopulates) }
   }
 )
 export default class HomeScreen extends Component {
   getAndFormatTeachers = () => {
-    const profile = this.props.populatedProfile
+    const profile = this.props.profile
 
     let defaultTeacherCards = null
     let requestedTeacherCards = null
@@ -40,8 +40,8 @@ export default class HomeScreen extends Component {
       })
     }
 
-    console.log('defaultTeacherCards:')
-    console.log(defaultTeacherCards)
+    // console.log('defaultTeacherCards:')
+    // console.log(defaultTeacherCards)
 
     return {
       defaultCards: defaultTeacherCards,
@@ -50,16 +50,12 @@ export default class HomeScreen extends Component {
   }
 
   render () {
-    console.log('RERENDER')
-    console.log(this.props.populatedProfile)
     let cards = this.getAndFormatTeachers()
-    // console.log(cards)
 
     if (cards == null) {
       return (
         <View style={Styles.loadingView}>
           <ActivityIndicator size='large' animating />
-          <Button title='Reload' onPress={() => console.log(this.props)} />
         </View>
       )
     }

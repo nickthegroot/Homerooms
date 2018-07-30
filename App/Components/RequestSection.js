@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import Styles from './Styles/RequestSectionStyles'
 
@@ -22,7 +22,7 @@ const RequestSection = ({ title, content, onEditClick }) => {
       <View style={Styles.editContent}>
         {(onEditClick) // only show edit button when needed
           ? (
-            <Icon onPress={onEditClick} name='chevron-right' size={30} color='black' />
+            <MaterialIcons onPress={onEditClick} name='chevron-right' size={30} color='black' />
           )
           : null
         }

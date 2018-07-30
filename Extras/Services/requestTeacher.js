@@ -1,13 +1,15 @@
 import Firebase from 'firebase'
 
-export default function handleRequest (schoolId, teacherKey, seminarDate, uid, reason) {
-  Firebase.database().ref(`/${schoolId}/requests`).push({
+export default function handleRequest (schoolID, teacherID, seminarDate, reason = '') {
+  const uid = Firebase.auth().currentUser.uid
+
+  Firebase.database().ref(`/schools/${schoolID}/requests`).push({
     user: uid,
-    teacher: teacherKey,
+    teacher: teacherID,
     accepted: false,
     viewed: false,
-    timestamp: new Date(),
-    requestedTime: seminarDate,
+    timestamp: (new Date()).toISOString(),
+    requestedTime: seminarDate.toISOString(),
     reason: reason
   })
 }

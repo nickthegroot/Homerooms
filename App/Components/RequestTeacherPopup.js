@@ -1,34 +1,54 @@
-import React, { Component } from 'react'
-import { View, Image, Text, TextInput, Button, ActivityIndicator, Alert } from 'react-native'
-import { Divider } from 'react-native-elements'
-import { Calendar } from 'react-native-calendars'
-import Modal from 'react-native-modal'
 import moment from 'moment'
-import RequestSection from './RequestSection'
+import React, { Component } from 'react'
+import { ActivityIndicator, Alert, Button, Image, Text, TextInput, View } from 'react-native'
+import { Calendar } from 'react-native-calendars'
+import { Divider } from 'react-native-elements'
+import Modal from 'react-native-modal'
+import requestTeacher from '../../Extras/Services/requestTeacher'
 import BlueButton from './Button'
-import requestTeacher from '../../Services/requestTeacher'
-
+import RequestSection from './RequestSection'
 import Styles from './Styles/RequestPopupStyles'
-import { firebaseConnect } from 'react-redux-firebase'
 
-@firebaseConnect()
 class RequestTeacherPopup extends Component {
-  // TODO: Set A/B day
-
   constructor (props) {
     super(props)
 
+    // Calendar calculations for max/min date
+    let calMinDate = moment() // AKA Today
+    let calMaxDate = moment('2018-08-27T04:00:00.000Z').add(14, 'days') // Reasonable limit
+    let disabledDays = ['Saturday', 'Sunday']
+
+    if ('disabledDays' in props.profile.school.homeroomTimes) {
+      disabledDays = props.profile.school.homeroomTimes.disabledDays
+    }
+
+    const schoolStartDate = moment(props.profile.school.startDate)
+
+    // Is today (calMinDate) BEFORE the school start date?  If so, we need to set the min to the school start date instead.
+    if (schoolStartDate.isAfter(calMinDate)) {
+      calMinDate = schoolStartDate
+    }
+
+    const schoolEndDate = moment(props.profile.school.endDate)
+
+    // Is today (calMinDate) AFTER the school end date?  If so, we need to set the max to the school end date instead.
+    if (schoolEndDate.isBefore(calMaxDate)) {
+      calMaxDate = schoolEndDate
+    }
+
     this.state = {
-      markedDates: this.getDaysInMonth(moment().month(), moment().year()),
+      disabledDays: disabledDays,
+      calMax: calMaxDate.format('YYYY-MM-DD'),
+      calMin: calMinDate.format('YYYY-MM-DD'),
+      markedDates: this.getDaysInMonth(moment().month(), moment().year(), disabledDays),
       requestedDate: null,
       requestedDay: null,
-      isVisible: true,
       requesting: false
     }
   }
 
-  getDaysInMonth (month, year) {
-    const DISABLED_DAYS = ['Monday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  getDaysInMonth (month, year, disabledDays) {
+    const DISABLED_DAYS = disabledDays
     let pivot = moment().month(month).year(year).startOf('month')
     const end = moment().month(month).year(year).endOf('month')
 
@@ -40,6 +60,7 @@ class RequestTeacherPopup extends Component {
       DISABLED_DAYS.forEach((day) => {
         dates[pivot.day(day).format('YYYY-MM-DD')] = disabled
       })
+
       pivot.add(7, 'days')
     }
 
@@ -48,7 +69,7 @@ class RequestTeacherPopup extends Component {
 
   onMonthChange = (date) => {
     this.setState({
-      markedDates: this.getDaysInMonth(date.month - 1, date.year)
+      markedDates: this.getDaysInMonth(date.month - 1, date.year, this.state.disabledDays)
     })
   }
 
@@ -62,59 +83,48 @@ class RequestTeacherPopup extends Component {
   }
 
   sendRequest = () => {
-    try {
-      requestTeacher(
-        this.props.requestedTeacher.id,
-        this.state.requestedDate,
-        this.props.firebase.auth()._user.uid,
-        this.state.requestedDay,
-        this.state.reason
-      )
-    } catch (err) {
-      Alert.alert(
-        'Error',
-        'An error occured when trying to submit your request. Please try again.',
-        [
-          { text: 'OK' }
-        ],
-        { cancelable: true }
-      )
-    }
+    requestTeacher(
+      this.props.profile.school.id,
+      this.props.requestedTeacher.id,
+      this.state.requestedDate.toDate(),
+      this.state.reason
+    )
   }
 
   handleRequest = () => {
     // Check to make sure all info is entered correctly.
-    if (this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid) {
+    if (this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B')) {
       this.setState({ requesting: true })
-      // Verify user with touch ID
-      TouchID.authenticate('Verify your Identity')
-        .then(success => {
-          this.sendRequest()
-          this.props.onFinish()
-        })
-        .catch(error => {
-          switch (error.name) {
-            case 'RCTTouchIDNotSupported':
-            case 'LAErrorTouchIDNotAvailable':
-            case 'LAErrorTouchIDNotEnrolled':
-              this.sendRequest()
-              this.props.onFinish()
-              break
-            default:
-              break
-          }
-        })
+
+      try {
+        this.sendRequest()
+      } catch (e) {
+        console.error(e)
+        this.props.onFinish(false)
+        return
+      }
+
+      this.props.onFinish(true)
     }
   }
 
   render () {
+    // TODO: Instead of A/B day, ask which teacher they'd be replacing
+    if (!this.props.profile.isLoaded) {
+      return (
+        <View style={Styles.loadingView}>
+          <ActivityIndicator size='large' animating />
+        </View>
+      )
+    }
+
     return (
       <View>
 
         <Modal
           style={Styles.bottomModal}
-          isVisible={this.props.isVisible}
-          onBackdropPress={this.props.onFinish} >
+          isVisible
+          onBackdropPress={() => this.props.onFinish(false)} >
 
           <Modal isVisible={this.state.calVisiblity} onBackdropPress={() => this.setState({ requestedDay: null, requestedDate: null, calVisiblity: false })}>
             <Modal isVisible={this.state.dayVisiblity} onBackdropPress={() => this.setState({ dayVisiblity: false, requestedDay: null, requestedDate: null, calVisiblity: false })}>
@@ -127,7 +137,8 @@ class RequestTeacherPopup extends Component {
             <Calendar
               style={{ flex: 0 }}
               markedDates={this.state.markedDates}
-              minDate={moment().format('YYYY-MM-DD')}
+              minDate={this.state.calMin}
+              maxDate={this.state.calMax}
               onMonthChange={(date) => this.onMonthChange(date)}
               onDayPress={(date) => this.handleDatePress(date)} />
           </Modal>
@@ -148,7 +159,7 @@ class RequestTeacherPopup extends Component {
           <View style={{ backgroundColor: 'white', height: 350 }}>
 
             <View style={Styles.header}>
-              <Image source={require('../../Assets/Images/logo.png')} style={{ width: 40, height: 40 }} />
+              <Image source={require('../../Extras/Assets/Images/logo.png')} style={{ width: 40, height: 40 }} />
               <Text style={Styles.subsectionTitle}>   REQUEST A TEACHER</Text>
             </View>
 
@@ -156,7 +167,7 @@ class RequestTeacherPopup extends Component {
 
             <RequestSection
               title='Requested Teacher'
-              content={(this.props.requestedTeacher) ? `${this.props.requestedTeacher.firstName} ${this.props.requestedTeacher.lastName}` : 'No Teacher Selected'} />
+              content={(this.props.requestedTeacher) ? `${this.props.requestedTeacher.name}` : 'No Teacher Selected'} />
 
             <Divider />
 
@@ -175,7 +186,7 @@ class RequestTeacherPopup extends Component {
             <View style={Styles.confirmView}>
               <BlueButton
                 text={(!this.state.requesting) ? 'Confirm Request' : null}
-                disabled={!(this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && this.props.firebase.auth()._user.uid && !this.state.requesting)}
+                disabled={!(this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && !this.state.requesting)}
                 onPress={this.handleRequest}>
                 {(this.state.requesting)
                   ? <ActivityIndicator size='large' animating />

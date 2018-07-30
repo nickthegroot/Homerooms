@@ -4,7 +4,6 @@ import { Avatar } from 'react-native-elements'
 import Styles from './Styles/CurrentSeminarsStyles'
 
 const CurrentSeminarCard = ({ day, teacher, onPress }) => {
-  console.log(teacher)
   return (
     <View style={Styles.cardView} onPress={onPress}>
       {('picture' in teacher)

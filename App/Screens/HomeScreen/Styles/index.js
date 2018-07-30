@@ -13,6 +13,7 @@ export default StyleSheet.create({
   },
   loadingView: {
     ...ApplicationStyles.mainContainer,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
