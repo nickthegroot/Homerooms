@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { Component } from 'react'
-import { ActivityIndicator, Alert, Button, Image, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Button, Image, Text, TextInput, View } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import { Divider } from 'react-native-elements'
 import Modal from 'react-native-modal'
@@ -42,7 +42,7 @@ class RequestTeacherPopup extends Component {
       calMin: calMinDate.format('YYYY-MM-DD'),
       markedDates: this.getDaysInMonth(moment().month(), moment().year(), disabledDays),
       requestedDate: null,
-      requestedDay: null,
+      oldTeacher: null,
       requesting: false
     }
   }
@@ -76,8 +76,7 @@ class RequestTeacherPopup extends Component {
   handleDatePress = (date) => {
     if (moment(date.dateString).weekday() === 2 || moment(date.dateString).weekday() === 3) {
       this.setState({
-        requestedDate: moment(date.dateString).hour(13).minute(30),
-        dayVisiblity: true
+        requestedDate: moment(date.dateString).hour(13).minute(30)
       })
     }
   }
@@ -86,6 +85,7 @@ class RequestTeacherPopup extends Component {
     requestTeacher(
       this.props.profile.school.id,
       this.props.requestedTeacher.id,
+      this.state.oldTeacher,
       this.state.requestedDate.toDate(),
       this.state.reason
     )
@@ -93,7 +93,7 @@ class RequestTeacherPopup extends Component {
 
   handleRequest = () => {
     // Check to make sure all info is entered correctly.
-    if (this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B')) {
+    if (this.props.requestedTeacher && this.state.requestedDate && this.state.oldTeacher) {
       this.setState({ requesting: true })
 
       try {
@@ -127,13 +127,6 @@ class RequestTeacherPopup extends Component {
           onBackdropPress={() => this.props.onFinish(false)} >
 
           <Modal isVisible={this.state.calVisiblity} onBackdropPress={() => this.setState({ requestedDay: null, requestedDate: null, calVisiblity: false })}>
-            <Modal isVisible={this.state.dayVisiblity} onBackdropPress={() => this.setState({ dayVisiblity: false, requestedDay: null, requestedDate: null, calVisiblity: false })}>
-              <View style={Styles.dayView}>
-                <Text style={Styles.dayTitle}>Is this an A or B day?</Text>
-                <Button style={Styles.dayButtons} title='A' onPress={() => { this.setState({ requestedDay: 'A', dayVisiblity: false }); setTimeout(() => this.setState({calVisiblity: false}), 320) }} />
-                <Button style={Styles.dayButtons} title='B' onPress={() => { this.setState({ requestedDay: 'B', dayVisiblity: false }); setTimeout(() => this.setState({ calVisiblity: false }), 320) }} />
-              </View>
-            </Modal>
             <Calendar
               style={{ flex: 0 }}
               markedDates={this.state.markedDates}
@@ -141,6 +134,13 @@ class RequestTeacherPopup extends Component {
               maxDate={this.state.calMax}
               onMonthChange={(date) => this.onMonthChange(date)}
               onDayPress={(date) => this.handleDatePress(date)} />
+          </Modal>
+
+          <Modal isVisible={this.state.teacherVisiblity} onBackdropPress={() => this.setState({ teacherVisiblity: false })}>
+            <View style={Styles.dayView}>
+              <Text style={Styles.dayTitle}>Which teacher are you replacing?</Text>
+              {/* TODO: Get teachers */}
+            </View>
           </Modal>
 
           <Modal isVisible={this.state.reasonVisiblity} onBackdropPress={() => this.setState({ reasonVisiblity: false, reason: '' })}>
@@ -167,13 +167,13 @@ class RequestTeacherPopup extends Component {
 
             <RequestSection
               title='Requested Teacher'
-              content={(this.props.requestedTeacher) ? `${this.props.requestedTeacher.name}` : 'No Teacher Selected'} />
+              content={(this.props.requestedTeacher) ? this.props.requestedTeacher.name : 'No Teacher Selected'} />
 
             <Divider />
 
             <RequestSection
               title='Requested Date'
-              content={(this.state.requestedDate && this.state.requestedDay) ? `${this.state.requestedDate.format('dddd, MMMM Do')} | ${this.state.requestedDay} Day` : 'Set a date'}
+              content={(this.state.requestedDate) ? `${this.state.requestedDate.format('dddd, MMMM Do')}` : 'Set a date'}
               onEditClick={() => this.setState({ calVisiblity: true })} />
 
             <Divider />
@@ -186,7 +186,7 @@ class RequestTeacherPopup extends Component {
             <View style={Styles.confirmView}>
               <BlueButton
                 text={(!this.state.requesting) ? 'Confirm Request' : null}
-                disabled={!(this.props.requestedTeacher && this.state.requestedDate && (this.state.requestedDay === 'A' || this.state.requestedDay === 'B') && !this.state.requesting)}
+                disabled={!(this.props.requestedTeacher && this.state.requestedDate && this.state.oldTeacher && !this.state.requesting)}
                 onPress={this.handleRequest}>
                 {(this.state.requesting)
                   ? <ActivityIndicator size='large' animating />

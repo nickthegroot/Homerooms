@@ -19,6 +19,12 @@
           }
         }
       ]
+    },
+    "ios": {
+      "bundleIdentifier": "com.nbdeg.homeroom.ios"
+    },
+    "android": {
+       "package": "com.nbdeg.homeroom"
     }
   }
 }

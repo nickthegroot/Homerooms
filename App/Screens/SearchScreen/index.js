@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, View, ActivityIndicator } from 'react-native'
+import { Alert, ScrollView, View, ActivityIndicator } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import SearchBar from 'react-native-searchbar'
 import { connect } from 'react-redux'
@@ -118,9 +118,9 @@ class SearchScreen extends Component {
               profile={this.props.profile} />)
             : null
         }
-        <View style={{ marginTop: 50 }}>
+        <ScrollView style={{ marginTop: 50 }}>
           {teacherCards}
-        </View>
+        </ScrollView>
       </View>
     )
   }
