@@ -1,0 +1,3 @@
+Homeroom, an app to connect teachers and learners.
+
+Homeroom allows students at LOHS to change their support seminar, all with the click of a button. Say goodbye to paper slips!

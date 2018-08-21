@@ -29,13 +29,6 @@ const generateHeaderTitle = (title: string) => {
   return <Text style={Styles.supportSeminarTitleWhite}>{title}<Text style={Styles.supportSeminarTitleBlue}>.</Text></Text>
 }
 
-// const logoImage = (
-//   <Image
-//     source={require('../Assets/Images/logo.png')}
-//     style={Styles.logo}
-//     resizeMode='contain' />
-// )
-
 const BottomNav = props => (
   <SafeAreaView
     forceInset={{ top: 'never', bottom: 'always', horizontal: 'never' }}

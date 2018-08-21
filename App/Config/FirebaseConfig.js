@@ -1,7 +1,7 @@
 import { NavigationActions } from 'react-navigation'
 import { Alert } from 'react-native'
 
-export const firebaseProfilePopulates = [{ child: 'lastRequest', root: 'requests' }, { child: 'seminars', root: 'teachers' }]
+export const firebaseProfilePopulates = [{ child: 'requests', root: 'requests' }, { child: 'seminars', root: 'teachers' }]
 export const reduxFirebaseConfig = {
   userProfile: 'users',
   profileParamsToPopulate: firebaseProfilePopulates, // populate list of todos from todos ref
@@ -20,6 +20,7 @@ function onFirebaseStateChange (authData, firebase, dispatch) {
   }
 
   if (authData) {
+    firebase.crashlytics().setUserIdentifier(authData.uid)
     firebase.messaging().hasPermission()
       .then(enabled => {
         if (enabled) {

@@ -1,8 +1,14 @@
-import Moment from 'moment'
+import moment from 'moment'
 
 export function getNextSeminar () {
-  let nextSeminarTuesday = Moment().day(7 + 2).hour(13).minute(30).second(0).millisecond(0)
-  let nextSeminarWednesday = Moment().day(7 + 3).hour(13).minute(30).second(0).millisecond(0)
+  let nextSeminarTuesday = moment().day('Tuesday').hour(13).minute(30).second(0).millisecond(0)
+  if (moment().isAfter(nextSeminarTuesday)) {
+    nextSeminarTuesday.add(1, 'weeks')
+  }
+  let nextSeminarWednesday = moment().day('Wednesday').hour(13).minute(30).second(0).millisecond(0)
+  if (moment().isAfter(nextSeminarWednesday)) {
+    nextSeminarWednesday.add(1, 'weeks')
+  }
 
   return (nextSeminarTuesday.isBefore(nextSeminarWednesday))
     ? nextSeminarTuesday
@@ -10,8 +16,14 @@ export function getNextSeminar () {
 }
 
 export function getBothSeminars () {
-  let nextSeminarTuesday = Moment().day(7 + 2).hour(13).minute(30).second(0).millisecond(0)
-  let nextSeminarWednesday = Moment().day(7 + 3).hour(13).minute(30).second(0).millisecond(0)
+  let nextSeminarTuesday = moment().day('Tuesday').hour(13).minute(30).second(0).millisecond(0)
+  if (moment().isAfter(nextSeminarTuesday)) {
+    nextSeminarTuesday.add(1, 'weeks')
+  }
+  let nextSeminarWednesday = moment().day('Wednesday').hour(13).minute(30).second(0).millisecond(0)
+  if (moment().isAfter(nextSeminarWednesday)) {
+    nextSeminarWednesday.add(1, 'weeks')
+  }
 
   return [ nextSeminarTuesday, nextSeminarWednesday ]
 }

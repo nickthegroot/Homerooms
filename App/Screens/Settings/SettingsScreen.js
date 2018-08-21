@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => {
   populatedProfile: populate(firebase, 'profile', firebaseProfilePopulates)
 }), mapDispatchToProps)
 class SettingsScreen extends React.Component<Props> {
-  handleSignOut () {
+  handleSignOut = () => {
     this.props.firebase.logout()
   }
 
@@ -52,7 +52,7 @@ class SettingsScreen extends React.Component<Props> {
                 fontFamily={(Platform.OS === 'ios') ? Fonts.type.headings : Fonts.type.headings + '-Regular'}
                 buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
                 title='Sign Out'
-                onPress={this.handleSignOut.bind(this)} />
+                onPress={this.handleSignOut} />
             </Card>
 
             <CurrentSeminarCard day='A' seminarTeacher={this.props.populatedProfile.seminars.a} onClick={() => this.props.navigation.navigate('ChangeScreen', { dayChange: 'A' })} icon='edit' title='Change Default Homeroom' isSettings />

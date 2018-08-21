@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View, Alert } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
@@ -46,6 +46,20 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
     }
   }
 
+  handleFinish = () => {
+    let teacher = this.state.requestedTeacher
+    Alert.alert(
+      'Success!',
+      `Your request for ${teacher.firstName} ${teacher.lastName}, has been sent. You'll recieve a notification when it is accepted or denied.`,
+      [
+        { text: 'OK', onPress: () => this.setState({ requestVisibility: false }) }
+      ],
+      { cancelable: false }
+    )
+
+    this.setState({ requestVisibility: false })
+  }
+
   render () {
     var teacherList = []
 
@@ -84,7 +98,7 @@ export default class RequestScreen extends React.Component<Props, {nextSeminar: 
         <RequestTeacherPopup
           isVisible={this.state.requestVisibility}
           requestedTeacher={this.state.requestedTeacher}
-          onFinish={() => this.setState({ requestVisibility: false })} />
+          onFinish={this.handleFinish} />
       </View>
     )
   }

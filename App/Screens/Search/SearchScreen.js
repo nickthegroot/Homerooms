@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, Alert } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
@@ -47,6 +47,18 @@ class SearchScreen extends Component {
     }
   }
 
+  handleFinish = () => {
+    let teacher = this.state.requestedTeacher
+    Alert.alert(
+      'Success!',
+      `Your request for ${teacher.firstName} ${teacher.lastName}, has been sent. You'll recieve a notification when it is accepted or denied.`,
+      [
+        { text: 'OK', onPress: () => this.setState({ requestVisibility: false }) }
+      ],
+      { cancelable: false }
+    )
+  }
+
   render () {
     let teacherCards = []
 
@@ -87,7 +99,7 @@ class SearchScreen extends Component {
         />
         <RequestTeacherPopup
           requestedTeacher={this.state.requestedTeacher}
-          onFinish={() => this.setState({ requestVisibility: false })}
+          onFinish={this.handleFinish}
           isVisible={this.state.requestVisibility} />
         <View style={{ marginTop: 50 }}>
           {teacherCards}

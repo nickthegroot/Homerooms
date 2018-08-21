@@ -1,6 +1,6 @@
 {
   "name": "homeroom",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "author": {
     "name": "Nick DeGroot",
@@ -23,7 +23,7 @@
     "flow": "flow",
     "lint": "standard --verbose | snazzy",
     "postinstall": "rm ./node_modules/react-native/local-cli/core/__fixtures__/files/package.json",
-    "postversion": "./bumpIOS.sh && git push && git push --tags"
+    "postversion": "./bumpIOS.sh && && git add . && git commit \"Bumped version.\" && git push && git push --tags"
   },
   "rnpm": {
     "assets": [
@@ -31,11 +31,11 @@
     ]
   },
   "dependencies": {
-    "moment": "^2.20.1",
+    "moment": "^2.22.1",
     "react": "16.2.0",
     "react-native": "0.52.2",
     "react-native-calendars": "^1.17.1",
-    "react-native-code-push": "^5.2.1",
+    "react-native-code-push": "^5.3.2",
     "react-native-elements": "^0.19.1",
     "react-native-firebase": "^4.0.3",
     "react-native-mail": "^3.0.5",
