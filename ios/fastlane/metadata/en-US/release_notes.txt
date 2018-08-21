@@ -1,7 +1,0 @@
-New Features:
-* Confirmations when requesting teachers
-
-Bug Fixes:
-* Fixed bug where app would crash when a request was accepted.
-* Fixed bug where accepted requests were not showing up on the home screen.
-* Fixed bug where the next seminar would be set a week ahead.

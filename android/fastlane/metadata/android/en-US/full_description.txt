@@ -1,3 +1,0 @@
-Homeroom is the app for LOHS students to request different Support Seminars with the click of a button.
-
-This app is currently in closed beta. Please contact the developer in order to get a login.
