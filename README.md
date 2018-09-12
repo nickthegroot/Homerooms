@@ -1,4 +1,4 @@
-# Homeroom
+# Homerooms
 :school: An app to connect teachers and learners.
 
 *Created by Nick DeGroot during his Junior year (2017-2018).*
