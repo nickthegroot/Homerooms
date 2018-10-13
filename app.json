@@ -21,10 +21,13 @@
       ]
     },
     "ios": {
-      "bundleIdentifier": "com.nbdeg.homeroom.ios"
+      "bundleIdentifier": "com.nbdeg.homeroom.ios",
+      "appStoreUrl": "https://itunes.apple.com/us/app/homeroom-lohs-seminars/id1376916514"
     },
     "android": {
-       "package": "com.nbdeg.homeroom"
+       "package": "com.nbdeg.homeroom",
+       "versionCode": 2,
+       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.nbdeg.homeroom"
     }
   }
 }
