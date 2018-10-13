@@ -8,7 +8,7 @@
 
 While school administrators have canceled the project, I've gone back and wrapped up just about everything planned. Below are screenshots from iOS. Feel free to download the APK or IPA from the Releases tab, or from the app store.
 
-![Launch Screen](.github/iOSLaunch.png)
-![Home Screen](.github/iOSHome.png)
-![Search Screen](.github/iOSSearch.png)
-![Request Screen](.github/iOSRequest.png)
+![Launch Screen](.github/iOSLaunch.jpg)
+![Home Screen](.github/iOSHome.jpg)
+![Search Screen](.github/iOSSearch.jpg)
+![Request Screen](.github/iOSRequest.jpg)
