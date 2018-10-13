@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { View, Text, ScrollView, ActivityIndicator, Dimensions } from 'react-native'
 import { firebaseConnect, populate } from 'react-redux-firebase'
 import CurrentSeminarCard from '../../Components/CurrentSeminarCard'
+import RequestSeminarCard from '../../Components/RequestSeminarCard'
 import { connect } from 'react-redux'
-// import Firebase from 'firebase'
+import moment from 'moment'
 import { MaterialIcons } from '@expo/vector-icons'
 import BlueButton from '../../Components/Button'
 import { profilePopulates } from '../../../Extras/Config/FirebaseConfig'
@@ -13,11 +14,13 @@ import Styles from './Styles'
 @firebaseConnect()
 @connect(
   ({ firebase }) => {
-    return { profile: populate(firebase, 'profile', profilePopulates) }
+    return {
+      profile: populate(firebase, 'profile', profilePopulates)
+    }
   }
 )
 export default class HomeScreen extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -25,41 +28,33 @@ export default class HomeScreen extends Component {
     }
   }
 
-  getAndFormatTeachers = () => {
-    const profile = this.props.profile
-
+  render () {
     let defaultTeacherCards = null
     let requestedTeacherCards = null
 
-    if (!profile.isLoaded) { return null } // Sanity Check
-
-    if (profile.defaultTeachers) {
-      defaultTeacherCards = Object.keys(profile.defaultTeachers).map(defaultDay => {
-        let teacherID = profile.defaultTeachers[defaultDay]
-        let teacherProfile = profile.school.teachers[teacherID]
+    if (this.props.profile.defaultTeachers) {
+      defaultTeacherCards = Object.keys(this.props.profile.defaultTeachers).map(defaultDay => {
+        let teacherID = this.props.profile.defaultTeachers[defaultDay]
+        let teacherProfile = this.props.profile.school.teachers[teacherID]
 
         return <CurrentSeminarCard key={teacherProfile.id} day={defaultDay} teacher={teacherProfile} />
       })
     }
 
-    if (profile.requests) {
-      requestedTeacherCards = Object.keys(profile.requests).map(requestID => {
-        // TODO: Figure out how requests are structured
-        // let request = profile.school.requests[requestID]
-        return null
+    if (this.props.profile.school && this.props.profile.school.requests && this.props.profile.school.requests[this.props.profile.id]) {
+      requestedTeacherCards = Object.keys(this.props.profile.school.requests[this.props.profile.id]).map(requestID => {
+        let request = this.props.profile.school.requests[this.props.profile.id][requestID]
+        if (moment(request.requestedTime).isBefore(moment())) {
+          return
+        }
+
+        let teacherProfile = this.props.profile.school.teachers[request.teacher]
+
+        return <RequestSeminarCard key={requestID} request={request} teacher={teacherProfile} />
       })
     }
 
-    return {
-      defaultCards: defaultTeacherCards,
-      requestCards: requestedTeacherCards
-    }
-  }
-
-  render () {
-    let cards = this.getAndFormatTeachers()
-
-    if (cards == null) {
+    if (defaultTeacherCards == null) {
       return (
         <View style={Styles.loadingView}>
           <ActivityIndicator size='large' animating />
@@ -73,9 +68,9 @@ export default class HomeScreen extends Component {
           <ScrollView>
 
             <Text style={Styles.header}>Requests</Text>
-            {cards.requestCards}
+            {requestedTeacherCards}
             <Text style={Styles.header}>Regular Homerooms</Text>
-            {cards.defaultCards}
+            {defaultTeacherCards}
 
           </ScrollView>
         </View>
@@ -84,7 +79,7 @@ export default class HomeScreen extends Component {
         <View style={{ flex: 1, justifyContent: 'center', height: this.state.width, margin: 20 }}>
           <BlueButton onPress={() => this.props.navigation.navigate('SearchScreen')} >
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', width: '100%', paddingTop: 10 }} >
-              <MaterialIcons name='add' size={32} color='white' />
+              <MaterialIcons name='add' size={28} color='white' />
               <Text style={Styles.requestText}>Request</Text>
             </View>
           </BlueButton>

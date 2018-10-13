@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 import { Avatar } from 'react-native-elements'
-import Styles from './Styles/CurrentSeminarsStyles'
+import Styles from './Styles/SeminarCardStyles'
 
 const CurrentSeminarCard = ({ day, teacher, onPress }) => {
   return (

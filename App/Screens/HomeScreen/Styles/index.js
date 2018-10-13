@@ -9,7 +9,8 @@ export default StyleSheet.create({
   header: {
     ...Fonts.style.heading,
     textAlign: 'center',
-    fontSize: 24
+    fontSize: 24,
+    marginTop: 5
   },
   loadingView: {
     ...ApplicationStyles.mainContainer,
@@ -25,7 +26,7 @@ export default StyleSheet.create({
   },
   requestText: {
     fontFamily: Fonts.type.content,
-    fontSize: 24,
+    fontSize: 20,
     color: 'white',
     textAlign: 'center'
   }

@@ -15,7 +15,7 @@ class RequestTeacherPopup extends Component {
 
     // Calendar calculations for max/min date
     let calMinDate = moment() // AKA Today
-    let calMaxDate = moment('2018-08-27T04:00:00.000Z').add(14, 'days') // Reasonable limit
+    let calMaxDate = moment().add(14, 'days') // Reasonable limit
     let disabledDays = ['Saturday', 'Sunday']
 
     if ('disabledDays' in props.profile.school.homeroomTimes) {
@@ -42,7 +42,6 @@ class RequestTeacherPopup extends Component {
       calMin: calMinDate.format('YYYY-MM-DD'),
       markedDates: this.getDaysInMonth(moment().month(), moment().year(), disabledDays),
       requestedDate: null,
-      oldTeacher: null,
       requesting: false
     }
   }
@@ -76,16 +75,17 @@ class RequestTeacherPopup extends Component {
   handleDatePress = (date) => {
     if (moment(date.dateString).weekday() === 2 || moment(date.dateString).weekday() === 3) {
       this.setState({
-        requestedDate: moment(date.dateString).hour(13).minute(30)
+        requestedDate: moment(date.dateString).hour(13).minute(30),
+        calVisiblity: false
       })
     }
   }
 
   sendRequest = () => {
+    // schoolID, teacherID, seminarDate, reason
     requestTeacher(
       this.props.profile.school.id,
       this.props.requestedTeacher.id,
-      this.state.oldTeacher,
       this.state.requestedDate.toDate(),
       this.state.reason
     )
@@ -93,7 +93,7 @@ class RequestTeacherPopup extends Component {
 
   handleRequest = () => {
     // Check to make sure all info is entered correctly.
-    if (this.props.requestedTeacher && this.state.requestedDate && this.state.oldTeacher) {
+    if (this.props.requestedTeacher && this.state.requestedDate) {
       this.setState({ requesting: true })
 
       try {
@@ -186,7 +186,7 @@ class RequestTeacherPopup extends Component {
             <View style={Styles.confirmView}>
               <BlueButton
                 text={(!this.state.requesting) ? 'Confirm Request' : null}
-                disabled={!(this.props.requestedTeacher && this.state.requestedDate && this.state.oldTeacher && !this.state.requesting)}
+                disabled={!(this.props.requestedTeacher && this.state.requestedDate && !this.state.requesting)}
                 onPress={this.handleRequest}>
                 {(this.state.requesting)
                   ? <ActivityIndicator size='large' animating />
