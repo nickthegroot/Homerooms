@@ -45,15 +45,6 @@ class SearchScreen extends Component {
         ],
         { cancelable: false }
       )
-    } else {
-      Alert.alert(
-        'Something went wrong',
-        `Your request for ${teacher.name} has not been sent. Please try again later.`,
-        [
-          { text: 'OK', onPress: onConfirm }
-        ],
-        { cancelable: false }
-      )
     }
   }
 

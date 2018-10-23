@@ -42,7 +42,8 @@ export default StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     paddingLeft: 25,
-    paddingRight: 25
+    paddingRight: 25,
+    paddingBottom: 25
   },
   dayView: {
     backgroundColor: 'white',

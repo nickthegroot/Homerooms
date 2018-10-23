@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { Component } from 'react'
-import { ActivityIndicator, Button, Image, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, Button, Image, Text, TextInput, View, SafeAreaView } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import { Divider } from 'react-native-elements'
 import Modal from 'react-native-modal'
@@ -156,7 +156,7 @@ class RequestTeacherPopup extends Component {
             </View>
           </Modal>
 
-          <View style={{ backgroundColor: 'white', height: 350 }}>
+          <SafeAreaView style={{ backgroundColor: 'white', height: 350 }}>
 
             <View style={Styles.header}>
               <Image source={require('../../Extras/Assets/Images/logo.png')} style={{ width: 40, height: 40 }} />
@@ -195,7 +195,7 @@ class RequestTeacherPopup extends Component {
               </BlueButton>
             </View>
 
-          </View>
+          </SafeAreaView>
 
         </Modal>
 

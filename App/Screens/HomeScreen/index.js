@@ -5,7 +5,6 @@ import CurrentSeminarCard from '../../Components/CurrentSeminarCard'
 import RequestSeminarCard from '../../Components/RequestSeminarCard'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { MaterialIcons } from '@expo/vector-icons'
 import BlueButton from '../../Components/Button'
 import { profilePopulates } from '../../../Extras/Config/FirebaseConfig'
 
@@ -64,7 +63,7 @@ export default class HomeScreen extends Component {
 
     return (
       <View style={Styles.mainContainer}>
-        <View style={{ flex: 10, justifyContent: 'center', alignItems: 'center', width: this.state.width }}>
+        <View style={{ flex: 9, justifyContent: 'center', alignItems: 'center', width: this.state.width }}>
           <ScrollView>
 
             <Text style={Styles.header}>Requests</Text>
@@ -76,12 +75,12 @@ export default class HomeScreen extends Component {
         </View>
 
         {/* Footer */}
-        <View style={{ flex: 1, justifyContent: 'center', height: this.state.width, margin: 20 }}>
-          <BlueButton onPress={() => this.props.navigation.navigate('SearchScreen')} >
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', width: '100%', paddingTop: 10 }} >
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: this.state.width, padding: 20 }}>
+          <BlueButton onPress={() => this.props.navigation.navigate('SearchScreen')} text='Request' icon='add' >
+            {/* <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', width: '100%', paddingTop: 10 }} >
               <MaterialIcons name='add' size={28} color='white' />
               <Text style={Styles.requestText}>Request</Text>
-            </View>
+            </View> */}
           </BlueButton>
         </View>
       </View>

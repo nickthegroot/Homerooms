@@ -16,6 +16,7 @@ export const firebaseConfig = {
 
 export const reduxFirebaseConfig = {
   userProfile: 'users',
+  logErrors: false,
   enableRedirectHandling: false,
   profileParamsToPopulate: profilePopulates,
   onAuthStateChanged: onFirebaseStateChange

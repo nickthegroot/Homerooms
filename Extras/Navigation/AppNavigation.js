@@ -1,11 +1,11 @@
 import React from 'react'
 import { Text } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
-// import HeaderButtons from 'react-navigation-header-buttons'
-// import { MaterialIcons } from '@expo/vector-icons'
-// import NavigationService from '../Navigation/NavigationService'
+import { getFirebase } from 'react-redux-firebase'
 
 import { Colors, ApplicationStyles as Styles } from '../Themes'
+import HeaderButtons from 'react-navigation-header-buttons'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import LaunchScreen from '../../App/Screens/LaunchScreen'
 import LoginScreen from '../../App/Screens/LoginScreen'
@@ -16,11 +16,11 @@ const generateHeaderTitle = (title) => {
   return <Text style={Styles.largeTitleWhite}>{title}<Text style={Styles.largeTitleBlue}>.</Text></Text>
 }
 
-// const headerButtons = (
-//   <HeaderButtons IconComponent={MaterialIcons} iconSize={23} color='white'>
-//     <HeaderButtons.Item title='search' iconName='search' onPress={() => NavigationService.navigate('SearchScreen')} />
-//   </HeaderButtons >
-// )
+const headerButtons = (
+  <HeaderButtons IconComponent={MaterialIcons} iconSize={22} color='white'>
+    <HeaderButtons.Item title='Log Out' iconName='power-settings-new' onPress={getFirebase().logout} />
+  </HeaderButtons >
+)
 
 const PrimaryNav = createStackNavigator({
   LaunchScreen: {
@@ -42,8 +42,8 @@ const PrimaryNav = createStackNavigator({
         backgroundColor: Colors.darkBlue
       },
       headerTintColor: '#fff',
-      headerTitle: generateHeaderTitle('Homerooms')
-      // headerRight: headerButtons
+      headerTitle: generateHeaderTitle('Homerooms'),
+      headerRight: headerButtons
     }
   },
   SearchScreen: {

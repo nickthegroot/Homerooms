@@ -35,7 +35,7 @@ class LaunchScreen extends Component {
 
         <View style={Styles.overlay} />
 
-        <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center', width: this.state.width }}>
+        <View style={{ flex: 12, justifyContent: 'center', alignItems: 'center', width: this.state.width }}>
           <Text style={Styles.supportSeminarTitleWhite}>Homerooms<Text style={Styles.supportSeminarTitleBlue}>.</Text></Text>
         </View>
 

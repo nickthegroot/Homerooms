@@ -61,7 +61,7 @@ export default class LoginScreen extends Component {
 
         <View style={Styles.overlay} />
 
-        <View style={{ flex: 8, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 12, justifyContent: 'center', alignItems: 'center' }}>
           <View style={Styles.form}>
             <FormLabel containerStyle={Styles.formLabelContainer} labelStyle={Styles.formLabelText} fontFamily={Fonts.type.content}>E-Mail</FormLabel>
             <FormInput
